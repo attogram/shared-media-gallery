@@ -1,20 +1,23 @@
-<?php // shared-media-gallery  index.php  v0.0.1
+<?php // shared-media-gallery  index.php  v0.0.2
 
 use Attogram\SharedMedia\Gallery\Gallery;
 
-function loadLib($lib)
-{
-    if (!is_readable($lib)) {
-        print 'ERROR: Not Found: '.$lib;
-        throw new Exception();
-    }
-    require_once($lib);
+$lib = '../vendor/autoload.php';
+if (!is_readable($lib)) {
+    print 'ERROR: Autoloader Not Found: ' . $lib;
+    return false;
 }
+require_once($lib);
 
-try {
-    loadLib('../vendor/autoload.php');
-    loadLib('../vendor/attogram/shared-media-orm/config/config.php');
-} catch (Exception $error) {
+$lib = '../config/config.php';
+if (!is_readable($lib)) {
+    print 'ERROR: Propel Config Not Found: ' . $lib;
+    return false;
+}
+require_once($lib);
+
+if (!class_exists('Attogram\SharedMedia\Gallery\Gallery')) {
+    print 'ERROR: Gallery Class Not Found';
     return false;
 }
 
