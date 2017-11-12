@@ -4,18 +4,18 @@ use Attogram\SharedMedia\Gallery\Gallery;
 
 function loadLib($lib)
 {
-	if (!is_readable($lib)) {
-		throw new Exception('File Not Found: '.$lib);
-	}
-	require_once($lib);
+    if (!is_readable($lib)) {
+		print 'ERROR: Not Found: '.$lib;
+        throw new Exception();
+    }
+    require_once($lib);
 }
 
 try {
-	loadLib('../vendor/autoload.php');
-	loadLib('../vendor/attogram/shared-media-orm/config/config.php');
+    loadLib('../vendor/autoload.php');
+    loadLib('../vendor/attogram/shared-media-orm/config/config.php');
 } catch (Exception $error) {
-	print 'ERROR: '.$error->getMessage();
-	return false;
+    return false;
 }
 
 $gallery = new Gallery();
