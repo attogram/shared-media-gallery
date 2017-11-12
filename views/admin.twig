@@ -1,4 +1,10 @@
 {# shared-media-gallery  admin.twig  v0.0.1 #}
 {{ include('header.twig') }}
-ADMIN
+{{ include('menu.twig') }}
+<div class="content">
+<pre>
+uriBase    : {{ uriBase }}
+uriRelative: {{ uriRelative }}
+</pre>
+</div>
 {{ include('footer.twig') }}

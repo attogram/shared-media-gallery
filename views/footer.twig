@@ -1,7 +1,14 @@
 {# shared-media-gallery  footer.twig  v0.0.1 #}
 <footer>
-<a target="github" 
-href="https://github.com/attogram/shared-media-gallery">Shared Media Gallery v{{ version }}</a>
+<a href="{{ uriBase }}">Shared Media Gallery v{{ version }}</a>
+&nbsp;|&nbsp;
+<a href="{{ uriBase }}about/">about</a>
+    
+<span style="float:right;">
+    <a target="github" href="https://github.com/attogram/shared-media-gallery">github</a>
+    &nbsp;|&nbsp;
+    <a href="{{ uriBase }}admin/">admin</a>
+</span>
 </footer>
 </body>
 </html>
