@@ -5,7 +5,7 @@ use Attogram\SharedMedia\Gallery\Gallery;
 function loadLib($lib)
 {
     if (!is_readable($lib)) {
-		print 'ERROR: Not Found: '.$lib;
+        print 'ERROR: Not Found: '.$lib;
         throw new Exception();
     }
     require_once($lib);

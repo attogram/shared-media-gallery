@@ -4,23 +4,23 @@ namespace Attogram\SharedMedia\Gallery;
 
 class Gallery
 {
-	const VERSION = '0.0.1';
+    const VERSION = '0.0.1';
 
-	private $twig;
+    private $twig;
 
-	public function __construct()
-	{
-		$this->twig = new \Twig_Environment(
-			new \Twig_Loader_Filesystem('../views/'),
-			[
-				//'cache' => '../cache/',
-			]
-		);
-		$this->homePage();
-	}
-	
-	private function homePage()
-	{
-		$this->twig->display('home.twig');
-	}
+    public function __construct()
+    {
+        $this->twig = new \Twig_Environment(
+            new \Twig_Loader_Filesystem('../views/'),
+            [
+                //'cache' => '../cache/',
+            ]
+        );
+        $this->homePage();
+    }
+
+    private function homePage()
+    {
+        $this->twig->display('home.twig');
+    }
 }
