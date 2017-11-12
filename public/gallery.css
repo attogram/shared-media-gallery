@@ -19,16 +19,17 @@ a:hover, .menu a:hover, footer a:hover {
 footer {
     font-size:80%;
     background-color:#333;
-    padding-top:20px;
     padding:10px;
+    padding-top:20px;
 }
 footer a {
     background-color:#333;
 }
 .menu {
     background-color:#333;
-    padding-bottom:20px;
     padding:10px;
+    padding-bottom:20px;
+
 }
 .menu a {
     background-color:#333;
