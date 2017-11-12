@@ -1,5 +1,8 @@
 {# shared-media-gallery  menu.twig  v0.0.1 #}
-
 <div class="menu">
-[MENU]
+    <nobr><a href=".">{{ title }}</a></nobr>
+    &nbsp;&nbsp;
+    <nobr>{{ number_of_files|default('0') }} Media Files</nobr>
+    &nbsp;&nbsp;
+    <nobr>{{ number_of_categories|default('0') }} Categories</nobr>
 </div>

@@ -1,7 +1,40 @@
 /* attogram/shared-media-gallery - gallery.css - v0.0.1 */
 body {
-	background-color:black;
-	color:white;
-	font-family:monospace;
-	font-size:20px;
+    background-color:black;
+    color:white;
+    font-family:monospace;
+    font-size:20px;
+    margin:0;
+    padding:0;
+}
+a {
+    background-color:black;
+    color:yellow;
+    text-decoration:none;
+}
+a:hover, .menu a:hover, footer a:hover {
+    background-color:yellow;
+    color:black;
+}
+footer {
+    font-size:80%;
+    background-color:#333;
+    padding-top:20px;
+    padding:10px;
+}
+footer a {
+    background-color:#333;
+}
+.menu {
+    background-color:#333;
+    padding-bottom:20px;
+    padding:10px;
+}
+.menu a {
+    background-color:#333;
+}
+.content {
+    background-color:salmon;
+    color:black;
+    padding:30px;
 }

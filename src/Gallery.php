@@ -2,25 +2,23 @@
 
 namespace Attogram\SharedMedia\Gallery;
 
-class Gallery
+class Gallery extends Base
 {
     const VERSION = '0.0.1';
 
-    private $twig;
+    protected $twig;
 
-    public function __construct()
+    protected function route()
     {
-        $this->twig = new \Twig_Environment(
-            new \Twig_Loader_Filesystem('../views/'),
-            [
-                //'cache' => '../cache/',
-            ]
-        );
         $this->homePage();
     }
 
     private function homePage()
     {
-        $this->twig->display('home.twig');
+        $data = [
+            'title' => 'Shared Media Gallery',
+            'version' => self::VERSION,
+        ];
+        $this->twig->display('home.twig', $data);
     }
 }
