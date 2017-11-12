@@ -1,0 +1,23 @@
+{
+    "name": "attogram/shared-media-gallery",
+    "description": "Gallery for attogram/shared-media-orm",
+    "type": "library",
+    "license": "MIT",
+    "homepage": "https://github.com/attogram/shared-media-gallery",
+    "minimum-stability": "dev",
+    "require": {
+        "php": ">=5.5",
+        "attogram/shared-media-orm": "^1.0@dev",
+        "twig/twig": "~2.0"
+    },
+    "autoload": {
+        "psr-4": {
+            "Attogram\\SharedMedia\\Gallery\\": "src/"
+        }
+    },
+    "extra": {
+        "branch-alias": {
+            "dev-master": "0.x-dev"
+        }
+    }
+}
