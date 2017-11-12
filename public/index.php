@@ -9,7 +9,7 @@ if (!is_readable($lib)) {
 }
 require_once($lib);
 
-$lib = '../config/config.php';
+$lib = '../vendor/attogram/shared-media-orm/config/config.php';
 if (!is_readable($lib)) {
     print 'ERROR: Propel Config Not Found: ' . $lib;
     return false;
