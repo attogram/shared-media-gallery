@@ -17,8 +17,8 @@ a:hover, .menu a:hover, footer a:hover {
     color:black;
 }
 footer {
-    font-size:80%;
     background-color:#333;
+    font-size:80%;
     padding:10px;
     padding-top:20px;
 }

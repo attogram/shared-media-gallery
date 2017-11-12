@@ -1,4 +1,4 @@
-# attogram/shared-media-gallery - codeclimate.yml - v0.0.1
+# attogram/shared-media-gallery - codeclimate.yml - v0.0.2
 version: "2"
 exclude_patterns:
 - "vendor/"
@@ -13,8 +13,8 @@ plugins:
     checks:
       CleanCode/StaticAccess: # allow Object::method()
         enabled: false
-      #Controversial/Superglobals: # allow $_GET in sandbox
-      #  enabled: false
+      Controversial/Superglobals: # allow $_SERVER in getServer()
+        enabled: false
       Design/DevelopmentCodeFragment: # allow print_r()
         enabled: false
   phan:
