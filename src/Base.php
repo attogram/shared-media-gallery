@@ -80,10 +80,7 @@ class Base
             return false;
         }
         foreach ($this->getRoutes() as $view => $route) {
-            if (isset($route[1])) {
-                continue;
-            }
-            if ($route[0] != $this->uri[0]) {
+            if (isset($route[1]) || $route[0] != $this->uri[0]) {
                 continue;
             }
             $this->displayView($view);
@@ -95,24 +92,13 @@ class Base
     private function routeLevel1()
     {
         foreach ($this->getRoutes() as $view => $route) {
-            if ($route[0] != $this->uri[0]) {
+            if ($route[0] != $this->uri[0] || !isset($route[1]) || isset($this->uri[2])) {
                 continue;
             }
-            if (!isset($route[1])) {
-                continue;
-            }
-            if (isset($this->uri[2])) {
-                continue;
-            }
-            if ($route[1] === '*') { // match all
+            if ($route[1] === '*' || $route[1] == $this->uri[1]) {
                 $this->displayView($view);
                 return true;
             }
-            if ($route[1] != $this->uri[1]) {
-                continue;
-            }
-            $this->displayView($view);
-            return true;
         }
         return false;
     }
