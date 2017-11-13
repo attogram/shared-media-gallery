@@ -74,35 +74,6 @@ class Base
         }
     }
 
-    private function routeLevel0()
-    {
-        if (isset($this->uri[1])) {
-            return false;
-        }
-        foreach ($this->getRoutes() as $view => $route) {
-            if (isset($route[1]) || $route[0] != $this->uri[0]) {
-                continue;
-            }
-            $this->displayView($view);
-            return true;
-        }
-        return false;
-    }
-
-    private function routeLevel1()
-    {
-        foreach ($this->getRoutes() as $view => $route) {
-            if ($route[0] != $this->uri[0] || !isset($route[1]) || isset($this->uri[2])) {
-                continue;
-            }
-            if ($route[1] === '*' || $route[1] == $this->uri[1]) {
-                $this->displayView($view);
-                return true;
-            }
-        }
-        return false;
-    }
-
     private function route()
     {
         if (!in_array($this->uri[0], array_column($this->getRoutes(), '0'))) {
@@ -119,6 +90,37 @@ class Base
         }
 
         $this->error404();
+        return false;
+    }
+
+    private function routeLevel0()
+    {
+        if (isset($this->uri[1])) {
+            return false;
+        }
+        foreach ($this->getRoutes() as $view => $route) {
+            if ($route[0] == $this->uri[0] && !isset($route[1])) {
+				$this->displayView($view);
+				return true;
+			}
+        }
+        return false;
+    }
+
+    private function routeLevel1()
+    {
+        if (isset($this->uri[2])) {
+            return false;
+        }
+        foreach ($this->getRoutes() as $view => $route) {
+            if ($route[0] != $this->uri[0] || !isset($route[1])) {
+                continue;
+            }
+            if ($route[1] === '*' || $route[1] === $this->uri[1]) {
+                $this->displayView($view);
+                return true;
+            }
+        }
         return false;
     }
 
