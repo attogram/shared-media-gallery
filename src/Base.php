@@ -58,7 +58,7 @@ class Base
             unset($this->uri[0]);
             $this->uri = array_values($this->uri); // reindex
         }
-        if (count($this->uri) == 1 ) {
+        if (count($this->uri) == 1) {
             return;
         }
         if ($this->uri[count($this->uri)-1] === '') { // trim off last empty element

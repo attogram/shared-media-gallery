@@ -27,5 +27,4 @@ class Gallery extends Base
             'routes'      => $this->getRoutes(),
         ];
     }
-
 }
