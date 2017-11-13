@@ -11,6 +11,8 @@ class Gallery extends Base
         return [
             'home' =>  [''],
             'about' => ['about'],
+            'about1' => ['about', '1'],
+            'about2' => ['about', '2'],
             'admin' => ['admin'],
             'debug' => ['admin', '*'],
         ];
