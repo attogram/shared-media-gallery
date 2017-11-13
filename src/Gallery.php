@@ -4,7 +4,7 @@ namespace Attogram\SharedMedia\Gallery;
 
 class Gallery extends Base
 {
-    const VERSION = '0.0.3';
+    const VERSION = '0.0.4';
 
     protected function getRoutes()
     {

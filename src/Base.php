@@ -8,7 +8,7 @@ use Twig_Loader_Filesystem;
 
 class Base
 {
-    const VERSION = '0.0.3';
+    const VERSION = '0.0.4';
 
     protected $twig;
     protected $uriBase;
@@ -74,26 +74,26 @@ class Base
         }
     }
 
-    private function route()
+    private function routeLevel0()
     {
-        if (!in_array($this->uri[0], array_column($this->getRoutes(), '0'))) {
-            $this->error404();
+        if (isset($this->uri[1])) {
             return false;
         }
-
-        if (!isset($this->uri[1])) {
-            foreach ($this->getRoutes() as $view => $route) {
-                if (isset($route[1])) {
-                    continue;
-                }
-                if ($route[0] != $this->uri[0]) {
-                    continue;
-                }
-                $this->displayView($view);
-                return true;
+        foreach ($this->getRoutes() as $view => $route) {
+            if (isset($route[1])) {
+                continue;
             }
+            if ($route[0] != $this->uri[0]) {
+                continue;
+            }
+            $this->displayView($view);
+            return true;
         }
+        return false;
+    }
 
+    private function routeLevel1()
+    {
         foreach ($this->getRoutes() as $view => $route) {
             if ($route[0] != $this->uri[0]) {
                 continue;
@@ -112,6 +112,23 @@ class Base
                 continue;
             }
             $this->displayView($view);
+            return true;
+        }
+        return false;
+    }
+
+    private function route()
+    {
+        if (!in_array($this->uri[0], array_column($this->getRoutes(), '0'))) {
+            $this->error404();
+            return false;
+        }
+
+        if ($this->routeLevel0()) {
+            return true;
+        }
+
+        if ($this->routeLevel1()) {
             return true;
         }
 
