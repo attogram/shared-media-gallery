@@ -99,7 +99,7 @@ class Base
             return false;
         }
         foreach ($this->getRoutes() as $view => $route) {
-            if ($route[0] === $this->uri[0] && !isset($route[1])) {
+            if (!isset($route[1]) && $route[0] === $this->uri[0]) {
                 $this->displayView($view);
                 return true;
             }
@@ -113,10 +113,7 @@ class Base
             return false;
         }
         foreach ($this->getRoutes() as $view => $route) {
-            if ($route[0] != $this->uri[0] || !isset($route[1])) {
-                continue;
-            }
-            if ($route[1] === '*' || $route[1] === $this->uri[1]) {
+            if (isset($route[1]) && !isset($route[2]) && in_array($route[1], ['*', $this->uri[1]])) {
                 $this->displayView($view);
                 return true;
             }
