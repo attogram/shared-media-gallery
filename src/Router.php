@@ -6,7 +6,7 @@ use Twig_Environment;
 use Twig_Error_Loader;
 use Twig_Loader_Filesystem;
 
-class Base
+class Router
 {
     const VERSION = '0.0.4';
 
@@ -14,13 +14,15 @@ class Base
     protected $uriBase;
     protected $uriRelative;
     protected $uri = [];
+    protected $baseFix;
 
-    public function __construct()
+    public function __construct($baseFix = '')
     {
+        $this->baseFix = $baseFix;
         $this->twig = new Twig_Environment(
-            new Twig_Loader_Filesystem('../views/'),
+            new Twig_Loader_Filesystem(dirname(__FILE__).'/../views/'),
             [
-                'cache' => '../cache/',
+                'cache' => dirname(__FILE__).'/../cache/',
                 'auto_reload' => true,
             ]
         );
@@ -37,6 +39,7 @@ class Base
 
         $this->uriRelative = strtr($this->getServer('REQUEST_URI'), [$this->uriBase => '/']);
 
+        $this->uriBase .= $this->baseFix;
         $this->uriBase = rtrim($this->uriBase, '/');
 
         $this->setUriList();
@@ -77,7 +80,7 @@ class Base
     private function route()
     {
         if (!in_array($this->uri[0], array_column($this->getRoutes(), '0'))) {
-            $this->error404();
+            $this->error404('No 0 Level Routes Found');
             return false;
         }
 
@@ -89,7 +92,7 @@ class Base
             return true;
         }
 
-        $this->error404();
+        $this->error404('Level 2 Routes Denied');
         return false;
     }
 
@@ -127,27 +130,35 @@ class Base
         return false;
     }
 
-    private function error404()
+    private function error404($message = '')
     {
         header('HTTP/1.0 404 Not Found');
-        $this->displayView('error');
+        $this->displayView('error', ['message' => $message]);
     }
 
-    private function displayView($view)
+    protected function getViewData()
     {
+        return [
+            'title'       => 'Shared Media Gallery',
+            'version'     => self::VERSION,
+            'uriBase'     => $this->uriBase,
+            'uriRelative' => $this->uriRelative,
+            'uri'         => $this->uri,
+            'routes'      => $this->getRoutes(),
+        ];
+    }
+
+    private function displayView($view, $data = [])
+    {
+        $data = array_merge($data, $this->getViewData());
         try {
-            $this->twig->display($view.'.twig', $this->getViewData());
+            $this->twig->display($view.'.twig', $data);
         } catch (Twig_Error_Loader $error) {
             print 'ERROR: '.$error->getMessage();
         }
     }
 
     protected function getRoutes()
-    {
-        return [];
-    }
-
-    protected function getViewData()
     {
         return [];
     }
