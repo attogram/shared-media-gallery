@@ -99,10 +99,10 @@ class Base
             return false;
         }
         foreach ($this->getRoutes() as $view => $route) {
-            if ($route[0] == $this->uri[0] && !isset($route[1])) {
-				$this->displayView($view);
-				return true;
-			}
+            if ($route[0] === $this->uri[0] && !isset($route[1])) {
+                $this->displayView($view);
+                return true;
+            }
         }
         return false;
     }
