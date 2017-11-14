@@ -37,7 +37,7 @@ class Gallery extends Router
     }
     private function isNumber($var)
     {
-        if (preg_match('/^[0-9]*$/',$var)) {
+        if (preg_match('/^[0-9]*$/', $var)) {
             return true;
         }
         return false;
