@@ -7,23 +7,6 @@
 <a href="{{ uriBase }}/admin/">admin</a>    
 &nbsp;|&nbsp;
 <a target="github" href="https://github.com/attogram/shared-media-gallery">github</a>
-
-<pre>
-uriBase    : {{ uriBase }}
-uriRelative: {{ uriRelative }}
-uri        : {{ uri|join(', ') }}
-uri.0      : {{ uri.0 is not null ? uri.0 : '-' }}
-uri.1      : {{ uri.1 is not null ? uri.1 : '-' }}
-uri.2      : {{ uri.2 is not null ? uri.2 : '-' }}
-{% for view, route in routes %}
-{{ view }}:
-	route: {{ route|join(', ') }}
-	route.0: {{ route.0 is not null ? route.0 : '-' }}
-	route.1: {{ route.1 is not null ? route.1 : '-' }}
-	route.2: {{ route.2 is not null ? route.2 : '-' }}
-{% endfor %}
-
-</pre>
 </footer>
 </body>
 </html>

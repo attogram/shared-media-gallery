@@ -8,7 +8,7 @@ use Twig_Loader_Filesystem;
 
 class Router
 {
-    const VERSION = '0.0.5';
+    const VERSION = '0.0.6';
 
     protected $twig;
     protected $uriBase;
@@ -36,15 +36,12 @@ class Router
     private function setUri()
     {
         $this->uriBase = strtr($this->getServer('SCRIPT_NAME'), ['index.php' => '']);
-
-        $this->uriRelative = strtr($this->getServer('REQUEST_URI'), [$this->uriBase => '/']);
-
-        $this->uriBase .= $this->baseFix;
-        $this->uriBase = rtrim($this->uriBase, '/');
-
+        $rUri = preg_replace('/\?.*/', '', $this->getServer('REQUEST_URI')); // remove query
+        $this->uriRelative = strtr($rUri, [$this->uriBase => '/']);
+        $this->uriBase .= $this->baseFix; // @TODO - numeric baseFix .. = 1 ../.. = 2
+        $this->uriBase = rtrim($this->uriBase, '/'); // remove trailing slash from base URI
         $this->setUriList();
-
-        // If has slash at end, all is OK
+        // If relative URI has slash at end, all is OK
         if (preg_match('#/$#', $this->uriRelative)) {
             return true;
         }
@@ -80,7 +77,7 @@ class Router
     private function route()
     {
         if (!in_array($this->uri[0], array_column($this->getRoutes(), '0'))) {
-            $this->error404('No 0 Level Routes Found');
+            $this->error404('404 Page Not Found');
             return false;
         }
 
@@ -92,7 +89,7 @@ class Router
             return true;
         }
 
-        $this->error404('Level 2 Routes Denied');
+        $this->error404('414 URI Too Long ');
         return false;
     }
 

@@ -2,8 +2,7 @@
 body {
     background-color:black;
     color:white;
-    font-family:monospace;
-    font-size:20px;
+    font-family:sans-serif;
     margin:0;
     padding:0;
 }
@@ -36,5 +35,5 @@ footer a {
 .content {
     background-color:salmon;
     color:black;
-    padding:30px;
+    padding:10px;
 }

@@ -9,8 +9,18 @@ class GalleryAdmin extends Router
     protected function getRoutes()
     {
         return [
-            'admin'      => [''],
-            'debug'      => ['debug'],
+            'admin/home'     => [''],
+            'admin/media'    => ['media'],
+            'admin/category' => ['category'],
+            'admin/debug'    => ['debug'],
         ];
     }
+	
+    protected function getViewData()
+    {
+        $data = parent::getViewData();
+		$data['title'] = 'Shared Media Gallery ADMIN';
+		return $data;
+    }
+
 }
