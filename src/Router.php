@@ -8,7 +8,7 @@ use Twig_Loader_Filesystem;
 
 class Router
 {
-    const VERSION = '0.0.4';
+    const VERSION = '0.0.5';
 
     protected $twig;
     protected $uriBase;
@@ -130,9 +130,12 @@ class Router
         return false;
     }
 
-    private function error404($message = '')
+    protected function error404($message = '')
     {
         header('HTTP/1.0 404 Not Found');
+        if (!$message) {
+            $message = '404 Not Found';
+        }
         $this->displayView('error', ['message' => $message]);
     }
 
@@ -150,6 +153,12 @@ class Router
 
     private function displayView($view, $data = [])
     {
+        $control = 'control'.ucfirst($view);
+        if (is_callable([$this, $control])) {
+            if (!$this->{$control}()) {
+                return false;
+            }
+        }
         $data = array_merge($data, $this->getViewData());
         try {
             $this->twig->display($view.'.twig', $data);
