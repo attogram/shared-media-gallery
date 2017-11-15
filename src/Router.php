@@ -12,7 +12,7 @@ use Twig_Loader_Filesystem;
  */
 class Router
 {
-    const VERSION = '0.0.8';
+    const VERSION = '0.0.10';
 
     protected $twig;
     protected $uriBase;
@@ -22,7 +22,7 @@ class Router
 
     /**
      * @param int $level
-     * @return void
+     * @return bool
      */
     public function __construct(int $level = 0)
     {
@@ -38,7 +38,7 @@ class Router
         if (!$this->setUri()) {
             return false;
         }
-        $this->route();
+        return $this->route();
     }
 
     protected function errorHandler($number, $message, $file, $line)
@@ -47,7 +47,7 @@ class Router
     }
 
     /**
-     * @return int
+     * @return bool
      */
     private function setUri()
     {
