@@ -1,6 +1,6 @@
 {# shared-media-gallery  menu.twig  v0.0.1 #}
 <div class="menu">
-    <nobr><a href="{{ uriBase }}">{{ title }}</a></nobr>
+    <nobr><a href="{{ uriBase }}">{{ title|default('Gallery') }}</a></nobr>
     &nbsp;&nbsp;
     <nobr><a href="{{ uriBase }}/media/">{{ number_of_media|default('0') }} Media</a></nobr>
     &nbsp;&nbsp;

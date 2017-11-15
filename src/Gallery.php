@@ -6,7 +6,15 @@ use Attogram\SharedMedia\Gallery\Tools;
 
 class Gallery extends Router
 {
-    const VERSION = '0.0.5';
+    const VERSION = '0.0.6';
+
+    public function __construct(int $level = 0)
+    {
+        $this->data['title'] = 'Shared Media Gallery';
+        $this->data['version'] = self::VERSION;
+        parent::__construct($level);
+
+    }
 
     protected function getRoutes()
     {

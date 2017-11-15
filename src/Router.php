@@ -12,13 +12,14 @@ use Twig_Loader_Filesystem;
  */
 class Router
 {
-    const VERSION = '0.0.10';
+    const VERSION = '0.0.11';
 
     protected $twig;
     protected $uriBase;
     protected $uriRelative;
     protected $uri = [];
     protected $level;
+    protected $data = [];
 
     /**
      * @param int $level
@@ -42,19 +43,6 @@ class Router
     }
 
     /**
-     * @param int    $number
-     * @param string $message
-     * @param string $file
-     * @param int    $line
-     * @return bool
-     */
-    protected function errorHandler($number, $message, $file = null, $line = null)
-    {
-        print "<pre>ERROR: $number: $message - $file : $line</pre>";
-        return true; // true = do not use normal error handler.  false = continue with normal error handler
-    }
-
-    /**
      * @return bool
      */
     private function setUri()
@@ -64,13 +52,11 @@ class Router
         $this->uriRelative = strtr($rUri, [$this->uriBase => '/']);
         $this->uriBase = $this->trimUriLevel($this->uriBase);
         $this->uriBase = rtrim($this->uriBase, '/'); // remove trailing slash from base URI
-        $this->setUriList();
-        // If relative URI has slash at end, all is OK
+        $this->setUriList(); // set the uri Array
         if (preg_match('#/$#', $this->uriRelative)) {
-            return true;
+            return true; // If relative URI has slash at end, all is OK
         }
-        // Force trailing slash
-        header('HTTP/1.1 301 Moved Permanently');
+        header('HTTP/1.1 301 Moved Permanently'); // Force trailing slash
         header('Location: '.$this->uriBase.$this->uriRelative.'/');
         return false;
     }
@@ -118,15 +104,12 @@ class Router
             $this->error404('404 Page Not Found');
             return false;
         }
-
         if ($this->routeLevel0()) {
             return true;
         }
-
         if ($this->routeLevel1()) {
             return true;
         }
-
         $this->error404('414 URI Too Long ');
         return false;
     }
@@ -186,18 +169,21 @@ class Router
 
     /**
      * @param string $view
-     * @param array|null $data
      * @return bool
      */
-    private function displayView($view, $data = [])
+    private function displayView(string $view)
     {
+        $this->data['version'] = self::VERSION;
+        $this->data['uriBase'] = $this->uriBase;
+        $this->data['uriRelative'] = $this->uriRelative;
+        $this->data['uri'] = $this->uri;
+        $this->data['routes'] = $this->getRoutes();
+        $this->data['level'] = $this->level;
         if (!$this->callControl($view)) {
             return false;
         }
-
-        $data = array_merge($data, $this->getViewData());
         try {
-            $this->twig->display($view.'.twig', $data);
+            $this->twig->display($view.'.twig', $this->data);
         } catch (Twig_Error_Loader $error) {
             print 'ERROR: '.$error->getMessage();
             return false;
@@ -209,7 +195,7 @@ class Router
      * @param string $view
      * @return bool
      */
-    private function callControl($view)
+    private function callControl(string $view)
     {
         $view = ucfirst(strtolower($view));
         if (strpos($view, '/')) {
@@ -229,23 +215,21 @@ class Router
     /**
      * @return array
      */
-    protected function getViewData()
-    {
-        return [
-            'title'       => 'Shared Media Gallery',
-            'version'     => self::VERSION,
-            'uriBase'     => $this->uriBase,
-            'uriRelative' => $this->uriRelative,
-            'uri'         => $this->uri,
-            'routes'      => $this->getRoutes(),
-        ];
-    }
-
-    /**
-     * @return array
-     */
     protected function getRoutes()
     {
         return [];
+    }
+
+    /**
+     * @param int    $number
+     * @param string $message
+     * @param string $file
+     * @param int    $line
+     * @return bool
+     */
+    protected function errorHandler(int $number, string $message, string $file = null, int $line = null)
+    {
+        print "<pre>ERROR: $number: $message - $file : $line</pre>";
+        return true; // true = do not use normal error handler.  false = continue with normal error handler
     }
 }
