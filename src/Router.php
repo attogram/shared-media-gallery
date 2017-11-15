@@ -41,9 +41,17 @@ class Router
         return $this->route();
     }
 
-    protected function errorHandler($number, $message, $file, $line)
+    /**
+     * @param int    $number
+     * @param string $message
+     * @param string $file
+     * @param int    $line
+     * @return bool
+     */
+    protected function errorHandler($number, $message, $file = null, $line = null)
     {
         print "<pre>ERROR: $number: $message - $file : $line</pre>";
+        return true; // true = do not use normal error handler.  false = continue with normal error handler
     }
 
     /**
