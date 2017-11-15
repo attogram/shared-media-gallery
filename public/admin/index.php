@@ -1,15 +1,16 @@
-<?php // shared-media-gallery  admin/index.php  v0.0.2
+<?php // shared-media-gallery  admin/index.php  v0.0.3
 
 use Attogram\SharedMedia\Gallery\GalleryAdmin;
 
-$lib = '../../vendor/autoload.php';
+$vendorDir = '../../vendor/';
+$lib = $vendorDir . 'autoload.php';
 if (!is_readable($lib)) {
     print 'ERROR: Autoloader Not Found: ' . $lib;
     return false;
 }
 require_once($lib);
 
-$lib = '../../vendor/attogram/shared-media-orm/config/config.php';
+$lib = $vendorDir . 'attogram/shared-media-orm/config/config.php';
 if (!is_readable($lib)) {
     print 'ERROR: Propel Config Not Found: ' . $lib;
     return false;
@@ -21,4 +22,4 @@ if (!class_exists('Attogram\SharedMedia\Gallery\GalleryAdmin')) {
     return false;
 }
 
-$gallery = new GalleryAdmin('..');
+$gallery = new GalleryAdmin(1);
