@@ -37,5 +37,4 @@ class Gallery extends Router
         }
         return true;
     }
-
 }
