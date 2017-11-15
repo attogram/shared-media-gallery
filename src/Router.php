@@ -12,7 +12,7 @@ use Twig_Loader_Filesystem;
  */
 class Router
 {
-    const VERSION = '0.0.11';
+    const VERSION = '0.0.12';
 
     protected $twig;
     protected $uriBase;
@@ -75,7 +75,7 @@ class Router
         for ($i = 0; $i < $this->level; $i++) {
             array_pop($sUri);
         }
-        return implode('/', $sUri);
+        return implode('/', $sUri) . '/';
     }
 
     /**
@@ -87,7 +87,7 @@ class Router
         if ($this->uri[0] === '') { // trim off first empty element
             array_shift($this->uri);
         }
-        if (count($this->uri) == 1) {
+        if (count($this->uri) <= 1) {
             return;
         }
         if ($this->uri[count($this->uri)-1] === '') { // trim off last empty element
@@ -164,7 +164,8 @@ class Router
         if (!$message) {
             $message = '404 Not Found';
         }
-        $this->displayView('error', ['message' => $message]);
+        $this->data['message'] = $message;
+        $this->displayView('error');
     }
 
     /**

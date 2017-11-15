@@ -13,7 +13,6 @@ class Gallery extends Router
         $this->data['title'] = 'Shared Media Gallery';
         $this->data['version'] = self::VERSION;
         parent::__construct($level);
-
     }
 
     protected function getRoutes()
