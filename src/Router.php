@@ -2,13 +2,14 @@
 
 namespace Attogram\SharedMedia\Gallery;
 
+use Attogram\SharedMedia\Gallery\Tools;
 use Twig_Environment;
 use Twig_Error_Loader;
 use Twig_Loader_Filesystem;
 
 class Router
 {
-    const VERSION = '0.0.6';
+    const VERSION = '0.0.7';
 
     protected $twig;
     protected $uriBase;
@@ -35,8 +36,8 @@ class Router
 
     private function setUri()
     {
-        $this->uriBase = strtr($this->getServer('SCRIPT_NAME'), ['index.php' => '']);
-        $rUri = preg_replace('/\?.*/', '', $this->getServer('REQUEST_URI')); // remove query
+        $this->uriBase = strtr(Tools::getServer('SCRIPT_NAME'), ['index.php' => '']);
+        $rUri = preg_replace('/\?.*/', '', Tools::getServer('REQUEST_URI')); // remove query
         $this->uriRelative = strtr($rUri, [$this->uriBase => '/']);
         $this->uriBase .= $this->baseFix; // @TODO - numeric baseFix .. = 1 ../.. = 2
         $this->uriBase = rtrim($this->uriBase, '/'); // remove trailing slash from base URI
@@ -64,13 +65,6 @@ class Router
         if ($this->uri[count($this->uri)-1] === '') { // trim off last empty element
             unset($this->uri[count($this->uri)-1]);
             $this->uri = array_values($this->uri); // reindex
-        }
-    }
-
-    private function getServer($name)
-    {
-        if (isset($_SERVER[$name])) {
-            return $_SERVER[$name];
         }
     }
 
@@ -150,18 +144,33 @@ class Router
 
     private function displayView($view, $data = [])
     {
-        $control = 'control'.ucfirst($view);
-        if (is_callable([$this, $control])) {
-            if (!$this->{$control}()) {
-                return false;
-            }
+        if (!$this->callControl($view)) {
+            return false;
         }
+
         $data = array_merge($data, $this->getViewData());
         try {
             $this->twig->display($view.'.twig', $data);
         } catch (Twig_Error_Loader $error) {
             print 'ERROR: '.$error->getMessage();
         }
+    }
+
+    private function callControl($view)
+    {
+        $view = ucfirst(strtolower($view));
+        if (strpos($view, '/')) {
+            $fullView = '';
+            foreach (explode('/', $view) as $name) {
+                $fullView .= ucfirst(strtolower($name));
+            }
+            $view = $fullView;
+        }
+        $control = 'control'.$view;
+        if (is_callable([$this, $control]) && !$this->{$control}()) {
+            return false;
+        }
+        return true;
     }
 
     protected function getRoutes()

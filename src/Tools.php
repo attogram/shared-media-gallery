@@ -13,5 +13,11 @@ class Tools
         }
         return false;
     }
-	
+
+    public static function getServer($name)
+    {
+        if (isset($_SERVER[$name])) {
+            return $_SERVER[$name];
+        }
+    }
 }

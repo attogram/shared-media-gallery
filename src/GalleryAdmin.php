@@ -4,7 +4,7 @@ namespace Attogram\SharedMedia\Gallery;
 
 class GalleryAdmin extends Router
 {
-    const VERSION = '0.0.4';
+    const VERSION = '0.0.5';
 
     protected function getRoutes()
     {
@@ -15,12 +15,21 @@ class GalleryAdmin extends Router
             'admin/debug'    => ['debug'],
         ];
     }
-	
+
     protected function getViewData()
     {
         $data = parent::getViewData();
-		$data['title'] = 'Shared Media Gallery ADMIN';
-		return $data;
+        $data['title'] = 'Shared Media Gallery ADMIN';
+        return $data;
     }
 
+    protected function controlAdminMedia()
+    {
+        return true;
+    }
+
+    protected function controlAdminCategory()
+    {
+        return true;
+    }
 }
