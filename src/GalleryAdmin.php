@@ -33,13 +33,13 @@ class GalleryAdmin extends Router
     protected function controlAdminCategory()
     {
         if (!Tools::hasGet('q')) {
-			return true;
-		}
-		
+            return true;
+        }
+
         $this->data['query'] = Tools::getGet('q');
-		$categoryQuery = new CategoryQuery();
-		$results = $categoryQuery->search($this->data['query']);
-		$this->data['results'] = $categoryQuery->format($results);
+        $categoryQuery = new CategoryQuery();
+        $results = $categoryQuery->search($this->data['query']);
+        $this->data['results'] = $categoryQuery->format($results);
 
         return true;
     }
