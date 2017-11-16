@@ -2,6 +2,8 @@
 
 namespace Attogram\SharedMedia\Gallery;
 
+use Attogram\SharedMedia\Orm\CategoryQuery;
+
 class GalleryAdmin extends Router
 {
     const VERSION = '0.0.6';
@@ -30,9 +32,15 @@ class GalleryAdmin extends Router
 
     protected function controlAdminCategory()
     {
-        if (Tools::hasGet('q')) {
-            $this->data['query'] = Tools::getGet('q');
-        }
+        if (!Tools::hasGet('q')) {
+			return true;
+		}
+		
+        $this->data['query'] = Tools::getGet('q');
+		$categoryQuery = new CategoryQuery();
+		$results = $categoryQuery->search($this->data['query']);
+		$this->data['results'] = $categoryQuery->format($results);
+
         return true;
     }
 }
