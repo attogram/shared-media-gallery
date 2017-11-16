@@ -2,6 +2,16 @@
 {{ include('header.twig') }}
 {{ include('menu.twig') }}
 <div class="content">
-	[ADMIN/MEDIA]
+	<h1>Media Admin</h1>
+	<form action="">
+		<input name="q" type="text" size="30" />
+		<input type="submit" value="   Find Media   " />
+	</form>
+	
+	{% if query %}
+	<br>query: {{ query|escape }}
+	<br>{{ results|raw }}
+	{% endif %}
 </div>
+
 {{ include('footer.twig') }}
