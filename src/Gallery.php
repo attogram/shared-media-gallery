@@ -4,10 +4,12 @@ namespace Attogram\SharedMedia\Gallery;
 
 use Attogram\SharedMedia\Gallery\GalleryTools;
 use Attogram\SharedMedia\Gallery\Tools;
+use Attogram\SharedMedia\Orm\MediaQuery;
+use Propel\Runtime\Map\TableMap;
 
 class Gallery extends Router
 {
-    const VERSION = '0.0.9';
+    const VERSION = '0.0.10';
 
     public function __construct(int $level = 0)
     {
@@ -28,12 +30,33 @@ class Gallery extends Router
         ];
     }
 
+    protected function controlMedias()
+    {
+        $page = 1;
+        $maxPerPage = 20;
+        $medias = MediaQuery::create()->paginate($page, $maxPerPage);
+        if (!$medias) {
+            return true;
+        }
+        foreach ($medias as $media) {
+            $this->data['medias'][] = $media->toArray(TableMap::TYPE_FIELDNAME);
+        }
+        return true;
+    }
+
     protected function controlMedia()
     {
         if (!Tools::isNumber($this->uri[1])) {
+            $this->error404('400 Media Not Found');
+            return false;
+        }
+        $media = MediaQuery::create()->filterByPageid($this->uri[1])->findOne();
+        if (!$media) {
             $this->error404('404 Media Not Found');
             return false;
         }
+        $this->data['media'] = $media;
+
         return true;
     }
 

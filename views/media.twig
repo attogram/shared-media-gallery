@@ -2,6 +2,34 @@
 {{ include('header.twig') }}
 {{ include('menu.twig') }}
 <div class="content">
-	[MEDIA] {{ uri.1|escape }}
+{{ include('thumb.media.twig') }}
+<pre>
+id: {{ media.id }}
+pageid: {{ media.pageid }}
+title: {{ media.title|e }}
+url: {{ media.url }}
+mime: {{ media.mime }}
+width: {{ media.width }}
+height: {{ media.height }}
+size: {{ media.size }}
+sha1: {{ media.sha1 }}
+thumburl: {{ media.thumburl }}
+thumbmime: {{ media.thumbmime }}
+thumbwidth: {{ media.thumbwidth }}
+thumbheight: {{ media.thumbheight }}
+thumbsize: {{ media.thumbsize }}
+descriptionurl: {{ media.descriptionurl }}
+descriptionurlshort: {{ media.descriptionurlshort }}
+imagedescription: {{ media.imagedescription|e }}
+datetimeoriginal: {{ media.datetimeoriginal|e }}
+artist: {{ media.artist|e }}
+licenseshortname: {{ media.licenseshortname }}
+usageterms: {{ media.usageterms }}
+attributionrequired: {{ media.attributionrequired }}
+restrictions: {{ media.restrictions }}
+timestamp: {{ media.timestamp|date('Y-m-d H:i:s') }}
+user: {{ media.user|e }}
+userid: {{ media.userid }}
+</pre>
 </div>
 {{ include('footer.twig') }}
