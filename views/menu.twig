@@ -2,7 +2,7 @@
 <div class="menu">
     <nobr><a href="{{ uriBase }}">{{ title|default('Gallery') }}</a></nobr>
     &nbsp;&nbsp;
-    <nobr><a href="{{ uriBase }}/media/">{{ number_of_media|default('0') }} Media</a></nobr>
+    <nobr><a href="{{ uriBase }}/media/">{{ media_count|default('0') }} Media</a></nobr>
     &nbsp;&nbsp;
-    <nobr><a href="{{ uriBase }}/category/">{{ number_of_categories|default('0') }} Categories</a></nobr>
+    <nobr><a href="{{ uriBase }}/category/">{{ category_count|default('0') }} Categories</a></nobr>
 </div>

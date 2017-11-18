@@ -2,15 +2,22 @@
 
 namespace Attogram\SharedMedia\Gallery;
 
+use Attogram\SharedMedia\Gallery\GalleryTools;
 use Attogram\SharedMedia\Gallery\Tools;
 
 class Gallery extends Router
 {
-    const VERSION = '0.0.6';
+    const VERSION = '0.0.7';
 
+	protected $galleryTools;
+	
     public function __construct(int $level = 0)
     {
-        $this->data['title'] = 'Shared Media Gallery';
+		$this->galleryTools = new GalleryTools;
+		$this->galleryTools->setupDatabase();
+		$this->data['media_count'] = $this->galleryTools->getMediaCount();
+		$this->data['category_count'] = $this->galleryTools->getCategoryCount();
+		$this->data['title'] = 'Shared Media Gallery';
         $this->data['version'] = self::VERSION;
         parent::__construct($level);
     }

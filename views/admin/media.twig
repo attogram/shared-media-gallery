@@ -10,7 +10,13 @@
 	
 	{% if query %}
 	<br>query: {{ query|escape }}
-	<br>{{ results|raw }}
+	
+	<pre>
+	{% for key, item in results %}
+		 <hr />{{ key }} - {{ dump(item) }}
+	{% endfor %}
+	</pre>
+	
 	{% endif %}
 </div>
 

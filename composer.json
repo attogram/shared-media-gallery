@@ -1,6 +1,6 @@
 {
     "name": "attogram/shared-media-gallery",
-    "description": "Gallery for attogram/shared-media-orm",
+    "description": "Web Gallery for attogram/shared-media-orm",
     "type": "library",
     "license": "MIT",
     "homepage": "https://github.com/attogram/shared-media-gallery",

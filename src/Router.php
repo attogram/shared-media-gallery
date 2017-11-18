@@ -5,6 +5,7 @@ namespace Attogram\SharedMedia\Gallery;
 use Attogram\SharedMedia\Gallery\Tools;
 use Twig_Environment;
 use Twig_Error_Loader;
+use Twig_Extension_Debug;
 use Twig_Loader_Filesystem;
 
 /**
@@ -12,7 +13,7 @@ use Twig_Loader_Filesystem;
  */
 class Router
 {
-    const VERSION = '0.0.12';
+    const VERSION = '0.0.13';
 
     protected $twig;
     protected $uriBase;
@@ -29,19 +30,26 @@ class Router
     {
         set_error_handler([$this, 'errorHandler']);
         $this->level = $level;
-        $this->twig = new Twig_Environment(
-            new Twig_Loader_Filesystem(dirname(__FILE__).'/../views/'),
-            [
-                'cache' => dirname(__FILE__).'/../cache/',
-                'auto_reload' => true,
-            ]
-        );
+		$this->setupTemplating();
         if (!$this->setUri()) {
             return false;
         }
         return $this->route();
     }
 
+	private function setupTemplating()
+	{
+        $this->twig = new Twig_Environment(
+            new Twig_Loader_Filesystem(dirname(__FILE__).'/../views/'),
+            [
+                //'cache' => dirname(__FILE__).'/../cache/',
+                //'auto_reload' => true,
+				'debug' => true,
+            ]
+        );
+		$this->twig->addExtension(new Twig_Extension_Debug());
+	}
+	
     /**
      * @return bool
      */
@@ -228,7 +236,7 @@ class Router
      * @param int    $line
      * @return bool
      */
-    protected function errorHandler(int $number, string $message, string $file = null, int $line = null)
+    public function errorHandler(int $number, string $message, string $file = null, int $line = null)
     {
         print "<pre>ERROR: $number: $message - $file : $line</pre>";
         return true; // true = do not use normal error handler.  false = continue with normal error handler
