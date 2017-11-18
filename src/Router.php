@@ -20,7 +20,7 @@ class Router extends Base
      */
     public function __construct(int $level = 0)
     {
-		parent::__construct();
+        parent::__construct();
         $this->level = $level;
         if (!$this->setUri()) {
             return false;
