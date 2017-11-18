@@ -8,15 +8,11 @@ use Attogram\SharedMedia\Orm\MediaQuery;
 
 class GalleryAdmin extends Router
 {
-    const VERSION = '0.0.9';
-
-    protected $galleryTools;
+    const VERSION = '0.0.10';
 
     public function __construct(int $level = 0)
     {
-        $this->galleryTools = new GalleryTools;
-        $this->data = $this->galleryTools->setup();
-        $this->data['title'] = 'Shared Media Gallery';
+        $this->data['title'] = 'Shared Media Gallery Admin';
         $this->data['version'] = self::VERSION;
         parent::__construct($level);
     }

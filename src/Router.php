@@ -13,14 +13,15 @@ use Twig_Loader_Filesystem;
  */
 class Router
 {
-    const VERSION = '0.0.13';
+    const VERSION = '0.0.14';
 
     protected $twig;
     protected $uriBase;
     protected $uriRelative;
     protected $uri = [];
     protected $level;
-    protected $data = [];
+    protected $data;
+    protected $galleryTools;
 
     /**
      * @param int $level
@@ -31,6 +32,8 @@ class Router
         set_error_handler([$this, 'errorHandler']);
         $this->level = $level;
         $this->setupTemplating();
+        $this->galleryTools = new GalleryTools;
+        $this->data = $this->galleryTools->setup($this->data);
         if (!$this->setUri()) {
             return false;
         }
