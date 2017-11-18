@@ -4,12 +4,12 @@ exclude_patterns:
 - "vendor/"
 plugins:
   phpcodesniffer:
-    enabled: true
+    enabled: false
     config:
       file_extensions: "php"
       standard: "PSR1,PSR2"
   phpmd:
-    enabled: true
+    enabled: false
     checks:
       CleanCode/StaticAccess: # allow Object::method()
         enabled: false
@@ -18,7 +18,7 @@ plugins:
       Design/DevelopmentCodeFragment: # allow print_r()
         enabled: false
   phan:
-    enabled: true
+    enabled: false
     checks:
       PhanTypeMismatchArgument:
         enabled: false
