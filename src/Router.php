@@ -30,26 +30,26 @@ class Router
     {
         set_error_handler([$this, 'errorHandler']);
         $this->level = $level;
-		$this->setupTemplating();
+        $this->setupTemplating();
         if (!$this->setUri()) {
             return false;
         }
         return $this->route();
     }
 
-	private function setupTemplating()
-	{
+    private function setupTemplating()
+    {
         $this->twig = new Twig_Environment(
             new Twig_Loader_Filesystem(dirname(__FILE__).'/../views/'),
             [
                 //'cache' => dirname(__FILE__).'/../cache/',
                 //'auto_reload' => true,
-				'debug' => true,
+                'debug' => true,
             ]
         );
-		$this->twig->addExtension(new Twig_Extension_Debug());
-	}
-	
+        $this->twig->addExtension(new Twig_Extension_Debug());
+    }
+
     /**
      * @return bool
      */
