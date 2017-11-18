@@ -1,4 +1,4 @@
-# attogram/shared-media-gallery - codeclimate.yml - v0.0.2
+# attogram/shared-media-gallery - codeclimate.yml - v0.0.3
 version: "2"
 exclude_patterns:
 - "vendor/"
@@ -22,6 +22,8 @@ plugins:
     checks:
       PhanTypeMismatchArgument:
         enabled: false
+      PhanTypeMismatchForeach:
+        enabled: false       
       PhanTypeMismatchProperty:
         enabled: false
       PhanUndeclaredClass:
@@ -46,6 +48,10 @@ plugins:
         enabled: false
   duplication:
     enabled: true
+    config:
+      languages:
+        php:
+          mass_threshold: 38
   csslint:
     enabled: true
   stylelint:
