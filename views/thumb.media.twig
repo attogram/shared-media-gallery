@@ -1,5 +1,7 @@
 {# shared-media-gallery  thumb.media.twig  v0.0.1 #}
 <div class="media">
+	<input name="{{ media.pageid }}" type="checkbox" />
+	<br />
 	<a href="{{ uriBase}}/media/{{ media.pageid }}/"><img src="{{ media.thumburl }}"' 
 		width="{{ media.thumbwidth }}"' height="{{ media.thumbheight }}"'></a>
 	<br />

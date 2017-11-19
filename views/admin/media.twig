@@ -9,14 +9,17 @@
 	</form>
 	
 	{% if query %}
-	<br>query: {{ query|escape }}
+	<p>query: {{ query|escape }}</p>
 	
-	<pre>
-	{% for key, item in results %}
-		 <hr />{{ key }} - {{ dump(item) }}
+	<form action="{{ uriBase }}/admin/media/save/" method="POST">
+	
+	{% for media in results %}
+		 {{ include('thumb.media.twig') }}
 	{% endfor %}
-	</pre>
 	
+	<br /><input type="submit" value="  Save selected   ">
+	</form>
+
 	{% endif %}
 </div>
 

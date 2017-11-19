@@ -13,7 +13,7 @@ use Twig_Loader_Filesystem;
  */
 class Base
 {
-    const VERSION = '0.0.1';
+    const VERSION = '0.0.2';
 
     protected $twig;
     protected $data;
@@ -61,7 +61,6 @@ class Base
      */
     protected function displayView(string $view)
     {
-        $this->data['version'] = self::VERSION;
         $this->data['uriBase'] = $this->uriBase;
         $this->data['uriRelative'] = $this->uriRelative;
         $this->data['uri'] = $this->uri;
@@ -89,6 +88,7 @@ class Base
         if (strpos($view, '/')) {
             $fullView = '';
             foreach (explode('/', $view) as $name) {
+				$name = str_replace(['.', ' '], '', $name);
                 $fullView .= ucfirst(strtolower($name));
             }
             $view = $fullView;

@@ -1,13 +1,14 @@
-# shared-media-gallery
+# shared-media-gallery v0.0
 
 Web Gallery for attogram/shared-media-orm
 
 ## Build
 
+Create new database:
 ~~~
 vendor/bin/propel sql:insert \
-    --sql-dir=vendor/attogram/shared-media-orm/config/ \
     --platform=sqlite \
     --connection='default=sqlite:database/gallery.sq3' \
+    --sql-dir=vendor/attogram/shared-media-orm/config/ \
     --config-dir=vendor/attogram/shared-media-orm/config/
 ~~~

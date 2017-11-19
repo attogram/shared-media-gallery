@@ -8,7 +8,7 @@ use Attogram\SharedMedia\Orm\MediaQuery;
 
 class GalleryAdmin extends Router
 {
-    const VERSION = '0.0.10';
+    const VERSION = '0.0.11';
 
     public function __construct(int $level = 0)
     {
@@ -20,10 +20,11 @@ class GalleryAdmin extends Router
     protected function getRoutes()
     {
         return [
-            'admin/home'     => [''],
-            'admin/media'    => ['media'],
-            'admin/category' => ['category'],
-            'admin/debug'    => ['debug'],
+            'admin/home'       => [''],
+            'admin/media'      => ['media'],
+            'admin/media.save' => ['media', 'save'],
+            'admin/category'   => ['category'],
+            'admin/debug'      => ['debug'],
         ];
     }
 
@@ -36,11 +37,17 @@ class GalleryAdmin extends Router
         $mediaQuery = new MediaQuery();
         $this->data['results'] = $mediaQuery->search($this->data['query']);
         foreach ($this->data['results'] as $res) {
-            $res->save();
+            //$res->save();
         }
 
         return true;
     }
+	
+	protected function controlAdminMediasave()
+	{
+		$this->data['post'] = $_POST;
+		return true;
+	}
 
     protected function controlAdminCategory()
     {
@@ -51,7 +58,7 @@ class GalleryAdmin extends Router
         $categoryQuery = new CategoryQuery();
         $this->data['results'] = $categoryQuery->search($this->data['query']);
         foreach ($this->data['results'] as $res) {
-            $res->save();
+            //$res->save();
         }
 
         return true;
