@@ -36,18 +36,18 @@ class GalleryAdmin extends Router
         $this->data['query'] = Tools::getGet('q');
         $mediaQuery = new MediaQuery();
         $this->data['results'] = $mediaQuery->search($this->data['query']);
-        foreach ($this->data['results'] as $res) {
-            //$res->save();
-        }
+        //foreach ($this->data['results'] as $res) {
+        //    $res->save();
+        //}
 
         return true;
     }
-	
-	protected function controlAdminMediasave()
-	{
-		$this->data['post'] = $_POST;
-		return true;
-	}
+
+    protected function controlAdminMediasave()
+    {
+        $this->data['post'] = $_POST;
+        return true;
+    }
 
     protected function controlAdminCategory()
     {
@@ -57,9 +57,9 @@ class GalleryAdmin extends Router
         $this->data['query'] = Tools::getGet('q');
         $categoryQuery = new CategoryQuery();
         $this->data['results'] = $categoryQuery->search($this->data['query']);
-        foreach ($this->data['results'] as $res) {
-            //$res->save();
-        }
+        //foreach ($this->data['results'] as $res) {
+        //    $res->save();
+        //}
 
         return true;
     }

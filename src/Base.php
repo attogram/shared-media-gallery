@@ -88,7 +88,7 @@ class Base
         if (strpos($view, '/')) {
             $fullView = '';
             foreach (explode('/', $view) as $name) {
-				$name = str_replace(['.', ' '], '', $name);
+                $name = str_replace(['.', ' '], '', $name);
                 $fullView .= ucfirst(strtolower($name));
             }
             $view = $fullView;
