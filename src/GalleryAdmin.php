@@ -5,11 +5,12 @@ namespace Attogram\SharedMedia\Gallery;
 use Attogram\SharedMedia\Gallery\GalleryTools;
 use Attogram\SharedMedia\Orm\CategoryQuery;
 use Attogram\SharedMedia\Orm\MediaQuery;
+use Propel\Runtime\Exception\PropelException;
 use Propel\Runtime\Map\TableMap;
 
 class GalleryAdmin extends Router
 {
-    const VERSION = '0.0.11';
+    const VERSION = '0.0.12';
 
     public function __construct(int $level = 0)
     {
@@ -18,10 +19,13 @@ class GalleryAdmin extends Router
         parent::__construct($level);
     }
 
+    /**
+     * @return array
+     */
     protected function getRoutes()
     {
         return [
-		    // View Template      => URI path
+            // Template           => URI path
             'admin/home'          => [''],
             'admin/media'         => ['media'],
             'admin/media.save'    => ['media', 'save'],
@@ -31,54 +35,80 @@ class GalleryAdmin extends Router
         ];
     }
 
+    /**
+     * @return bool
+     */
     protected function controlAdminMedia()
     {
-        if (!Tools::hasGet('q')) {
-            return true;
-        }
-        $this->data['query'] = Tools::getGet('q');
-        $mediaQuery = new MediaQuery();
-        $this->data['results'] = $mediaQuery->search($this->data['query']);
-        //foreach ($this->data['results'] as $res) {
-        //    $res->save();
-        //}
-
-        return true;
+        return $this->adminSearch(new MediaQuery());
     }
 
+    /**
+     * @return bool
+     */
     protected function controlAdminMediasave()
     {
-        $this->data['post'] = $_POST;
-		
-        return true;
+        return $this->adminSave(new MediaQuery());
     }
 
+    /**
+     * @return bool
+     */
     protected function controlAdminCategory()
     {
-        if (!Tools::hasGet('q')) {
+        return $this->adminSearch(new CategoryQuery());
+    }
+
+    /**
+     * @return bool
+     */
+    protected function controlAdminCategorysave()
+    {
+        return $this->adminSave(new CategoryQuery());
+    }
+
+    /**
+     * @param object $api
+     * @return bool
+     */
+    private function adminSearch($api)
+    {
+        $query = Tools::getGet('q');
+        if (!$query) {
             return true;
         }
-        $this->data['query'] = Tools::getGet('q');
-		$categoryQuery = new CategoryQuery;
-        $results = $categoryQuery ->search($this->data['query']);
-        foreach ($results as $result) {
+        foreach ($api->search($query) as $result) {
             $this->data['results'][] = $result->toArray(TableMap::TYPE_FIELDNAME);
         }
-
+        $this->data['query'] = $query;
         return true;
     }
-	
-	protected function controlAdminCategorysave()
-    {
-		if (empty($_POST['pageid']) || !is_array($_POST['pageid'])) {
-			return true;
-		}
-		
-		$this->data['pageids'] = implode('|', $_POST['pageid']);
-		
-		//$categoryQuery = new CategoryQuery;
-		//$categoryQuery->setApiPageid($pageids); // @TODO
 
+    /**
+     * @param object $api
+     * @return bool
+     */
+    protected function adminSave($api)
+    {
+        $pageids = Tools::getPost('pageid');
+        if (!$pageids) {
+            return true;
+        }
+        if (is_array($pageids)) {
+            $pageids = implode('|', $pageids);
+        }
+        $api->setApiPageid($pageids);
+        foreach ($api->info() as $result) {
+            $this->data['results'][] = $result->toArray(TableMap::TYPE_FIELDNAME);
+            // @TODO - if in db, then update, else save new
+            try {
+                $result->save();
+            } catch(PropelException $error) {
+                print '<pre>ERROR: pageid:' . $result->getPageid()
+                . ': ' . $error->getMessage() . '</pre>';
+            }
+        }
+        $this->data['pageids'] = $pageids;
         return true;
     }
 }

@@ -37,8 +37,8 @@ footer a {
     color:black;
     padding:10px;
 }
-.category, .media, .page {
-    background-color:white;
+.media, .page {
+	background-color:white;
     border:1px solid black;
     display:inline-block;
     margin:6px;

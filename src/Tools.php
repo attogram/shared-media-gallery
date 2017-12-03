@@ -4,7 +4,7 @@ namespace Attogram\SharedMedia\Gallery;
 
 class Tools
 {
-    const VERSION = '0.0.2';
+    const VERSION = '0.0.3';
 
     /**
      * @param mixed $var
@@ -25,7 +25,7 @@ class Tools
      */
     public static function getServer(string $name)
     {
-        if (isset($_SERVER[$name])) {
+        if (!empty($_SERVER[$name])) {
             return $_SERVER[$name];
         }
     }
@@ -34,27 +34,25 @@ class Tools
      * get the value of a global _GET variable
      *
      * @param string $name
-     * @return string
+     * @return mixed
      */
     public static function getGet(string $name)
     {
-        if (self::hasGet($name)) {
+        if (!empty($_GET[$name])) {
             return trim(urldecode($_GET[$name]));
         }
-        return '';
     }
 
     /**
-     * Check if a global _GET variable is set
+     * get the value of a global _POST variable
      *
      * @param string $name
      * @return mixed
      */
-    public static function hasGet(string $name)
+    public static function getPost(string $name)
     {
-        if (!empty($_GET[$name])) {
-            return true;
+        if (!empty($_POST[$name])) {
+            return $_POST[$name];
         }
-        return false;
     }
 }

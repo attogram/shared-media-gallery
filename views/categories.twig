@@ -2,6 +2,10 @@
 {{ include('header.twig') }}
 {{ include('menu.twig') }}
 <div class="content">
-	[CATEGORIES]
+	<ul>
+	{% for category in categories %}
+		<li>{{ include('thumb.category.twig') }}</li>
+	{% endfor %}
+	</ul>
 </div>
 {{ include('footer.twig') }}
