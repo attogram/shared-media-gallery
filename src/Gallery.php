@@ -29,6 +29,13 @@ class Gallery extends Router
             'media'      => ['media', '*'],
         ];
     }
+	protected function controlHome()
+	{
+		$this->data['media'] = MediaQuery::create()
+			->setOffset(rand(1, $this->data['category_count'] - 1))
+			->findOne();
+		return true;
+	}
 
     protected function controlMedias()
     {

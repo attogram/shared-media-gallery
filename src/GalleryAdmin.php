@@ -5,6 +5,7 @@ namespace Attogram\SharedMedia\Gallery;
 use Attogram\SharedMedia\Gallery\GalleryTools;
 use Attogram\SharedMedia\Orm\CategoryQuery;
 use Attogram\SharedMedia\Orm\MediaQuery;
+use Propel\Runtime\Map\TableMap;
 
 class GalleryAdmin extends Router
 {
@@ -20,11 +21,13 @@ class GalleryAdmin extends Router
     protected function getRoutes()
     {
         return [
-            'admin/home'       => [''],
-            'admin/media'      => ['media'],
-            'admin/media.save' => ['media', 'save'],
-            'admin/category'   => ['category'],
-            'admin/debug'      => ['debug'],
+		    // View Template      => URI path
+            'admin/home'          => [''],
+            'admin/media'         => ['media'],
+            'admin/media.save'    => ['media', 'save'],
+            'admin/category'      => ['category'],
+            'admin/category.save' => ['category', 'save'],
+            'admin/debug'         => ['debug'],
         ];
     }
 
@@ -46,6 +49,7 @@ class GalleryAdmin extends Router
     protected function controlAdminMediasave()
     {
         $this->data['post'] = $_POST;
+		
         return true;
     }
 
@@ -55,11 +59,25 @@ class GalleryAdmin extends Router
             return true;
         }
         $this->data['query'] = Tools::getGet('q');
-        $categoryQuery = new CategoryQuery();
-        $this->data['results'] = $categoryQuery->search($this->data['query']);
-        //foreach ($this->data['results'] as $res) {
-        //    $res->save();
-        //}
+		$categoryQuery = new CategoryQuery;
+        $results = $categoryQuery ->search($this->data['query']);
+        foreach ($results as $result) {
+            $this->data['results'][] = $result->toArray(TableMap::TYPE_FIELDNAME);
+        }
+
+        return true;
+    }
+	
+	protected function controlAdminCategorysave()
+    {
+		if (empty($_POST['pageid']) || !is_array($_POST['pageid'])) {
+			return true;
+		}
+		
+		$this->data['pageids'] = implode('|', $_POST['pageid']);
+		
+		//$categoryQuery = new CategoryQuery;
+		//$categoryQuery->setApiPageid($pageids); // @TODO
 
         return true;
     }

@@ -11,11 +11,25 @@
 	{% if query %}
 	<br>query: {{ query|escape }}
 	
-	<pre>
-	{% for key, item in results %}
-		 <hr />{{ key }} - {{ dump(item) }}
+	<form action="{{ uriBase }}/admin/category/save/" method="POST">
+	<input type="submit" value="  Save selected   ">
+	<ul>
+	{% for result in results %}
+		 <li>
+		 <input name="pageid[]" value="{{ result.pageid }}" type="checkbox" />
+		 <span class="title">{{ result.title|e }}</span> 
+		 &nbsp; <span class="pageid">{{ result.pageid }}</span>
+	     &nbsp; files:{{ result.files }}
+		 &nbsp; subcats:{{ result.subcats }}
+		 &nbsp; pages:{{ result.pages }}
+		 &nbsp; size:{{ result.size }}
+		 &nbsp; hidden:{{ result.hidden ? 'true' : 'false' }}
+		 </li>
 	{% endfor %}
-	</pre>
+	</ul>
+	
+	<br /><input type="submit" value="  Save selected   ">
+	</form>
 	
 	{% endif %}
 </div>
