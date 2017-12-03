@@ -103,7 +103,7 @@ class GalleryAdmin extends Router
             // @TODO - if in db, then update, else save new
             try {
                 $result->save();
-            } catch(PropelException $error) {
+            } catch (PropelException $error) {
                 print '<pre>ERROR: pageid:' . $result->getPageid()
                 . ': ' . $error->getMessage() . '</pre>';
             }
