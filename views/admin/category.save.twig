@@ -2,19 +2,30 @@
 {{ include('header.twig') }}
 {{ include('menu.twig') }}
 <div class="content">
-	Saved Categories: {{ pageids }}
-	<ul>
-	{% for result in results %}
-		 <li>
-		 <span class="title">{{ result.title|e }}</span> 
-		 &nbsp; <span class="pageid">{{ result.pageid }}</span>
-	     &nbsp; files:{{ result.files }}
-		 &nbsp; subcats:{{ result.subcats }}
-		 &nbsp; pages:{{ result.pages }}
-		 &nbsp; size:{{ result.size }}
-		 &nbsp; hidden:{{ result.hidden ? 'true' : 'false' }}
-		 </li>
-	{% endfor %}
-	</ul>
+
+    {% if errors %}
+        Errors:
+        <ul>
+        {% for error in errors %}
+            <li><pre>{{ error|e }}</pre></li>
+        {% endfor %}
+        </ul>
+    {% endif %}
+
+    Saved Categories:
+    <ul>
+    {% for result in results %}
+         <li>
+         <span class="title">{{ result.title|e }}</span>
+         &nbsp; <span class="pageid">{{ result.pageid }}</span>
+         &nbsp; files:{{ result.files }}
+         &nbsp; subcats:{{ result.subcats }}
+         &nbsp; pages:{{ result.pages }}
+         &nbsp; size:{{ result.size }}
+         &nbsp; hidden:{{ result.hidden ? 'true' : 'false' }}
+         </li>
+    {% endfor %}
+    </ul>
+
 </div>
 {{ include('footer.twig') }}

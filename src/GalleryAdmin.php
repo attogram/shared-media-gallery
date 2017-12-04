@@ -10,7 +10,7 @@ use Propel\Runtime\Map\TableMap;
 
 class GalleryAdmin extends Router
 {
-    const VERSION = '0.0.12';
+    const VERSION = '0.0.13';
 
     public function __construct(int $level = 0)
     {
@@ -99,16 +99,32 @@ class GalleryAdmin extends Router
         }
         $api->setApiPageid($pageids);
         foreach ($api->info() as $result) {
-            $this->data['results'][] = $result->toArray(TableMap::TYPE_FIELDNAME);
-            // @TODO - if in db, then update, else save new
             try {
-                $result->save();
+                $this->adminSaveOrUpdate($api, $result);
+                $this->data['results'][] = $result->toArray(TableMap::TYPE_FIELDNAME);
             } catch (PropelException $error) {
-                print '<pre>ERROR: pageid:' . $result->getPageid()
-                . ': ' . $error->getMessage() . '</pre>';
+                $this->data['errors'][] = 'adminSave: pageid:'
+                    . $result->getPageid() . ': ' . $error->getMessage();
             }
         }
-        $this->data['pageids'] = $pageids;
         return true;
+    }
+
+    /**
+     * @param object $api
+     * @param object $result
+     * @return void
+     */
+    private function adminSaveOrUpdate($api, $result)
+    {
+        $exists = $api::create()
+            ->filterByPageid($result->getPageid())
+            ->findOne();
+        if (!$exists) {
+            $result->save();
+            return;
+        }
+        $exists->fromArray($result->toArray());
+        $exists->save();
     }
 }
