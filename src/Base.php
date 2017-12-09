@@ -13,7 +13,7 @@ use Twig_Loader_Filesystem;
  */
 class Base
 {
-    const VERSION = '0.0.2';
+    const VERSION = '0.0.3';
 
     protected $twig;
     protected $data;
@@ -26,6 +26,7 @@ class Base
         $this->setupDatabase();
         $this->galleryTools = new GalleryTools;
         $this->data = $this->galleryTools->setup($this->data);
+        $this->data['title'] = 'Shared Media Gallery';
     }
 
     private function setupTemplating()

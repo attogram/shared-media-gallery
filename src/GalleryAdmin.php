@@ -11,11 +11,11 @@ use Propel\Runtime\Map\TableMap;
 
 class GalleryAdmin extends Router
 {
-    const VERSION = '0.0.14';
+    const VERSION = '0.0.15';
 
     public function __construct(int $level = 0)
     {
-        $this->data['title'] = 'Shared Media Gallery Admin';
+        $this->data['title'] .= ' Admin';
         $this->data['version'] = self::VERSION;
         parent::__construct($level);
     }
