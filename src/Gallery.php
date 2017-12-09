@@ -10,7 +10,7 @@ use Propel\Runtime\Map\TableMap;
 
 class Gallery extends Router
 {
-    const VERSION = '0.0.14';
+    const VERSION = '0.0.15';
 
     public function __construct(int $level = 0)
     {
@@ -55,17 +55,17 @@ class Gallery extends Router
 
     protected function controlMedia()
     {
-        return $this->setItems(MediaQuery::create(), 'media');
+        return $this->setItem(MediaQuery::create(), 'media');
     }
 
     protected function controlCategory()
     {
-        return $this->setItems(CategoryQuery::create(), 'category');
+        return $this->setItem(CategoryQuery::create(), 'category');
     }
 
     protected function controlPage()
     {
-        return $this->setItems(PageQuery::create(), 'page');
+        return $this->setItem(PageQuery::create(), 'page');
     }
 
     /**
@@ -103,7 +103,7 @@ class Gallery extends Router
             $this->error404('404 ' . ucfirst($dataName) . ' Not Found');
             return false;
         }
-        $this->data[$dataName] = $category;
+        $this->data[$dataName] = $item;
 
         return true;
     }
