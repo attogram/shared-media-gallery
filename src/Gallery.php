@@ -10,7 +10,7 @@ use Propel\Runtime\Map\TableMap;
 
 class Gallery extends Router
 {
-    const VERSION = '0.0.12';
+    const VERSION = '0.0.13';
 
     public function __construct(int $level = 0)
     {
@@ -40,16 +40,30 @@ class Gallery extends Router
 
     protected function controlMedias()
     {
+        return $this->getItems(MediaQuery::create(), 'medias');
+    }
+
+    protected function controlCategories()
+    {
+        return $this->getItems(CategoryQuery::create(), 'categories');
+    }
+
+    /**
+     * @param object $orm
+     * @param string $dataName
+     * @return bool
+     */
+    private function getItems($orm, $dataName)
+    {
         $page = 1;
         $maxPerPage = 100;
-        $medias = MediaQuery::create()->paginate($page, $maxPerPage);
-        if (!$medias) {
+        $items = $orm->orderByTitle()->paginate($page, $maxPerPage);
+        if (!$items) {
             return true;
         }
-        foreach ($medias as $media) {
-            $this->data['medias'][] = $media->toArray(TableMap::TYPE_FIELDNAME);
+        foreach ($items as $item) {
+            $this->data[$dataName][] = $item->toArray(TableMap::TYPE_FIELDNAME);
         }
-
         return true;
     }
 
@@ -65,23 +79,6 @@ class Gallery extends Router
             return false;
         }
         $this->data['media'] = $media;
-
-        return true;
-    }
-
-    protected function controlCategories()
-    {
-        $page = 1;
-        $maxPerPage = 100;
-        $categories = CategoryQuery::create()
-            ->orderByTitle()
-            ->paginate($page, $maxPerPage);
-        if (!$categories) {
-            return true;
-        }
-        foreach ($categories as $category) {
-            $this->data['categories'][] = $category->toArray(TableMap::TYPE_FIELDNAME);
-        }
 
         return true;
     }
