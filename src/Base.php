@@ -16,7 +16,7 @@ class Base
     const VERSION = '0.0.3';
 
     protected $twig;
-    protected $data;
+    protected $data = [];
     protected $galleryTools;
 
     public function __construct()

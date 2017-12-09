@@ -15,7 +15,6 @@ class GalleryAdmin extends Router
 
     public function __construct(int $level = 0)
     {
-        $this->data['title'] .= ' Admin';
         $this->data['version'] = self::VERSION;
         parent::__construct($level);
     }
