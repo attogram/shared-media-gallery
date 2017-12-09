@@ -10,7 +10,7 @@ use Propel\Runtime\Map\TableMap;
 
 class Gallery extends Router
 {
-    const VERSION = '0.0.13';
+    const VERSION = '0.0.14';
 
     public function __construct(int $level = 0)
     {
@@ -40,12 +40,32 @@ class Gallery extends Router
 
     protected function controlMedias()
     {
-        return $this->getItems(MediaQuery::create(), 'medias');
+        return $this->setItems(MediaQuery::create(), 'medias');
     }
 
     protected function controlCategories()
     {
-        return $this->getItems(CategoryQuery::create(), 'categories');
+        return $this->setItems(CategoryQuery::create(), 'categories');
+    }
+
+    protected function controlPages()
+    {
+        return $this->setItems(PageQuery::create(), 'pages');
+    }
+
+    protected function controlMedia()
+    {
+        return $this->setItems(MediaQuery::create(), 'media');
+    }
+
+    protected function controlCategory()
+    {
+        return $this->setItems(CategoryQuery::create(), 'category');
+    }
+
+    protected function controlPage()
+    {
+        return $this->setItems(PageQuery::create(), 'page');
     }
 
     /**
@@ -53,7 +73,7 @@ class Gallery extends Router
      * @param string $dataName
      * @return bool
      */
-    private function getItems($orm, $dataName)
+    private function setItems($orm, $dataName)
     {
         $page = 1;
         $maxPerPage = 100;
@@ -67,34 +87,23 @@ class Gallery extends Router
         return true;
     }
 
-    protected function controlMedia()
+    /**
+     * @param object $orm
+     * @param string $dataName
+     * @return bool
+     */
+    private function setItem($orm, $dataName)
     {
         if (!Tools::isNumber($this->uri[1])) {
-            $this->error404('400 Media Not Found');
+            $this->error404('400 ' . ucfirst($dataName) . ' Not Found');
             return false;
         }
-        $media = MediaQuery::create()->filterByPageid($this->uri[1])->findOne();
-        if (!$media) {
-            $this->error404('404 Media Not Found');
+        $item = $orm->filterByPageid($this->uri[1])->findOne();
+        if (!$item) {
+            $this->error404('404 ' . ucfirst($dataName) . ' Not Found');
             return false;
         }
-        $this->data['media'] = $media;
-
-        return true;
-    }
-
-    protected function controlCategory()
-    {
-        if (!Tools::isNumber($this->uri[1])) {
-            $this->error404('400 Category Not Found');
-            return false;
-        }
-        $category = CategoryQuery::create()->filterByPageid($this->uri[1])->findOne();
-        if (!$category) {
-            $this->error404('404 Category Not Found');
-            return false;
-        }
-        $this->data['category'] = $category;
+        $this->data[$dataName] = $category;
 
         return true;
     }
