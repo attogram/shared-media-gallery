@@ -2,28 +2,25 @@
 {{ include('header.twig') }}
 {{ include('menu.twig') }}
 <div class="content">
-	<h1>Category Admin</h1>
+	<h1>Categories</h1>
 	<form action="">
-		<input name="q" type="text" size="30" />
-		<input type="submit" value="   Find Categories   " />
+		<input name="q" type="text" value="{{ query|e }}" size="30" />
+		<input type="submit" value="   Search   " />
+		&nbsp;&nbsp; limit: <input name="limit" value="{{ limit|e }}" type="text" size="5" />
+		&nbsp;&nbsp; endpoint: <em>commons.wikimedia.org</em>
+		
 	</form>
 	
 	{% if query %}
-	<br>query: {{ query|escape }}
+	<br>query: {{ query|e }}  limit: {{ limit|e }}
 	
 	<form action="{{ uriBase }}/admin/category/save/" method="POST">
 	<input type="submit" value="  Save selected   ">
 	<ul>
-	{% for result in results %}
+	{% for category in results %}
 		 <li>
-		 <input name="pageid[]" value="{{ result.pageid }}" type="checkbox" />
-		 <span class="title">{{ result.title|e }}</span> 
-		 &nbsp; <span class="pageid">{{ result.pageid }}</span>
-	     &nbsp; files:{{ result.files }}
-		 &nbsp; subcats:{{ result.subcats }}
-		 &nbsp; pages:{{ result.pages }}
-		 &nbsp; size:{{ result.size }}
-		 &nbsp; hidden:{{ result.hidden ? 'true' : 'false' }}
+		 <input name="pageid[]" value="{{ category.pageid }}" type="checkbox" />
+		 {{ include('thumb.category.twig') }}
 		 </li>
 	{% endfor %}
 	</ul>

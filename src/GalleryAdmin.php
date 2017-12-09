@@ -2,6 +2,7 @@
 
 namespace Attogram\SharedMedia\Gallery;
 
+use Attogram\SharedMedia\Api\Base as ApiBase;
 use Attogram\SharedMedia\Gallery\GalleryTools;
 use Attogram\SharedMedia\Orm\CategoryQuery;
 use Attogram\SharedMedia\Orm\MediaQuery;
@@ -10,7 +11,7 @@ use Propel\Runtime\Map\TableMap;
 
 class GalleryAdmin extends Router
 {
-    const VERSION = '0.0.13';
+    const VERSION = '0.0.14';
 
     public function __construct(int $level = 0)
     {
@@ -56,6 +57,12 @@ class GalleryAdmin extends Router
      */
     protected function controlAdminCategory()
     {
+        $limit = Tools::getGet('limit');
+        if (!$limit || !Tools::isNumber($limit)) {
+            $limit = ApiBase::DEFAULT_LIMIT;
+        }
+        $this->data['limit'] = $limit;
+
         return $this->adminSearch(new CategoryQuery());
     }
 
@@ -77,10 +84,15 @@ class GalleryAdmin extends Router
         if (!$query) {
             return true;
         }
+        $this->data['query'] = $query;
+        $limit = Tools::getGet('limit');
+        if (Tools::isNumber($limit) && $limit) {
+            $api->setApiLimit($limit);
+            $this->data['limit'] = $limit;
+        }
         foreach ($api->search($query) as $result) {
             $this->data['results'][] = $result->toArray(TableMap::TYPE_FIELDNAME);
         }
-        $this->data['query'] = $query;
         return true;
     }
 
@@ -101,7 +113,6 @@ class GalleryAdmin extends Router
         foreach ($api->info() as $result) {
             try {
                 $this->adminSaveOrUpdate($api, $result);
-                $this->data['results'][] = $result->toArray(TableMap::TYPE_FIELDNAME);
             } catch (PropelException $error) {
                 $this->data['errors'][] = 'adminSave: pageid:'
                     . $result->getPageid() . ': ' . $error->getMessage();
@@ -122,9 +133,11 @@ class GalleryAdmin extends Router
             ->findOne();
         if (!$exists) {
             $result->save();
+            $this->data['results'][] = $result->toArray(TableMap::TYPE_FIELDNAME);
             return;
         }
         $exists->fromArray($result->toArray());
         $exists->save();
+        $this->data['results'][] = $exists->toArray(TableMap::TYPE_FIELDNAME);
     }
 }

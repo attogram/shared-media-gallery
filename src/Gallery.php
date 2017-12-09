@@ -10,7 +10,7 @@ use Propel\Runtime\Map\TableMap;
 
 class Gallery extends Router
 {
-    const VERSION = '0.0.11';
+    const VERSION = '0.0.12';
 
     public function __construct(int $level = 0)
     {
@@ -73,7 +73,9 @@ class Gallery extends Router
     {
         $page = 1;
         $maxPerPage = 100;
-        $categories = CategoryQuery::create()->paginate($page, $maxPerPage);
+        $categories = CategoryQuery::create()
+            ->orderByTitle()
+            ->paginate($page, $maxPerPage);
         if (!$categories) {
             return true;
         }

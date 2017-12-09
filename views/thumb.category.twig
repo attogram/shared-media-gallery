@@ -1,4 +1,9 @@
 {# shared-media-gallery  thumb.category.twig  v0.0.1 #}
 
-<span class="title">{{ category.title|e }}</span> 
-<span class="pageid">{{ category.pageid }}</span>
+<span class="title"><a href="{{ uriBase }}/category/{{ category.pageid }}/">{{ category.title|e }}</a></span> 
+&nbsp; <span class="pageid">{{ category.pageid }}</span>
+&nbsp; {{ category.files|default('?') }} files
+&nbsp; {{ category.subcats|default('?') }} subcats
+&nbsp; {{ category.pages|default('?') }} pages
+&nbsp; {{ category.size|default('?') }} size
+&nbsp; [{{ category.hidden ? 'hidden' : 'public' }}]

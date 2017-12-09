@@ -15,6 +15,9 @@ a:hover, .menu a:hover, footer a:hover {
     background-color:yellow;
     color:black;
 }
+h1, h2 ,h3 {
+	display:inline;
+}
 footer {
     background-color:#333;
     font-size:80%;

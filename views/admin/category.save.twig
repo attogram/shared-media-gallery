@@ -14,15 +14,9 @@
 
     Saved Categories:
     <ul>
-    {% for result in results %}
+    {% for category in results %}
          <li>
-         <span class="title">{{ result.title|e }}</span>
-         &nbsp; <span class="pageid">{{ result.pageid }}</span>
-         &nbsp; files:{{ result.files }}
-         &nbsp; subcats:{{ result.subcats }}
-         &nbsp; pages:{{ result.pages }}
-         &nbsp; size:{{ result.size }}
-         &nbsp; hidden:{{ result.hidden ? 'true' : 'false' }}
+         {{ include('thumb.category.twig') }}
          </li>
     {% endfor %}
     </ul>
