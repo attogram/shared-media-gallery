@@ -33,7 +33,8 @@ class GalleryTools
     /**
      * @param ojbect $orm
      */
-    private function getCount($orm) {
+    private function getCount($orm)
+    {
         try {
             return $orm->count();
         } catch (RuntimeException $error) {
