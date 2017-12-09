@@ -8,7 +8,7 @@ use Propel\Runtime\Exception\RuntimeException;
 
 class GalleryTools
 {
-    const VERSION = '0.0.3';
+    const VERSION = '0.0.4';
 
     /**
      * @param array|null $data
@@ -22,20 +22,22 @@ class GalleryTools
 
     public function getCategoryCount()
     {
-        try {
-            return CategoryQuery::create()->count();
-        } catch (RuntimeException $error) {
-            print '<pre>ERROR: getCategoryCount: ' . $error->getMessage() . '</pre>';
-            return 0;
-        }
+        return $this->getCount(new CategoryQuery());
     }
 
     public function getMediaCount()
     {
+        return $this->getCount(new MediaQuery());
+    }
+
+    /**
+     * @param ojbect $orm
+     */
+    private function getCount($orm) {
         try {
-            return MediaQuery::create()->count();
+            return $orm->count();
         } catch (RuntimeException $error) {
-            print '<pre>ERROR: getMediaCount: ' . $error->getMessage() . '</pre>';
+            print '<pre>ERROR: getCount: orm:' . get_class($orm) . ': ' . $error->getMessage() . '</pre>';
             return 0;
         }
     }
