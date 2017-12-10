@@ -3,6 +3,7 @@
 namespace Attogram\SharedMedia\Gallery;
 
 use Attogram\SharedMedia\Api\Base as ApiBase;
+use Attogram\SharedMedia\Api\Sources;
 use Attogram\SharedMedia\Gallery\GalleryTools;
 use Attogram\SharedMedia\Orm\CategoryQuery;
 use Attogram\SharedMedia\Orm\MediaQuery;
@@ -11,7 +12,7 @@ use Propel\Runtime\Map\TableMap;
 
 class GalleryAdmin extends Router
 {
-    const VERSION = '0.0.15';
+    const VERSION = '0.0.16';
 
     public function __construct(int $level = 0)
     {
@@ -31,7 +32,7 @@ class GalleryAdmin extends Router
             'admin/media.save'    => ['media', 'save'],
             'admin/category'      => ['category'],
             'admin/category.save' => ['category', 'save'],
-            'admin/debug'         => ['debug'],
+            'admin/source'        => ['source'],
         ];
     }
 
@@ -61,7 +62,6 @@ class GalleryAdmin extends Router
             $limit = ApiBase::DEFAULT_LIMIT;
         }
         $this->data['limit'] = $limit;
-
         return $this->adminSearch(new CategoryQuery());
     }
 
@@ -71,6 +71,15 @@ class GalleryAdmin extends Router
     protected function controlAdminCategorysave()
     {
         return $this->adminSave(new CategoryQuery());
+    }
+
+    /**
+     * @return bool
+     */
+    protected function controlAdminSource()
+    {
+        $this->data['sources'] = Sources::$sources;
+        return true;
     }
 
     /**
