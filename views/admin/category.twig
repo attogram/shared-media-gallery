@@ -8,26 +8,23 @@
 		<input type="submit" value="   Search   " />
 		&nbsp;&nbsp; limit: <input name="limit" value="{{ limit|e }}" type="text" size="5" />
 		&nbsp;&nbsp; endpoint: <em>commons.wikimedia.org</em>
-		
 	</form>
 	
 	{% if query %}
-	<br>query: {{ query|e }}  limit: {{ limit|e }}
-	
-	<form action="{{ uriBase }}/admin/category/save/" method="POST">
-	<input type="submit" value="  Save selected   ">
-	<ul>
-	{% for category in results %}
-		 <li>
-		 <input name="pageid[]" value="{{ category.pageid }}" type="checkbox" />
-		 {{ include('thumb.category.twig') }}
-		 </li>
-	{% endfor %}
-	</ul>
-	
-	<br /><input type="submit" value="  Save selected   ">
-	</form>
-	
+		<br>query: {{ query|e }}  limit: {{ limit|e }}
+		<form action="{{ uriBase }}/admin/category/save/" name="cats" method="POST">
+		<input type="submit" value="  Save selected   ">
+		<ul>
+		{% for category in results %}
+			 <li>
+			 <input name="pageid[]" value="{{ category.pageid }}" type="checkbox" />
+			 {{ include('thumb.category.twig') }}
+			 </li>
+		{% endfor %}
+		</ul>
+		<br /><input type="submit" value="  Save selected   ">
+		</form>
+		{{ include('admin/javascript.checkall.twig') }}
 	{% endif %}
 </div>
 
