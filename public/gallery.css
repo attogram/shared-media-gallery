@@ -18,7 +18,7 @@ ul { display:block; line-height:1; list-style-position: inside; list-style-type:
 video { background-clip:content-box; background-color:white; border:1px solid black; }
 audio { background-clip:content-box; background-color:white; border:1px solid black; }
 .cattable { display:table; margin:0 auto; min-width:80%; }
-.catcon { background-color:white; display:table-row; margin:0; padding:0; }
+.catcon { background-color:white; display:table-row; padding:0; }
 .catfiles { border:1px solid #eee; display:table-cell; font-size:90%; min-width:42px; padding:0 10px 0 0; text-align:right; }
 .catname { border:1px solid #eee; display:table-cell; padding:0 0 0 10px; text-align:left; }
 .catname:hover { background-color:yellow; }
