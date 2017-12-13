@@ -1,11 +1,11 @@
 /* attogram/shared-media-gallery - gallery.css - v0.0.1 */
-body { background-color:white; color:black; margin:0; font-family:sans-serif,helvetica,arial; }
-a { text-decoration:none; color:darkblue; }
+body { background-color:white; color:black; font-family:sans-serif,helvetica,arial; margin:0; }
+a { color:darkblue; text-decoration:none; }
 a:visited { color:darkblue; }
 a:hover { background-color:yellow; color:darkblue; }
-table { background-color:white; border-spacing:0; border:1px solid grey; border-collapse:collapse; margin:auto; }
+table { background-color:white; border:1px solid grey; border-collapse:collapse; border-spacing:0; margin:auto; }
 table td { padding:2px; vertical-align:top; }
-table th { background-color:white; padding:4px; vertical-align:middle; font-size:75%; }
+table th { background-color:white; font-size:75%; padding:4px; vertical-align:middle; }
 form { display:inline; }
 h1, h2, h3, h4, h5 { display:inline; }
 .menu { background-color:lightgrey; border:1px solid black; padding:10px; padding-bottom:20px; }
@@ -19,8 +19,8 @@ video { background-clip:content-box; background-color:white; border:1px solid bl
 audio { background-clip:content-box; background-color:white; border:1px solid black; }
 .cattable { display:table; margin:0 auto; min-width:80%; }
 .catcon { background-color:white; display:table-row; margin:0; padding:0; }
-.catfiles { border:1px solid #eee; display:table-cell; font-size:90%; margin:0; min-width:42px; padding:0 10px 0 0; text-align:right; }
-.catname { border:1px solid #eee; display:table-cell; padding:0 0 0 10px; margin:0; text-align:left; }
+.catfiles { border:1px solid #eee; display:table-cell; font-size:90%; min-width:42px; padding:0 10px 0 0; text-align:right; }
+.catname { border:1px solid #eee; display:table-cell; padding:0 0 0 10px; text-align:left; }
 .catname:hover { background-color:yellow; }
 .cathead { background-color:white; font-size:95%; font-style:italic; }
 .media, .page { background-color:white; border:1px solid black; display:inline-block; margin:6px; padding:4px; vertical-align:top; }
