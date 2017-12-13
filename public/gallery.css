@@ -3,49 +3,27 @@ body { background-color:white; color:black; margin:0; font-family:sans-serif,hel
 a { text-decoration:none; color:darkblue; }
 a:visited { color:darkblue; }
 a:hover { background-color:yellow; color:darkblue; }
-table { border-spacing:0; border:1px solid grey; border-collapse:collapse; margin:auto; background-color:white; }
+table { background-color:white; border-spacing:0; border:1px solid grey; border-collapse:collapse; margin:auto; }
 table td { padding:2px; vertical-align:top; }
-table th { padding:4px; vertical-align:center; font-size:75%; background-color:white; }
+table th { background-color:white; padding:4px; vertical-align:middle; font-size:75%; }
 form { display:inline; }
 h1, h2, h3, h4, h5 { display:inline; }
-.menu { background-color:lightgrey; padding:10px; padding-bottom:20px; border:1px solid black; }
+.menu { background-color:lightgrey; border:1px solid black; padding:10px; padding-bottom:20px; }
 .menu a { background-color:lightgrey; border:1px solid black; }
-.content { background-color:white; color:black;padding:10px; border:1px solid black; }
-footer { background-color:lightgrey; font-size:80%; padding:10px; padding-top:20px; border:1px solid black; }
+.content { background-color:white; border:1px solid black; color:black;padding:10px;  }
+footer { background-color:lightgrey; border:1px solid black; font-size:80%; padding:10px; padding-top:20px; }
 footer a { background-color:lightgrey; border:1px solid black; }
-img { border:1px solid black; background-color:white; background-clip:content-box; }
-ul { line-height:1; display:block; margin:0px 0px 0px 7px; padding:0; list-style-type:disc; list-style-position: inside; }
-video { border:1px solid black; background-color:white; background-clip:content-box; }
-audio { border:1px solid black; background-color:white; background-clip:content-box; }
+img { background-clip:content-box; background-color:white; border:1px solid black; }
+ul { display:block; line-height:1; list-style-position: inside; list-style-type:disc; margin:0 0 0 7px; padding:0; }
+video { background-clip:content-box; background-color:white; border:1px solid black; }
+audio { background-clip:content-box; background-color:white; border:1px solid black; }
 .cattable { display:table; margin:0 auto; min-width:80%; }
 .catcon { display:table-row; margin:0; padding:0;  background-color:white; }
-.catfiles { display:table-cell; min-width:42px; padding:0px 10px 0px 0px; margin:0; text-align:right; font-size:90%; border:1px solid #eee; }
-.catname { display:table-cell; padding:0px 0px 0px 10px; margin:0; border:1px solid #eee; text-align:left; }
+.catfiles { display:table-cell; min-width:42px; padding:0 10px 0 0; margin:0; text-align:right; font-size:90%; border:1px solid #eee; }
+.catname { border:1px solid #eee; display:table-cell; padding:0 0 0 10px; margin:0; text-align:left; }
 .catname:hover { background-color:yellow; }
-.cathead { font-style:italic; font-size:95%; background-color:white; }
-
-.media, .page {
-	background-color:white;
-    border:1px solid black;
-    display:inline-block;
-    margin:6px;
-    padding:4px;
-    vertical-align: top;
-}
-.media {
-    font-size:12px;
-}
-.title {
-    background-color:white;
-    font-weight:bold;
-    margin:2px;
-}
-.pageid {
-    background-color:black;
-    color:white;
-    font-family:monospace;
-    font-weight:bold;
-    margin:2px;
-}
-
-
+.cathead { background-color:white; font-size:95%; font-style:italic; }
+.media, .page { background-color:white; border:1px solid black; display:inline-block; margin:6px; padding:4px; vertical-align:top; }
+.media { font-size:12px; }
+.title { background-color:white; font-weight:bold; margin:2px; }
+.pageid { background-color:black; color:white; font-family:monospace; font-weight:bold; margin:2px; }
