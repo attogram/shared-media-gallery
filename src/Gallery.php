@@ -6,11 +6,12 @@ use Attogram\SharedMedia\Gallery\GalleryTools;
 use Attogram\SharedMedia\Gallery\Tools;
 use Attogram\SharedMedia\Orm\CategoryQuery;
 use Attogram\SharedMedia\Orm\MediaQuery;
+use Propel\Runtime\ActiveQuery\Criteria;
 use Propel\Runtime\Map\TableMap;
 
 class Gallery extends Router
 {
-    const VERSION = '0.0.16';
+    const VERSION = '0.0.17';
 
     public function __construct(int $level = 0)
     {
@@ -44,7 +45,13 @@ class Gallery extends Router
 
     protected function controlCategories()
     {
-        return $this->setItems(CategoryQuery::create(), 'categories');
+        $orm = CategoryQuery::create();
+        $query = Tools::getGet('q');
+        if (!empty($query)) {
+            $orm->filterByTitle("%$query%", Criteria::LIKE);
+            $this->data['query'] = $query;
+        }
+        return $this->setItems($orm, 'categories');
     }
 
     protected function controlPages()

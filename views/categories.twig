@@ -2,10 +2,23 @@
 {{ include('header.twig') }}
 {{ include('menu.twig') }}
 <div class="content">
-	<ul>
-	{% for category in categories %}
-		<li>{{ include('thumb.category.twig') }}</li>
-	{% endfor %}
-	</ul>
+	<form method="GET" style="float:right;">
+		<input type="text" name="q" value="{{ query|e }}" size="16">
+		<input type="submit" value="Search {{ category_count|default('0') }} Categories">
+	</form>
+	<div class="cattable">
+		<div class="catcon">
+			<div class="catfiles cathead">Files</div>
+			<div class="catname cathead">Category</div>
+		</div>
+		{% for category in categories %}
+			<div class="catcon">
+				<div class="catfiles">#LOCALFILES</div>
+				<div class="catname" onclick="window.location='.'">
+					{{ include('thumb.category.twig') }}
+				</div>
+			</div>
+		{% endfor %}
+	</div>
 </div>
 {{ include('footer.twig') }}
