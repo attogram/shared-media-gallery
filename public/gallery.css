@@ -10,7 +10,7 @@ form { display:inline; }
 h1, h2, h3, h4, h5 { display:inline; }
 .menu { background-color:lightgrey; border:1px solid black; padding:10px; padding-bottom:20px; }
 .menu a { background-color:lightgrey; border:1px solid black; }
-.content { background-color:white; border:1px solid black; color:black;padding:10px;  }
+.content { background-color:white; border:1px solid black; color:black;padding:10px; }
 footer { background-color:lightgrey; border:1px solid black; font-size:80%; padding:10px; padding-top:20px; }
 footer a { background-color:lightgrey; border:1px solid black; }
 img { background-clip:content-box; background-color:white; border:1px solid black; }
@@ -18,8 +18,8 @@ ul { display:block; line-height:1; list-style-position: inside; list-style-type:
 video { background-clip:content-box; background-color:white; border:1px solid black; }
 audio { background-clip:content-box; background-color:white; border:1px solid black; }
 .cattable { display:table; margin:0 auto; min-width:80%; }
-.catcon { display:table-row; margin:0; padding:0;  background-color:white; }
-.catfiles { display:table-cell; min-width:42px; padding:0 10px 0 0; margin:0; text-align:right; font-size:90%; border:1px solid #eee; }
+.catcon { background-color:white; display:table-row; margin:0; padding:0; }
+.catfiles { border:1px solid #eee; display:table-cell; font-size:90%; margin:0; min-width:42px; padding:0 10px 0 0; text-align:right; }
 .catname { border:1px solid #eee; display:table-cell; padding:0 0 0 10px; margin:0; text-align:left; }
 .catname:hover { background-color:yellow; }
 .cathead { background-color:white; font-size:95%; font-style:italic; }
