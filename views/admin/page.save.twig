@@ -1,0 +1,25 @@
+{# shared-media-gallery  admin/page.save.twig  v0.0.1 #}
+{{ include('header.twig') }}
+{{ include('menu.twig') }}
+<div class="content">
+
+    {% if errors %}
+        Errors:
+        <ul>
+        {% for error in errors %}
+            <li><pre>{{ error|e }}</pre></li>
+        {% endfor %}
+        </ul>
+    {% endif %}
+
+    Saved Pages:
+    <ul>
+    {% for page in results %}
+         <li>
+         {{ dump(page) }}
+         </li>
+    {% endfor %}
+    </ul>
+
+</div>
+{{ include('footer.twig') }}

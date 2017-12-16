@@ -6,12 +6,13 @@ use Attogram\SharedMedia\Gallery\GalleryTools;
 use Attogram\SharedMedia\Gallery\Tools;
 use Attogram\SharedMedia\Orm\CategoryQuery;
 use Attogram\SharedMedia\Orm\MediaQuery;
+use Attogram\SharedMedia\Orm\PageQuery;
 use Propel\Runtime\ActiveQuery\Criteria;
 use Propel\Runtime\Map\TableMap;
 
 class Gallery extends Router
 {
-    const VERSION = '0.0.19';
+    const VERSION = '0.0.20';
 
     public function __construct(int $level = 0)
     {
@@ -28,6 +29,8 @@ class Gallery extends Router
             'category'   => ['category', '*'],
             'medias'     => ['media'],
             'media'      => ['media', '*'],
+            'pages'      => ['page'],
+            'page'       => ['page', '*'],
         ];
     }
     protected function controlHome()
