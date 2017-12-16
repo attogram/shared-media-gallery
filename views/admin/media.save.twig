@@ -2,7 +2,24 @@
 {{ include('header.twig') }}
 {{ include('menu.twig') }}
 <div class="content">
-[ADMIN.MEDIA.SAVE]
-{{ dump(post) }}
+
+    {% if errors %}
+        Errors:
+        <ul>
+        {% for error in errors %}
+            <li><pre>{{ error|e }}</pre></li>
+        {% endfor %}
+        </ul>
+    {% endif %}
+
+    Saved Media:
+    <ul>
+    {% for media in results %}
+         <li>
+         {{ include('thumb.media.twig') }}
+         </li>
+    {% endfor %}
+    </ul>
+
 </div>
 {{ include('footer.twig') }}
