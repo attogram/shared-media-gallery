@@ -11,7 +11,7 @@ use Propel\Runtime\Map\TableMap;
 
 class Gallery extends Router
 {
-    const VERSION = '0.0.18';
+    const VERSION = '0.0.19';
 
     public function __construct(int $level = 0)
     {
@@ -40,23 +40,20 @@ class Gallery extends Router
 
     protected function controlMedias()
     {
-        return $this->setItems(MediaQuery::create(), 'medias');
+        $orm = $this->setupSearch(MediaQuery::create());
+        return $this->setItems($orm, 'medias');
     }
 
     protected function controlCategories()
     {
-        $orm = CategoryQuery::create();
-        $query = Tools::getGet('q');
-        if (!empty($query)) {
-            $orm->filterByTitle("%$query%", Criteria::LIKE);
-            $this->data['query'] = $query;
-        }
+        $orm = $this->setupSearch(CategoryQuery::create());
         return $this->setItems($orm, 'categories');
     }
 
     protected function controlPages()
     {
-        return $this->setItems(PageQuery::create(), 'pages');
+        $orm = $this->setupSearch(PageQuery::create());
+        return $this->setItems($orm, 'pages');
     }
 
     protected function controlMedia()
@@ -72,6 +69,22 @@ class Gallery extends Router
     protected function controlPage()
     {
         return $this->setItem(PageQuery::create(), 'page');
+    }
+
+    /**
+     * Setup search query
+     *
+     * @param object $orm
+     * @return object orm
+     */
+    private function setupSearch($orm)
+    {
+        $query = Tools::getGet('q');
+        if (!empty($query)) {
+            $orm->filterByTitle("%$query%", Criteria::LIKE);
+            $this->data['query'] = $query;
+        }
+        return $orm;
     }
 
     /**
