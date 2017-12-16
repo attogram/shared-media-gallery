@@ -7,6 +7,7 @@ use Attogram\SharedMedia\Api\Sources;
 use Attogram\SharedMedia\Gallery\GalleryTools;
 use Attogram\SharedMedia\Orm\CategoryQuery;
 use Attogram\SharedMedia\Orm\MediaQuery;
+use Attogram\SharedMedia\Orm\PageQuery;
 use Propel\Runtime\Exception\PropelException;
 use Propel\Runtime\Map\TableMap;
 
@@ -32,6 +33,8 @@ class GalleryAdmin extends Router
             'admin/media.save'    => ['media', 'save'],
             'admin/category'      => ['category'],
             'admin/category.save' => ['category', 'save'],
+            'admin/page'          => ['page'],
+            'admin/page.save'     => ['page', 'save'],
             'admin/source'        => ['source'],
         ];
     }
@@ -73,6 +76,22 @@ class GalleryAdmin extends Router
         return $this->adminSave(new CategoryQuery());
     }
 
+    /**
+     * @return bool
+     */
+    protected function controlAdminPage()
+    {
+        return $this->adminSearch(new PageQuery());
+    }
+
+    /**
+     * @return bool
+     */
+    protected function controlAdminPagesave()
+    {
+        return $this->adminSave(new PageQuery());
+    }
+	
     /**
      * @return bool
      */
