@@ -4,7 +4,7 @@ namespace Attogram\SharedMedia\Gallery;
 
 class Tools
 {
-    const VERSION = '0.0.3';
+    const VERSION = '0.0.4';
 
     /**
      * @param mixed $var
@@ -54,5 +54,24 @@ class Tools
         if (!empty($_POST[$name])) {
             return $_POST[$name];
         }
+    }
+
+
+    /**
+     * strip Category: or File: prefix
+     *
+     * @param string $string
+     * @return string
+     */
+    public static function stripPrefix($string)
+    {
+        if (!$string || !is_string($string)) {
+            return '';
+        }
+        return preg_replace(
+            array('/^File:/', '/^Category:/'),
+            '',
+            $string
+        );
     }
 }

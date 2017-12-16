@@ -11,7 +11,7 @@ use Propel\Runtime\Map\TableMap;
 
 class Gallery extends Router
 {
-    const VERSION = '0.0.17';
+    const VERSION = '0.0.18';
 
     public function __construct(int $level = 0)
     {
@@ -88,7 +88,9 @@ class Gallery extends Router
             return true;
         }
         foreach ($items as $item) {
-            $this->data[$dataName][] = $item->toArray(TableMap::TYPE_FIELDNAME);
+            $itemArray = $item->toArray(TableMap::TYPE_FIELDNAME);
+            $itemArray['shortTitle'] = Tools::stripPrefix($itemArray['title']);
+            $this->data[$dataName][] = $itemArray;
         }
         return true;
     }
@@ -110,7 +112,6 @@ class Gallery extends Router
             return false;
         }
         $this->data[$dataName] = $item;
-
         return true;
     }
 }

@@ -22,7 +22,7 @@ audio { background-clip:content-box; background-color:white; border:1px solid bl
 .catfiles { border:1px solid lightgrey; display:table-cell; font-size:90%; min-width:42px; padding:0 10px 0 0; text-align:right; }
 .catname { border:1px solid lightgrey; display:table-cell; padding:0 0 0 10px; text-align:left; }
 .catname:hover { background-color:yellow; }
-.cathead { font-size:95%; font-style:italic; }
+.cathead { background-color:lightgrey; border-color:white; font-size:95%; font-style:italic; padding:2px 10px 2px 2px; }
 .media, .page { background-color:white; border:1px solid black; display:inline-block; margin:6px; padding:4px; vertical-align:top; }
 .media { font-size:12px; }
 .title { font-weight:bold; margin:2px; }

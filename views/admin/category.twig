@@ -11,18 +11,19 @@
 	</form>
 	
 	{% if query %}
-		<br>query: {{ query|e }}  limit: {{ limit|e }}
+		<hr />
+		query: {{ query|e }}  limit: {{ limit|e }}
 		<form action="{{ uriBase }}/admin/category/save/" name="cats" method="POST">
+		<br />
 		<input type="submit" value="  Save selected   ">
-		<ul>
+		<br />
 		{% for category in results %}
-			 <li>
+			 <br />
 			 <input name="pageid[]" value="{{ category.pageid }}" type="checkbox" />
 			 {{ include('thumb.category.twig') }}
-			 </li>
 		{% endfor %}
-		</ul>
-		<br /><input type="submit" value="  Save selected   ">
+		<br /><br />
+		<input type="submit" value="  Save selected   ">
 		</form>
 		{{ include('admin/javascript.checkall.twig') }}
 	{% endif %}
