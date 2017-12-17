@@ -1,7 +1,9 @@
-# attogram/shared-media-gallery - codeclimate.yml - v0.0.3
+# attogram/shared-media-gallery - codeclimate.yml - v0.0.4
 version: "2"
 exclude_patterns:
 - "vendor/"
+- "src/Attogram/SharedMedia/Orm/Base/"
+- "src/Attogram/SharedMedia/Orm/Map/"
 plugins:
   phpcodesniffer:
     enabled: true

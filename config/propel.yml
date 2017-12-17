@@ -1,0 +1,24 @@
+propel:
+    general:
+        project: attogram/shared-media-gallery
+        version: 1.0.0
+    database:
+        connections:
+            default:
+                adapter: sqlite
+                dsn: sqlite:database/gallery.sq3
+                user: root
+                password:
+                settings:
+                    charset: utf8
+    paths:
+          # The directory where Propel expects to find your `schema.xml` file.
+          schemaDir: schema
+          # The directory where Propel should output generated object model classes.
+          phpDir: src
+          # The directory where Propel should output the compiled runtime configuration.
+          phpConfDir: config
+          # The directory where Propel should output the generated DDL (or data insert statements, etc.)
+          sqlDir: config
+          # Directory in which your composer.json resides
+          composerDir: .

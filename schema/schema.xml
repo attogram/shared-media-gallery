@@ -1,0 +1,20 @@
+<!-- attogram/shared-media-gallery  -  schema.xml  -  v0.0.1  -->
+<database name="default" defaultIdMethod="native"
+          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+          xsi:noNamespaceSchemaLocation="http://xsd.propelorm.org/1.6/database.xsd"
+          namespace="Attogram\SharedMedia\Orm"
+        >
+
+    <table name="site" phpName="Site">
+        <column name="id" type="INTEGER" required="true" primaryKey="true" autoIncrement="true"/>
+        <column name="title" type="VARCHAR" size="255" />
+        <column name="about" type="LONGVARCHAR" />
+        <column name="header" type="LONGVARCHAR" />
+        <column name="footer" type="LONGVARCHAR" />
+        <column name="use_cdn" type="BOOLEAN" defaultValue="false"/>
+        <column name="curation" type="BOOLEAN" defaultValue="false"/>
+		<behavior name="timestampable" />
+    </table>
+	
+</database>
+

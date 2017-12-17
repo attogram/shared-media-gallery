@@ -1,6 +1,6 @@
 {
     "name": "attogram/shared-media-gallery",
-    "description": "Web Gallery for attogram/shared-media-orm",
+    "description": "Shared Media Gallery",
     "type": "library",
     "license": "MIT",
     "homepage": "https://github.com/attogram/shared-media-gallery",
@@ -12,7 +12,8 @@
     },
     "autoload": {
         "psr-4": {
-            "Attogram\\SharedMedia\\Gallery\\": "src/"
+            "Attogram\\SharedMedia\\Gallery\\": "src/",
+			"Attogram\\SharedMedia\\Orm\\": "src/Attogram/SharedMedia/Orm/"
         }
     },
     "extra": {
