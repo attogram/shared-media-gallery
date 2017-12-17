@@ -5,15 +5,17 @@ namespace Attogram\SharedMedia\Gallery;
 use Attogram\SharedMedia\Api\Base as ApiBase;
 use Attogram\SharedMedia\Api\Sources;
 use Attogram\SharedMedia\Gallery\GalleryTools;
+use Attogram\SharedMedia\Gallery\Seeder;
 use Attogram\SharedMedia\Orm\CategoryQuery;
 use Attogram\SharedMedia\Orm\MediaQuery;
 use Attogram\SharedMedia\Orm\PageQuery;
+use Attogram\SharedMedia\Orm\SourceQuery;
 use Propel\Runtime\Exception\PropelException;
 use Propel\Runtime\Map\TableMap;
 
 class GalleryAdmin extends Router
 {
-    const VERSION = '0.0.16';
+    const VERSION = '0.0.17';
 
     public function __construct(int $level = 0)
     {
@@ -97,7 +99,11 @@ class GalleryAdmin extends Router
      */
     protected function controlAdminSource()
     {
-        $this->data['sources'] = Sources::$sources;
+        $seeder = new Seeder();
+        $seeder->seedSources();
+        foreach (SourceQuery::create()->find() as $source) {
+            $this->data['sources'][] = $source->toArray(TableMap::TYPE_FIELDNAME);
+        }
         return true;
     }
 
@@ -139,6 +145,7 @@ class GalleryAdmin extends Router
         $api->setApiPageid($pageids);
         foreach ($api->info() as $result) {
             try {
+                $result->setSourceId(1);
                 $this->adminSaveOrUpdate($api, $result);
             } catch (PropelException $error) {
                 $this->data['errors'][] = 'adminSave: pageid:'
