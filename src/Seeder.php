@@ -3,6 +3,7 @@
 namespace Attogram\SharedMedia\Gallery;
 
 use Attogram\SharedMedia\Api\Sources;
+use Attogram\SharedMedia\Orm\Source;
 use Attogram\SharedMedia\Orm\SourceQuery;
 
 /**
@@ -14,12 +15,15 @@ class Seeder
 
     public function seedSources()
     {
-        foreach (Sources::$sources as $title => $url ) {
+        foreach (Sources::$sources as $title => $url) {
             $source = SourceQuery::create()
                 ->filterByTitle($title)
                 ->filterByHost($url)
                 ->filterByEndpoint($url)
                 ->findOneOrCreate();
+            if (!$source instanceof Source) {
+                print '<pre>Error: seedSources: title:'.$title.' source:'.$source.'</pre>';
+            }
         }
     }
 }
