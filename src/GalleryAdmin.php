@@ -91,7 +91,7 @@ class GalleryAdmin extends Router
     {
         return $this->adminSave(new PageQuery());
     }
-	
+
     /**
      * @return bool
      */
