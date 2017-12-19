@@ -11,22 +11,28 @@ use Twig_Loader_Filesystem;
 /**
  * Attogram SharedMedia Gallery Base
  */
-class Base
+class Base extends Router
 {
-    const VERSION = '0.0.3';
+    const VERSION = '0.0.4';
+
+    const ITEMS_PER_PAGE = 10;
 
     protected $twig;
     protected $data = [];
     protected $galleryTools;
 
-    public function __construct()
+    /**
+     * @param int|null $level
+     */
+    public function __construct(int $level = 0)
     {
-        set_error_handler([$this, 'errorHandler']);
         $this->setupTemplating();
         $this->setupDatabase();
         $this->galleryTools = new GalleryTools;
         $this->data = $this->galleryTools->setup($this->data);
         $this->data['title'] = 'Shared Media Gallery';
+
+        parent::__construct($level); // Route
     }
 
     private function setupTemplating()
@@ -40,6 +46,31 @@ class Base
             ]
         );
         $this->twig->addExtension(new Twig_Extension_Debug());
+    }
+
+    private function setupDatabase()
+    {
+        $dsn = 'sqlite:' . __DIR__ . '/../database/gallery.sq3';
+        $serviceContainer = \Propel\Runtime\Propel::getServiceContainer();
+        $serviceContainer->checkVersion('2.0.0-dev');
+        $serviceContainer->setAdapterClass('default', 'sqlite');
+        $manager = new \Propel\Runtime\Connection\ConnectionManagerSingle();
+        $manager->setConfiguration([
+          'dsn' => $dsn,
+          'user' => 'root',
+          'password' => '',
+          'settings' => [
+            'charset' => 'utf8',
+            'queries' =>[],
+          ],
+          'classname' => '\\Propel\\Runtime\\Connection\\ConnectionWrapper',
+          'model_paths' => [
+            0 => 'vendor/attogram/shared-media-orm/src/Attogram/SharedMedia/Orm/',
+          ],
+        ]);
+        $manager->setName('default');
+        $serviceContainer->setConnectionManager('default', $manager);
+        $serviceContainer->setDefaultDatasource('default');
     }
 
     /**
@@ -99,44 +130,5 @@ class Base
             return false;
         }
         return true;
-    }
-
-
-    private function setupDatabase()
-    {
-        $dsn = 'sqlite:' . __DIR__ . '/../database/gallery.sq3';
-        $serviceContainer = \Propel\Runtime\Propel::getServiceContainer();
-        $serviceContainer->checkVersion('2.0.0-dev');
-        $serviceContainer->setAdapterClass('default', 'sqlite');
-        $manager = new \Propel\Runtime\Connection\ConnectionManagerSingle();
-        $manager->setConfiguration([
-          'dsn' => $dsn,
-          'user' => 'root',
-          'password' => '',
-          'settings' => [
-            'charset' => 'utf8',
-            'queries' =>[],
-          ],
-          'classname' => '\\Propel\\Runtime\\Connection\\ConnectionWrapper',
-          'model_paths' => [
-            0 => 'vendor/attogram/shared-media-orm/src/Attogram/SharedMedia/Orm/',
-          ],
-        ]);
-        $manager->setName('default');
-        $serviceContainer->setConnectionManager('default', $manager);
-        $serviceContainer->setDefaultDatasource('default');
-    }
-
-    /**
-     * @param int    $number
-     * @param string $message
-     * @param string $file
-     * @param int    $line
-     * @return bool
-     */
-    public function errorHandler(int $number, string $message, string $file = null, int $line = null)
-    {
-        print "<pre>ERROR: $number: $message - $file : $line</pre>";
-        return true; // true = do not use normal error handler.  false = continue with normal error handler
     }
 }

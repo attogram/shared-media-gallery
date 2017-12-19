@@ -13,13 +13,15 @@ use Attogram\SharedMedia\Orm\SourceQuery;
 use Propel\Runtime\Exception\PropelException;
 use Propel\Runtime\Map\TableMap;
 
-class GalleryAdmin extends Router
+class GalleryAdmin extends Base
 {
-    const VERSION = '0.0.17';
+    const VERSION = '0.0.18';
 
+    /**
+     * @param int|null $level
+     */
     public function __construct(int $level = 0)
     {
-        $this->data['version'] = self::VERSION;
         parent::__construct($level);
     }
 

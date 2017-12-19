@@ -3,11 +3,11 @@
 namespace Attogram\SharedMedia\Gallery;
 
 /**
- * Attogram SharedMedia Gallery Router
+ * Attogram Router
  */
-class Router extends Base
+class Router
 {
-    const VERSION = '0.0.15';
+    const VERSION = '0.0.16';
 
     protected $uriBase;
     protected $uriRelative;
@@ -20,7 +20,7 @@ class Router extends Base
      */
     public function __construct(int $level = 0)
     {
-        parent::__construct();
+        set_error_handler([$this, 'errorHandler']);
         $this->level = $level;
         if (!$this->setUri()) {
             return false;
@@ -146,5 +146,29 @@ class Router extends Base
     protected function getRoutes()
     {
         return [];
+    }
+
+    /**
+     * @param int    $number
+     * @param string $message
+     * @param string $file
+     * @param int    $line
+     * @return bool
+     */
+    public function errorHandler(int $number, string $message, string $file = null, int $line = null)
+    {
+        print "<pre>ERROR: $number: $message - $file : $line</pre>";
+        return true; // true = do not use normal error handler.  false = continue with normal error handler
+    }
+
+    /**
+     * display view - overrideable
+     *
+     * @param string $view
+     * @return bool
+     */
+    protected function displayView(string $view)
+    {
+        return true;
     }
 }

@@ -10,16 +10,21 @@ use Attogram\SharedMedia\Orm\PageQuery;
 use Propel\Runtime\ActiveQuery\Criteria;
 use Propel\Runtime\Map\TableMap;
 
-class Gallery extends Router
+class Gallery extends Base
 {
-    const VERSION = '0.0.20';
+    const VERSION = '0.0.21';
 
+    /**
+     * @param int|null $level
+     */
     public function __construct(int $level = 0)
     {
-        $this->data['version'] = self::VERSION;
         parent::__construct($level);
     }
 
+    /**
+     * @return array
+     */
     protected function getRoutes()
     {
         return [
@@ -33,6 +38,10 @@ class Gallery extends Router
             'page'       => ['page', '*'],
         ];
     }
+
+    /**
+     * @return bool
+     */
     protected function controlHome()
     {
         $this->data['media'] = MediaQuery::create()
@@ -50,7 +59,7 @@ class Gallery extends Router
     protected function controlCategories()
     {
         $orm = $this->setupSearch(CategoryQuery::create());
-        return $this->setItems($orm, 'categories');
+        return $this->setItems($orm, 'categories', 100);
     }
 
     protected function controlPages()
@@ -93,13 +102,13 @@ class Gallery extends Router
     /**
      * @param object $orm
      * @param string $dataName
+     * @param int|null $itemsPerPage
      * @return bool
      */
-    private function setItems($orm, $dataName)
+    private function setItems($orm, $dataName, $itemsPerPage = self::ITEMS_PER_PAGE)
     {
         $page = 1;
-        $maxPerPage = 100;
-        $items = $orm->orderByTitle()->paginate($page, $maxPerPage);
+        $items = $orm->orderByTitle()->paginate($page, $itemsPerPage);
         if (!$items) {
             return true;
         }
