@@ -13,7 +13,7 @@ class GalleryTools
     const VERSION = '0.0.5';
 
     /**
-     * @param array|null $data
+     * @param array $data
      * @return array
      */
     public function setup(array $data = [])

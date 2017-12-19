@@ -16,7 +16,6 @@ class Router
 
     /**
      * @param int $level
-     * @return bool
      */
     public function __construct(int $level = 0)
     {
@@ -25,7 +24,7 @@ class Router
         if (!$this->setUri()) {
             return false;
         }
-        return $this->route();
+        $this->route();
     }
 
     /**
@@ -149,10 +148,10 @@ class Router
     }
 
     /**
-     * @param int    $number
-     * @param string $message
-     * @param string $file
-     * @param int    $line
+     * @param int         $number
+     * @param string      $message
+     * @param string|null $file
+     * @param int|null    $line
      * @return bool
      */
     public function errorHandler(int $number, string $message, string $file = null, int $line = null)
