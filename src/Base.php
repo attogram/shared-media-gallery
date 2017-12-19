@@ -22,7 +22,7 @@ class Base extends Router
     protected $galleryTools;
 
     /**
-     * @param int|null $level
+     * @param int $level
      */
     public function __construct(int $level = 0)
     {

@@ -18,7 +18,7 @@ class GalleryAdmin extends Base
     const VERSION = '0.0.18';
 
     /**
-     * @param int|null $level
+     * @param int $level
      */
     public function __construct(int $level = 0)
     {

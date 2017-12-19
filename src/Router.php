@@ -21,10 +21,9 @@ class Router
     {
         set_error_handler([$this, 'errorHandler']);
         $this->level = $level;
-        if (!$this->setUri()) {
-            return false;
+        if ($this->setUri()) {
+            $this->route();
         }
-        $this->route();
     }
 
     /**
