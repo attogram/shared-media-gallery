@@ -52,23 +52,23 @@ class Gallery
     protected function setRoutes()
     {
         // Public Routes
-        $this->router->allow('/',                     'GalleryPublic::home');
-        $this->router->allow('/about/',               'GalleryPublic::about');
-        $this->router->allow('/category/',            'GalleryPublic::categories');
-        $this->router->allow('/category/?/',          'GalleryPublic::category');
-        $this->router->allow('/media/',               'GalleryPublic::medias');
-        $this->router->allow('/media/?/',             'GalleryPublic::media');
-        $this->router->allow('/page/',                'GalleryPublic::pages');
-        $this->router->allow('/page/?/',              'GalleryPublic::page');
+        $this->router->allow('/', 'GalleryPublic::home');
+        $this->router->allow('/about/', 'GalleryPublic::about');
+        $this->router->allow('/category/', 'GalleryPublic::categories');
+        $this->router->allow('/category/?/', 'GalleryPublic::category');
+        $this->router->allow('/media/', 'GalleryPublic::medias');
+        $this->router->allow('/media/?/', 'GalleryPublic::media');
+        $this->router->allow('/page/', 'GalleryPublic::pages');
+        $this->router->allow('/page/?/', 'GalleryPublic::page');
         // Admin Routes
-        $this->router->allow('/admin/',               'GalleryAdmin::home');
-        $this->router->allow('/admin/category/',      'GalleryAdmin::category');
+        $this->router->allow('/admin/', 'GalleryAdmin::home');
+        $this->router->allow('/admin/category/', 'GalleryAdmin::category');
         $this->router->allow('/admin/category/save/', 'GalleryAdmin::categorySave');
-        $this->router->allow('/admin/media/',         'GalleryAdmin::media');
-        $this->router->allow('/admin/media/save/',    'GalleryAdmin::mediaSave');
-        $this->router->allow('/admin/page/',          'GalleryAdmin::page');
-        $this->router->allow('/admin/page/save/',     'GalleryAdmin::pageSave');
-        $this->router->allow('/admin/source/',        'GalleryAdmin::source');
+        $this->router->allow('/admin/media/', 'GalleryAdmin::media');
+        $this->router->allow('/admin/media/save/', 'GalleryAdmin::mediaSave');
+        $this->router->allow('/admin/page/', 'GalleryAdmin::page');
+        $this->router->allow('/admin/page/save/', 'GalleryAdmin::pageSave');
+        $this->router->allow('/admin/source/', 'GalleryAdmin::source');
     }
 
     /**
@@ -81,6 +81,6 @@ class Gallery
         if (!$message) {
             $message = '404 Not Found';
         }
-        $this->displayView('error' [$message]);
+        $this->displayView('error', [$message]);
     }
 }

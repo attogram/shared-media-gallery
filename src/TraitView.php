@@ -25,8 +25,8 @@ trait TraitView
     }
 
     /**
-     * @param string     $view
-     * @param array|null $array
+     * @param string $view
+     * @param array  $array
      * @return void
      */
     private function displayView(string $view, array $data = [])
