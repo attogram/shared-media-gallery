@@ -1,4 +1,4 @@
-# shared-media-gallery v0.0
+# shared-media-gallery v0.1
 
 Shared Media Gallery
 

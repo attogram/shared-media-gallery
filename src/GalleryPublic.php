@@ -124,27 +124,30 @@ class GalleryPublic
     private function displayItem($data, $orm, $name)
     {
         $this->data = $data;
-        $this->setItem($orm, $name);
+        if (!$this->setItem($orm, $name)) {
+			return;
+		}
         $this->displayView($name, $this->data);
     }
 
     /**
      * @param object $orm
      * @param string $dataName
-     * @return void
+     * @return bool
      */
     private function setItem($orm, $dataName)
     {
         $itemId = $this->data['vars'][0];
         if (!Tools::isNumber($itemId)) {
             $this->error404('400 ' . ucfirst($dataName) . ' Not Found');
-            return;
+            return false;
         }
         $item = $orm->filterByPageid($itemId)->findOne();
         if (!$item) {
             $this->error404('404 ' . ucfirst($dataName) . ' Not Found');
-            return;
+            return false;
         }
         $this->data[$dataName] = $item;
+		return true;
     }
 }

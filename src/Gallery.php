@@ -70,17 +70,4 @@ class Gallery
         $this->router->allow('/admin/page/save/', 'GalleryAdmin::pageSave');
         $this->router->allow('/admin/source/', 'GalleryAdmin::source');
     }
-
-    /**
-     * @param string $message
-     * @return void
-     */
-    protected function error404(string $message = '')
-    {
-        header('HTTP/1.0 404 Not Found');
-        if (!$message) {
-            $message = '404 Not Found';
-        }
-        $this->displayView('error', [$message]);
-    }
 }

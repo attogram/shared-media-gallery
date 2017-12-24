@@ -40,4 +40,18 @@ trait TraitView
             print 'ERROR: ' . $error->getMessage();
         }
     }
+
+    /**
+     * @param string $message
+     * @return void
+     */
+    protected function error404(string $message = '')
+    {
+        header('HTTP/1.0 404 Not Found');
+        if (!$message) {
+            $message = '404 Not Found';
+        }
+        $this->data['message'] = $message;
+        $this->displayView('error', $this->data);
+    }
 }
