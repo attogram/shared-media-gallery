@@ -125,8 +125,8 @@ class GalleryPublic
     {
         $this->data = $data;
         if (!$this->setItem($orm, $name)) {
-			return;
-		}
+            return;
+        }
         $this->displayView($name, $this->data);
     }
 
@@ -148,6 +148,6 @@ class GalleryPublic
             return false;
         }
         $this->data[$dataName] = $item;
-		return true;
+        return true;
     }
 }
