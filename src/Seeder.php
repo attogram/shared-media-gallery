@@ -11,8 +11,6 @@ use Attogram\SharedMedia\Orm\SourceQuery;
  */
 class Seeder
 {
-    const VERSION = '0.0.1';
-
     public function seedSources()
     {
         foreach (Sources::$sources as $title => $url) {

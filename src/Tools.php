@@ -4,8 +4,6 @@ namespace Attogram\SharedMedia\Gallery;
 
 class Tools
 {
-    const VERSION = '0.0.4';
-
     /**
      * @param mixed $var
      * @return bool
@@ -16,18 +14,6 @@ class Tools
             return true;
         }
         return false;
-    }
-
-    /**
-     * get the value of a global _SERVER variable
-     * @param string $name
-     * @return mixed
-     */
-    public static function getServer(string $name)
-    {
-        if (!empty($_SERVER[$name])) {
-            return $_SERVER[$name];
-        }
     }
 
     /**
@@ -55,7 +41,6 @@ class Tools
             return $_POST[$name];
         }
     }
-
 
     /**
      * strip Category: or File: prefix

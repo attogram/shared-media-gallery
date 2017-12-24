@@ -4,7 +4,6 @@ namespace Attogram\SharedMedia\Gallery;
 
 use Attogram\SharedMedia\Api\Base as ApiBase;
 use Attogram\SharedMedia\Api\Sources;
-use Attogram\SharedMedia\Gallery\GalleryTools;
 use Attogram\SharedMedia\Gallery\Seeder;
 use Attogram\SharedMedia\Orm\CategoryQuery;
 use Attogram\SharedMedia\Orm\MediaQuery;
@@ -13,111 +12,87 @@ use Attogram\SharedMedia\Orm\SourceQuery;
 use Propel\Runtime\Exception\PropelException;
 use Propel\Runtime\Map\TableMap;
 
-class GalleryAdmin extends Base
+class GalleryAdmin
 {
-    const VERSION = '0.0.18';
+    use TraitView;
+
+    private $data = [];
 
     /**
-     * @param int $level
+     * @param array $data
      */
-    public function __construct(int $level = 0)
+    public function home($data)
     {
-        parent::__construct($level);
+        $this->displayView('admin/home', $data);
     }
 
-    /**
-     * @return array
-     */
-    protected function getRoutes()
+    public function media($data)
     {
-        return [
-            // Template           => URI path
-            'admin/home'          => [''],
-            'admin/media'         => ['media'],
-            'admin/media.save'    => ['media', 'save'],
-            'admin/category'      => ['category'],
-            'admin/category.save' => ['category', 'save'],
-            'admin/page'          => ['page'],
-            'admin/page.save'     => ['page', 'save'],
-            'admin/source'        => ['source'],
-        ];
+        $this->data = $data;
+        $this->adminSearch(new MediaQuery());
+        $this->displayView('admin/media', $this->data);
     }
 
-    /**
-     * @return bool
-     */
-    protected function controlAdminMedia()
+    public function mediaSave($data)
     {
-        return $this->adminSearch(new MediaQuery());
+        $this->data = $data;
+        $this->adminSave(new MediaQuery());
+        $this->displayView('admin/media.save', $this->data);
     }
 
-    /**
-     * @return bool
-     */
-    protected function controlAdminMediasave()
+    public function category($data)
     {
-        return $this->adminSave(new MediaQuery());
-    }
-
-    /**
-     * @return bool
-     */
-    protected function controlAdminCategory()
-    {
+        $this->data = $data;
         $limit = Tools::getGet('limit');
         if (!$limit || !Tools::isNumber($limit)) {
             $limit = ApiBase::DEFAULT_LIMIT;
         }
         $this->data['limit'] = $limit;
-        return $this->adminSearch(new CategoryQuery());
+        $this->adminSearch(new CategoryQuery());
+        $this->displayView('admin/category', $this->data);
     }
 
-    /**
-     * @return bool
-     */
-    protected function controlAdminCategorysave()
+    public function categorySave($data)
     {
-        return $this->adminSave(new CategoryQuery());
+        $this->data = $data;
+        $this->adminSave(new CategoryQuery());
+         $this->displayView('admin/category.save', $this->data);
     }
 
-    /**
-     * @return bool
-     */
-    protected function controlAdminPage()
+    public function page($data)
     {
-        return $this->adminSearch(new PageQuery());
+        $this->data = $data;
+        $this->adminSearch(new PageQuery());
+        $this->displayView('admin/page', $this->data);
     }
 
-    /**
-     * @return bool
-     */
-    protected function controlAdminPagesave()
+    public function pageSave($data)
     {
-        return $this->adminSave(new PageQuery());
+        $this->data = $data;
+        $this->adminSave(new PageQuery());
+        $this->displayView('admin/page.save', $this->data);
     }
 
-    /**
-     * @return bool
-     */
-    protected function controlAdminSource()
+
+    public function source($data)
     {
         $seeder = new Seeder();
         $seeder->seedSources();
         foreach (SourceQuery::create()->find() as $source) {
-            $this->data['sources'][] = $source->toArray(TableMap::TYPE_FIELDNAME);
+            $data['sources'][] = $source->toArray(TableMap::TYPE_FIELDNAME);
         }
-        return true;
+        $this->displayView('admin/source', $data);
     }
 
     /**
      * @param object $api
-     * @return bool
+     * @return void
      */
     private function adminSearch($api)
     {
         $query = Tools::getGet('q');
         if (!$query) {
-            return true;
+            return;
         }
         $this->data['query'] = $query;
         $limit = Tools::getGet('limit');
@@ -128,18 +103,17 @@ class GalleryAdmin extends Base
         foreach ($api->search($query) as $result) {
             $this->data['results'][] = $result->toArray(TableMap::TYPE_FIELDNAME);
         }
-        return true;
     }
 
     /**
      * @param object $api
-     * @return bool
+     * @return void
      */
     protected function adminSave($api)
     {
         $pageids = Tools::getPost('pageid');
         if (!$pageids) {
-            return true;
+            return;
         }
         if (is_array($pageids)) {
             $pageids = implode('|', $pageids);
@@ -154,7 +128,6 @@ class GalleryAdmin extends Base
                     . $result->getPageid() . ': ' . $error->getMessage();
             }
         }
-        return true;
     }
 
     /**

@@ -10,8 +10,6 @@ use Propel\Runtime\Exception\RuntimeException;
 
 class GalleryTools
 {
-    const VERSION = '0.0.5';
-
     /**
      * @param array $data
      * @return array

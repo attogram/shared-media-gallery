@@ -2,141 +2,85 @@
 
 namespace Attogram\SharedMedia\Gallery;
 
-use Attogram\SharedMedia\Gallery\GalleryTools;
+use Attogram\Router\Router;
 use Attogram\SharedMedia\Gallery\Tools;
-use Attogram\SharedMedia\Orm\CategoryQuery;
-use Attogram\SharedMedia\Orm\MediaQuery;
-use Attogram\SharedMedia\Orm\PageQuery;
-use Propel\Runtime\ActiveQuery\Criteria;
-use Propel\Runtime\Map\TableMap;
 
-class Gallery extends Base
+class Gallery
 {
-    const VERSION = '0.0.21';
+    use TraitDatabase;
+    use TraitView;
+
+    const VERSION = '0.1.0';
+
+    private $router;
+
+    protected $galleryTools;
 
     /**
-     * @param int $level
+     * @return void
      */
-    public function __construct(int $level = 0)
+    public function __construct()
     {
-        parent::__construct($level);
-    }
-
-    /**
-     * @return array
-     */
-    protected function getRoutes()
-    {
-        return [
-            'home'       => [''],
-            'about'      => ['about'],
-            'categories' => ['category'],
-            'category'   => ['category', '*'],
-            'medias'     => ['media'],
-            'media'      => ['media', '*'],
-            'pages'      => ['page'],
-            'page'       => ['page', '*'],
-        ];
-    }
-
-    /**
-     * @return bool
-     */
-    protected function controlHome()
-    {
-        $this->data['media'] = MediaQuery::create()
-            ->setOffset(rand(1, $this->data['category_count'] - 1))
-            ->findOne();
-        return true;
-    }
-
-    protected function controlMedias()
-    {
-        $orm = $this->setupSearch(MediaQuery::create());
-        return $this->setItems($orm, 'medias');
-    }
-
-    protected function controlCategories()
-    {
-        $orm = $this->setupSearch(CategoryQuery::create());
-        return $this->setItems($orm, 'categories', 100);
-    }
-
-    protected function controlPages()
-    {
-        $orm = $this->setupSearch(PageQuery::create());
-        return $this->setItems($orm, 'pages');
-    }
-
-    protected function controlMedia()
-    {
-        return $this->setItem(MediaQuery::create(), 'media');
-    }
-
-    protected function controlCategory()
-    {
-        return $this->setItem(CategoryQuery::create(), 'category');
-    }
-
-    protected function controlPage()
-    {
-        return $this->setItem(PageQuery::create(), 'page');
-    }
-
-    /**
-     * Setup search query
-     *
-     * @param object $orm
-     * @return object orm
-     */
-    private function setupSearch($orm)
-    {
-        $query = Tools::getGet('q');
-        if (!empty($query)) {
-            $orm->filterByTitle("%$query%", Criteria::LIKE);
-            $this->data['query'] = $query;
+        $this->setupDatabase();
+        $this->galleryTools = new GalleryTools;
+        $data = $this->galleryTools->setup([]); // set counts
+        $this->router = new Router();
+        $this->setRoutes();
+        $control = $this->router->match(); // get controller
+        $data['uriBase'] = $this->router->getUriBase();
+        $data['uriRelative'] = $this->router->getUriRelative();
+        $data['vars'] = $this->router->getVars();
+        $data['title'] = 'Shared Media Gallery';
+        $data['version'] = self::VERSION;
+        if (!$control) {
+            $this->error404('404 Page Not Found');
+            return;
         }
-        return $orm;
+        list($className, $methodName) = explode('::', $control);
+        $className = 'Attogram\\SharedMedia\\Gallery\\' . $className;
+        if (!is_callable([$className, $methodName])) {
+            $this->error404('404 Control Not Found');
+            return;
+        }
+        $class = new $className;
+        $class->{$methodName}($data); // call controller
     }
 
     /**
-     * @param object $orm
-     * @param string $dataName
-     * @param int|null $itemsPerPage
-     * @return bool
+     * @return void
      */
-    private function setItems($orm, $dataName, $itemsPerPage = self::ITEMS_PER_PAGE)
+    protected function setRoutes()
     {
-        $page = 1;
-        $items = $orm->orderByTitle()->paginate($page, $itemsPerPage);
-        if (!$items) {
-            return true;
-        }
-        foreach ($items as $item) {
-            $itemArray = $item->toArray(TableMap::TYPE_FIELDNAME);
-            $itemArray['shortTitle'] = Tools::stripPrefix($itemArray['title']);
-            $this->data[$dataName][] = $itemArray;
-        }
-        return true;
+        // Public Routes
+        $this->router->allow('/',                     'GalleryPublic::home');
+        $this->router->allow('/about/',               'GalleryPublic::about');
+        $this->router->allow('/category/',            'GalleryPublic::categories');
+        $this->router->allow('/category/?/',          'GalleryPublic::category');
+        $this->router->allow('/media/',               'GalleryPublic::medias');
+        $this->router->allow('/media/?/',             'GalleryPublic::media');
+        $this->router->allow('/page/',                'GalleryPublic::pages');
+        $this->router->allow('/page/?/',              'GalleryPublic::page');
+        // Admin Routes
+        $this->router->allow('/admin/',               'GalleryAdmin::home');
+        $this->router->allow('/admin/category/',      'GalleryAdmin::category');
+        $this->router->allow('/admin/category/save/', 'GalleryAdmin::categorySave');
+        $this->router->allow('/admin/media/',         'GalleryAdmin::media');
+        $this->router->allow('/admin/media/save/',    'GalleryAdmin::mediaSave');
+        $this->router->allow('/admin/page/',          'GalleryAdmin::page');
+        $this->router->allow('/admin/page/save/',     'GalleryAdmin::pageSave');
+        $this->router->allow('/admin/source/',        'GalleryAdmin::source');
     }
 
     /**
-     * @param object $orm
-     * @param string $dataName
-     * @return bool
+     * @param string $message
+     * @return void
      */
-    private function setItem($orm, $dataName)
+    protected function error404(string $message = '')
     {
-        if (!Tools::isNumber($this->uri[1])) {
-            $this->error404('400 ' . ucfirst($dataName) . ' Not Found');
-            return false;
+        header('HTTP/1.0 404 Not Found');
+        if (!$message) {
+            $message = '404 Not Found';
         }
-        $item = $orm->filterByPageid($this->uri[1])->findOne();
-        if (!$item) {
-            $this->error404('404 ' . ucfirst($dataName) . ' Not Found');
-            return false;
-        }
-        $this->data[$dataName] = $item;
-        return true;
+        $this->displayView('error' [$message]);
     }
 }
