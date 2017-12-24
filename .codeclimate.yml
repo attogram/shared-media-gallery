@@ -26,8 +26,10 @@ plugins:
       PhanTypeMismatchArgument:
         enabled: false
       PhanTypeMismatchForeach:
-        enabled: false       
+        enabled: false
       PhanTypeMismatchProperty:
+        enabled: false
+      PhanNonClassMethodCall:
         enabled: false
       PhanUndeclaredClass:
         enabled: false
