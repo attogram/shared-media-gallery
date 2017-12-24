@@ -2,7 +2,6 @@
 
 namespace Attogram\SharedMedia\Gallery;
 
-use Attogram\SharedMedia\Gallery\Tools;
 use Attogram\SharedMedia\Orm\CategoryQuery;
 use Attogram\SharedMedia\Orm\MediaQuery;
 use Attogram\SharedMedia\Orm\PageQuery;
@@ -11,6 +10,7 @@ use Propel\Runtime\Map\TableMap;
 
 class GalleryPublic
 {
+    use TraitTools;
     use TraitView;
 
     const ITEMS_PER_PAGE = 10;
@@ -70,7 +70,7 @@ class GalleryPublic
      */
     private function setupSearch($orm)
     {
-        $query = Tools::getGet('q');
+        $query = $this->getGet('q');
         if (!empty($query)) {
             $orm->filterByTitle("%$query%", Criteria::LIKE);
             $this->data['query'] = $query;
@@ -96,7 +96,7 @@ class GalleryPublic
         }
         foreach ($items as $item) {
             $itemArray = $item->toArray(TableMap::TYPE_FIELDNAME);
-            $itemArray['shortTitle'] = Tools::stripPrefix($itemArray['title']);
+            $itemArray['shortTitle'] = $this->stripPrefix($itemArray['title']);
             $this->data[$dataName][] = $itemArray;
         }
     }
@@ -138,7 +138,7 @@ class GalleryPublic
     private function setItem($orm, $dataName)
     {
         $itemId = $this->data['vars'][0];
-        if (!Tools::isNumber($itemId)) {
+        if (!$this->isNumber($itemId)) {
             $this->error404('400 ' . ucfirst($dataName) . ' Not Found');
             return false;
         }

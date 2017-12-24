@@ -2,13 +2,13 @@
 
 namespace Attogram\SharedMedia\Gallery;
 
-class Tools
+trait TraitTools
 {
     /**
      * @param mixed $var
      * @return bool
      */
-    public static function isNumber($var)
+    private function isNumber($var)
     {
         if (preg_match('/^[0-9]*$/', $var)) {
             return true;
@@ -22,10 +22,10 @@ class Tools
      * @param string $name
      * @return mixed
      */
-    public static function getGet(string $name)
+    private function getGet(string $name)
     {
         if (!empty($_GET[$name])) {
-            return trim(urldecode($_GET[$name]));
+            return urldecode($_GET[$name]);
         }
     }
 
@@ -35,7 +35,7 @@ class Tools
      * @param string $name
      * @return mixed
      */
-    public static function getPost(string $name)
+    private function getPost(string $name)
     {
         if (!empty($_POST[$name])) {
             return $_POST[$name];
@@ -48,7 +48,7 @@ class Tools
      * @param string $string
      * @return string
      */
-    public static function stripPrefix($string)
+    private function stripPrefix($string)
     {
         if (!$string || !is_string($string)) {
             return '';

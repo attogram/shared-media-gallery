@@ -3,53 +3,62 @@
 namespace Attogram\SharedMedia\Gallery;
 
 use Attogram\Router\Router;
-use Attogram\SharedMedia\Gallery\Tools;
 
 class Gallery
 {
     use TraitDatabase;
     use TraitView;
 
-    const VERSION = '0.1.0';
+    const VERSION = '0.1.1';
 
     private $router;
-
-    protected $galleryTools;
+    private $data = [];
 
     /**
      * @return void
      */
     public function __construct()
     {
-        $this->setupDatabase();
-        $this->galleryTools = new GalleryTools;
-        $data = $this->galleryTools->setup([]); // set counts
         $this->router = new Router();
         $this->setRoutes();
         $control = $this->router->match(); // get controller
-        $data['uriBase'] = $this->router->getUriBase();
-        $data['uriRelative'] = $this->router->getUriRelative();
-        $data['vars'] = $this->router->getVars();
-        $data['title'] = 'Shared Media Gallery';
-        $data['version'] = self::VERSION;
+        $this->data['uriBase'] = $this->router->getUriBase();
+        $this->data['title'] = 'Shared Media Gallery';
+        $this->data['version'] = self::VERSION;
         if (!$control) {
             $this->error404('404 Page Not Found');
             return;
         }
+        $this->callControl($control);
+    }
+
+    /**
+     * @param string $control
+     * @return void
+     */
+    private function callControl($control)
+    {
         list($className, $methodName) = explode('::', $control);
         $className = 'Attogram\\SharedMedia\\Gallery\\' . $className;
         if (!is_callable([$className, $methodName])) {
             $this->error404('404 Control Not Found');
             return;
         }
+        $this->setupDatabase();
+        $galleryTools = new GalleryTools;
+        $this->data['media_count'] = $galleryTools->getMediaCount();
+        $this->data['category_count'] = $galleryTools->getCategoryCount();
+        $this->data['page_count'] = $galleryTools->getPageCount();
+        $this->data['source_count'] = $galleryTools->getSourceCount();
+        $this->data['uriRelative'] = $this->router->getUriRelative();
+        $this->data['vars'] = $this->router->getVars();
         $class = new $className;
-        $class->{$methodName}($data); // call controller
+        $class->{$methodName}($this->data); // call controller
     }
-
     /**
      * @return void
      */
-    protected function setRoutes()
+    private function setRoutes()
     {
         // Public Routes
         $this->router->allow('/', 'GalleryPublic::home');

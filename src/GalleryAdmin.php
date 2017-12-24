@@ -14,6 +14,7 @@ use Propel\Runtime\Map\TableMap;
 
 class GalleryAdmin
 {
+    use TraitTools;
     use TraitView;
 
     private $data = [];
@@ -43,8 +44,8 @@ class GalleryAdmin
     public function category($data)
     {
         $this->data = $data;
-        $limit = Tools::getGet('limit');
-        if (!$limit || !Tools::isNumber($limit)) {
+        $limit = $this->getGet('limit');
+        if (!$limit || !$this->isNumber($limit)) {
             $limit = ApiBase::DEFAULT_LIMIT;
         }
         $this->data['limit'] = $limit;
@@ -56,7 +57,7 @@ class GalleryAdmin
     {
         $this->data = $data;
         $this->adminSave(new CategoryQuery());
-         $this->displayView('admin/category.save', $this->data);
+        $this->displayView('admin/category.save', $this->data);
     }
 
     public function page($data)
@@ -90,13 +91,13 @@ class GalleryAdmin
      */
     private function adminSearch($api)
     {
-        $query = Tools::getGet('q');
+        $query = $this->getGet('q');
         if (!$query) {
             return;
         }
         $this->data['query'] = $query;
-        $limit = Tools::getGet('limit');
-        if (Tools::isNumber($limit) && $limit) {
+        $limit = $this->getGet('limit');
+        if ($this->isNumber($limit) && $limit) {
             $api->setApiLimit($limit);
             $this->data['limit'] = $limit;
         }
@@ -111,7 +112,7 @@ class GalleryAdmin
      */
     protected function adminSave($api)
     {
-        $pageids = Tools::getPost('pageid');
+        $pageids = $this->getPost('pageid');
         if (!$pageids) {
             return;
         }

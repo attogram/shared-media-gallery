@@ -11,19 +11,6 @@ use Propel\Runtime\Exception\RuntimeException;
 class GalleryTools
 {
     /**
-     * @param array $data
-     * @return array
-     */
-    public function setup(array $data = [])
-    {
-        $data['media_count'] = $this->getMediaCount();
-        $data['category_count'] = $this->getCategoryCount();
-        $data['page_count'] = $this->getPageCount();
-        $data['source_count'] = $this->getSourceCount();
-        return $data;
-    }
-
-    /**
      * @return int
      */
     public function getCategoryCount()
