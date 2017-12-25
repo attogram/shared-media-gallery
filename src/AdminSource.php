@@ -10,8 +10,6 @@ class AdminSource
 {
     use TraitView;
 
-    private $data = [];
-
     public function source($data)
     {
         $seeder = new Seeder();
@@ -24,6 +22,6 @@ class AdminSource
 
     public function save($data)
     {
-        print 'AdminSource::save';
+        $this->displayView('admin/source.save', $data);
     }
 }

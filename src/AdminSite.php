@@ -21,6 +21,6 @@ class AdminSite
 
     public function save($data)
     {
-        print 'GalleryAdminSite::save';
+       $this->displayView('admin/site.save', $data);
     }
 }

@@ -49,6 +49,8 @@ plugins:
         enabled: false
       PhanUndeclaredProperty:
         enabled: false
+      PhanUndeclaredStaticMethod:
+        enabled: false
       PhanUndeclaredTypeParameter:
         enabled: false
   duplication:
