@@ -97,7 +97,7 @@ class GalleryPublic
         $page = 1;
         try {
             $items = $orm->orderByTitle()->paginate($page, $itemsPerPage);
-        } catch(Exception $error) {
+        } catch (Exception $error) {
             return;
         }
         if (!$items) {
