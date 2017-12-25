@@ -9,7 +9,7 @@ class Gallery
     use TraitDatabase;
     use TraitView;
 
-    const VERSION = '0.1.1';
+    const VERSION = '0.1.2';
 
     private $router;
     private $data = [];

@@ -5,6 +5,7 @@ namespace Attogram\SharedMedia\Gallery;
 use Attogram\SharedMedia\Orm\CategoryQuery;
 use Attogram\SharedMedia\Orm\MediaQuery;
 use Attogram\SharedMedia\Orm\PageQuery;
+use Exception;
 use Propel\Runtime\ActiveQuery\Criteria;
 use Propel\Runtime\Map\TableMap;
 
@@ -22,9 +23,13 @@ class GalleryPublic
      */
     public function home($data)
     {
-        $data['media'] = MediaQuery::create()
-            ->setOffset(rand(1, $data['category_count'] - 1))
-            ->findOne();
+        try {
+            $data['media'] = MediaQuery::create()
+                ->setOffset(rand(1, $data['category_count'] - 1))
+                ->findOne();
+        } catch (Exception $error) {
+            $data['media'] = ['title' => 'Error', 'pageid' => 0];
+        }
         $this->displayView('home', $data);
     }
 
@@ -84,13 +89,17 @@ class GalleryPublic
      * @param int|null $itemsPerPage
      * @return void
      */
-    private function setItems($orm, $dataName, $itemsPerPage = self::ITEMS_PER_PAGE)
+    private function setItems($orm, $dataName, $itemsPerPage = 0)
     {
         if (!$itemsPerPage) {
             $itemsPerPage = self::ITEMS_PER_PAGE;
         }
         $page = 1;
-        $items = $orm->orderByTitle()->paginate($page, $itemsPerPage);
+        try {
+            $items = $orm->orderByTitle()->paginate($page, $itemsPerPage);
+        } catch(Exception $error) {
+            return;
+        }
         if (!$items) {
             return;
         }
@@ -142,7 +151,11 @@ class GalleryPublic
             $this->error404('400 ' . ucfirst($dataName) . ' Not Found');
             return false;
         }
-        $item = $orm->filterByPageid($itemId)->findOne();
+        try {
+            $item = $orm->filterByPageid($itemId)->findOne();
+        } catch (Exception $error) {
+            $item = false;
+        }
         if (!$item) {
             $this->error404('404 ' . ucfirst($dataName) . ' Not Found');
             return false;

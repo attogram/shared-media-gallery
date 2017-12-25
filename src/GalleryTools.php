@@ -6,6 +6,7 @@ use Attogram\SharedMedia\Orm\CategoryQuery;
 use Attogram\SharedMedia\Orm\MediaQuery;
 use Attogram\SharedMedia\Orm\PageQuery;
 use Attogram\SharedMedia\Orm\SourceQuery;
+use Exception;
 use Propel\Runtime\Exception\RuntimeException;
 
 class GalleryTools
@@ -49,8 +50,8 @@ class GalleryTools
     {
         try {
             return $orm->count();
-        } catch (RuntimeException $error) {
-            print '<pre>ERROR: getCount: orm:' . get_class($orm) . ': ' . $error->getMessage() . '</pre>';
+        } catch (Exception $error) {
+            //print '<pre>ERROR: getCount: orm:' . get_class($orm) . ': ' . $error->getMessage() . '</pre>';
             return 0;
         }
     }
