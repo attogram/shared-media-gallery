@@ -21,6 +21,6 @@ class AdminSite
 
     public function save($data)
     {
-       $this->displayView('admin/site.save', $data);
+        $this->displayView('admin/site.save', $data);
     }
 }
