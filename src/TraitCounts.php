@@ -7,14 +7,13 @@ use Attogram\SharedMedia\Orm\MediaQuery;
 use Attogram\SharedMedia\Orm\PageQuery;
 use Attogram\SharedMedia\Orm\SourceQuery;
 use Exception;
-use Propel\Runtime\Exception\RuntimeException;
 
-class GalleryTools
+trait TraitCounts
 {
     /**
      * @return int
      */
-    public function getCategoryCount()
+    private function getCategoryCount()
     {
         return $this->getCount(new CategoryQuery());
     }
@@ -22,7 +21,7 @@ class GalleryTools
     /**
      * @return int
      */
-    public function getMediaCount()
+    private function getMediaCount()
     {
         return $this->getCount(new MediaQuery());
     }
@@ -30,7 +29,7 @@ class GalleryTools
     /**
      * @return int
      */
-    public function getPageCount()
+    private function getPageCount()
     {
         return $this->getCount(new PageQuery());
     }
@@ -38,7 +37,7 @@ class GalleryTools
     /**
      * @return int
      */
-    public function getSourceCount()
+    private function getSourceCount()
     {
         return $this->getCount(new SourceQuery());
     }
@@ -51,7 +50,6 @@ class GalleryTools
         try {
             return $orm->count();
         } catch (Exception $error) {
-            //print '<pre>ERROR: getCount: orm:' . get_class($orm) . ': ' . $error->getMessage() . '</pre>';
             return 0;
         }
     }

@@ -6,6 +6,7 @@ use Attogram\Router\Router;
 
 class Gallery
 {
+    use TraitCounts;
     use TraitDatabase;
     use TraitView;
 
@@ -45,11 +46,10 @@ class Gallery
             return;
         }
         $this->setupDatabase();
-        $galleryTools = new GalleryTools;
-        $this->data['media_count'] = $galleryTools->getMediaCount();
-        $this->data['category_count'] = $galleryTools->getCategoryCount();
-        $this->data['page_count'] = $galleryTools->getPageCount();
-        $this->data['source_count'] = $galleryTools->getSourceCount();
+        $this->data['media_count'] = $this->getMediaCount();
+        $this->data['category_count'] = $this->getCategoryCount();
+        $this->data['page_count'] = $this->getPageCount();
+        $this->data['source_count'] = $this->getSourceCount();
         $this->data['uriRelative'] = $this->router->getUriRelative();
         $this->data['vars'] = $this->router->getVars();
         $class = new $className;
@@ -71,11 +71,11 @@ class Gallery
         $this->router->allow('/page/?/', 'GalleryPublic::page');
         // Admin Routes
         $this->router->allow('/admin/', 'GalleryAdmin::home');
-        $this->router->allow('/admin/category/', 'GalleryAdmin::category');
+        $this->router->allow('/admin/category/find/', 'GalleryAdmin::category');
         $this->router->allow('/admin/category/save/', 'GalleryAdmin::categorySave');
-        $this->router->allow('/admin/media/', 'GalleryAdmin::media');
+        $this->router->allow('/admin/media/find/', 'GalleryAdmin::media');
         $this->router->allow('/admin/media/save/', 'GalleryAdmin::mediaSave');
-        $this->router->allow('/admin/page/', 'GalleryAdmin::page');
+        $this->router->allow('/admin/page/find/', 'GalleryAdmin::page');
         $this->router->allow('/admin/page/save/', 'GalleryAdmin::pageSave');
         $this->router->allow('/admin/source/', 'GalleryAdmin::source');
     }
