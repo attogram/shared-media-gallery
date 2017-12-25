@@ -12,7 +12,7 @@
             <div class="catfiles cathead">local<br />files</div>
             <div class="catfiles cathead">Subcats</div>
             <div class="catfiles cathead">Pages</div>
-            <div class="catfiles cathead">public<br />hidden</div>
+            <div class="catfiles cathead">H/P</div>
             <div class="catfiles cathead">source</div>
         </div>
         {% for category in categories %}
@@ -21,10 +21,10 @@
 				<div class="catname"><span class="pageid">{{ category.pageid }}</span></div>
 				<div class="catname"><span class="title">{{ category.shortTitle|e }}</span></div>
                 <div class="catfiles">{{ category.files|default('?') }}</div>
-                <div class="catfiles">?</div>
+                <div class="catfiles">-</div>
                 <div class="catfiles">{{ category.subcats|default('?') }}</div>
                 <div class="catfiles">{{ category.pages|default('?') }}</div>
-                <div class="catfiles">{{ category.hidden ? 'h' : 'p' }}</div>
+                <div class="catfiles">{{ category.hidden ? 'H' : 'P' }}</div>
                 <div class="catfiles">{{ category.source_id }}</div>
             </div>
         {% endfor %}

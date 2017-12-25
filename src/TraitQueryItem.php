@@ -8,6 +8,8 @@ use Propel\Runtime\Map\TableMap;
 
 trait TraitQueryItem
 {
+    private $defaultItemsPerPage = 20;
+
      /**
      * @param object $orm
      * @param string $dataName
@@ -17,7 +19,7 @@ trait TraitQueryItem
     private function setItems($orm, $dataName, $itemsPerPage = 0)
     {
         if (!$itemsPerPage) {
-            $itemsPerPage = GalleryPublic::ITEMS_PER_PAGE;
+            $itemsPerPage = $this->defaultItemsPerPage;
         }
         $page = 1;
         try {
@@ -74,5 +76,33 @@ trait TraitQueryItem
             $this->data['query'] = $query;
         }
         return $orm;
+    }
+
+    /**
+     * @param array    $data
+     * @param object   $orm
+     * @param string   $name
+     * @param int      $limit
+     */
+    private function displayItems($data, $orm, $name, $limit = 0)
+    {
+        $this->data = $data;
+        $orm = $this->setupSearch($orm);
+        $this->setItems($orm, $name, $limit);
+        $this->displayView($name, $this->data);
+    }
+
+    /**
+     * @param array    $data
+     * @param object   $orm
+     * @param string   $name
+     */
+    private function displayItem($data, $orm, $name)
+    {
+        $this->data = $data;
+        if (!$this->setItem($orm, $name)) {
+            return;
+        }
+        $this->displayView($name, $this->data);
     }
 }

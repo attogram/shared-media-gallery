@@ -30,15 +30,6 @@ class Gallery
             $this->error404('404 Page Not Found');
             return;
         }
-        $this->callControl($control);
-    }
-
-    /**
-     * @param string $control
-     * @return void
-     */
-    private function callControl($control)
-    {
         list($className, $methodName) = explode('::', $control);
         $className = 'Attogram\\SharedMedia\\Gallery\\' . $className;
         if (!is_callable([$className, $methodName])) {
@@ -55,31 +46,35 @@ class Gallery
         $class = new $className;
         $class->{$methodName}($this->data); // call controller
     }
+
     /**
      * @return void
      */
     private function setRoutes()
     {
         // Public Routes
-        $this->router->allow('/', 'GalleryPublic::home');
-        $this->router->allow('/about/', 'GalleryPublic::about');
-        $this->router->allow('/category/', 'GalleryPublic::categories');
-        $this->router->allow('/category/?/', 'GalleryPublic::category');
-        $this->router->allow('/media/', 'GalleryPublic::medias');
-        $this->router->allow('/media/?/', 'GalleryPublic::media');
-        $this->router->allow('/page/', 'GalleryPublic::pages');
-        $this->router->allow('/page/?/', 'GalleryPublic::page');
+        $this->router->allow('/', 'PublicSite::home');
+        $this->router->allow('/about/', 'PublicSite::about');
+        $this->router->allow('/category/', 'PublicCategory::categories');
+        $this->router->allow('/category/?/', 'PublicCategory::category');
+        $this->router->allow('/media/', 'PublicMedia::medias');
+        $this->router->allow('/media/?/', 'PublicMedia::media');
+        $this->router->allow('/page/', 'PublicPage::pages');
+        $this->router->allow('/page/?/', 'PublicPage::page');
         // Admin Routes
-        $this->router->allow('/admin/', 'GalleryAdmin::home');
-        $this->router->allow('/admin/category/list/', 'GalleryAdmin::categoryList');
-        $this->router->allow('/admin/category/find/', 'GalleryAdmin::categoryFind');
-        $this->router->allow('/admin/category/save/', 'GalleryAdmin::categorySave');
-        $this->router->allow('/admin/media/list/', 'GalleryAdmin::mediaList');
-        $this->router->allow('/admin/media/find/', 'GalleryAdmin::mediaFind');
-        $this->router->allow('/admin/media/save/', 'GalleryAdmin::mediaSave');
-        $this->router->allow('/admin/page/list/', 'GalleryAdmin::pageList');
-        $this->router->allow('/admin/page/find/', 'GalleryAdmin::pageFind');
-        $this->router->allow('/admin/page/save/', 'GalleryAdmin::pageSave');
-        $this->router->allow('/admin/source/', 'GalleryAdmin::source');
+        $this->router->allow('/admin/', 'AdminSite::home');
+        $this->router->allow('/admin/category/list/', 'AdminCategory::categoryList');
+        $this->router->allow('/admin/category/find/', 'AdminCategory::categoryFind');
+        $this->router->allow('/admin/category/save/', 'AdminCategory::categorySave');
+        $this->router->allow('/admin/media/list/', 'AdminMedia::mediaList');
+        $this->router->allow('/admin/media/find/', 'AdminMedia::mediaFind');
+        $this->router->allow('/admin/media/save/', 'AdminMedia::mediaSave');
+        $this->router->allow('/admin/page/list/', 'AdminPage::pageList');
+        $this->router->allow('/admin/page/find/', 'AdminPage::pageFind');
+        $this->router->allow('/admin/page/save/', 'AdminPage::pageSave');
+        $this->router->allow('/admin/site/', 'AdminSite::site');
+        $this->router->allow('/admin/site/save/', 'AdminSite::save');
+        $this->router->allow('/admin/source/', 'AdminSource::source');
+        $this->router->allow('/admin/source/save', 'AdminSource::save');
     }
 }
