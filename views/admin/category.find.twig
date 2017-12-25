@@ -1,8 +1,7 @@
-{# shared-media-gallery  admin/media.twig  v0.0.1 #}
 {{ include('header.twig') }}
 {{ include('menu.twig') }}
 <div class="content">
-	<h1>Media</h1>
+	<h1>Categories</h1>
 	<form action="">
 		<input name="q" type="text" value="{{ query|e }}" size="30" />
 		<input type="submit" value="   Search   " />
@@ -13,14 +12,14 @@
 	{% if query %}
 		<hr />
 		query: {{ query|e }}  limit: {{ limit|e }}
-		<form action="{{ uriBase }}/admin/media/save/" name="cats" method="POST">
+		<form action="{{ uriBase }}/admin/category/save/" name="cats" method="POST">
 		<br />
 		<input type="submit" value="  Save selected   ">
 		<br />
-		{% for media in results %}
+		{% for category in results %}
 			 <br />
-			 <input name="pageid[]" value="{{ media.pageid }}" type="checkbox" />
-			 {{ include('thumb.media.twig') }}
+			 <input name="pageid[]" value="{{ category.pageid }}" type="checkbox" />
+			 {{ include('thumb.category.twig') }}
 		{% endfor %}
 		<br /><br />
 		<input type="submit" value="  Save selected   ">

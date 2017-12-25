@@ -10,7 +10,7 @@ class Gallery
     use TraitDatabase;
     use TraitView;
 
-    const VERSION = '0.1.2';
+    const VERSION = '0.1.3';
 
     private $router;
     private $data = [];
@@ -71,11 +71,14 @@ class Gallery
         $this->router->allow('/page/?/', 'GalleryPublic::page');
         // Admin Routes
         $this->router->allow('/admin/', 'GalleryAdmin::home');
-        $this->router->allow('/admin/category/find/', 'GalleryAdmin::category');
+        $this->router->allow('/admin/category/list/', 'GalleryAdmin::categoryList');
+        $this->router->allow('/admin/category/find/', 'GalleryAdmin::categoryFind');
         $this->router->allow('/admin/category/save/', 'GalleryAdmin::categorySave');
-        $this->router->allow('/admin/media/find/', 'GalleryAdmin::media');
+        $this->router->allow('/admin/media/list/', 'GalleryAdmin::mediaList');
+        $this->router->allow('/admin/media/find/', 'GalleryAdmin::mediaFind');
         $this->router->allow('/admin/media/save/', 'GalleryAdmin::mediaSave');
-        $this->router->allow('/admin/page/find/', 'GalleryAdmin::page');
+        $this->router->allow('/admin/page/list/', 'GalleryAdmin::pageList');
+        $this->router->allow('/admin/page/find/', 'GalleryAdmin::pageFind');
         $this->router->allow('/admin/page/save/', 'GalleryAdmin::pageSave');
         $this->router->allow('/admin/source/', 'GalleryAdmin::source');
     }

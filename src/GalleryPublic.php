@@ -6,11 +6,10 @@ use Attogram\SharedMedia\Orm\CategoryQuery;
 use Attogram\SharedMedia\Orm\MediaQuery;
 use Attogram\SharedMedia\Orm\PageQuery;
 use Exception;
-use Propel\Runtime\ActiveQuery\Criteria;
-use Propel\Runtime\Map\TableMap;
 
 class GalleryPublic
 {
+    use TraitQueryItem;
     use TraitTools;
     use TraitView;
 
@@ -67,49 +66,6 @@ class GalleryPublic
         $this->displayView($name, $this->data);
     }
 
-    /**
-     * Setup search query
-     *
-     * @param object $orm
-     * @return object orm
-     */
-    private function setupSearch($orm)
-    {
-        $query = $this->getGet('q');
-        if (!empty($query)) {
-            $orm->filterByTitle("%$query%", Criteria::LIKE);
-            $this->data['query'] = $query;
-        }
-        return $orm;
-    }
-
-    /**
-     * @param object $orm
-     * @param string $dataName
-     * @param int|null $itemsPerPage
-     * @return void
-     */
-    private function setItems($orm, $dataName, $itemsPerPage = 0)
-    {
-        if (!$itemsPerPage) {
-            $itemsPerPage = self::ITEMS_PER_PAGE;
-        }
-        $page = 1;
-        try {
-            $items = $orm->orderByTitle()->paginate($page, $itemsPerPage);
-        } catch (Exception $error) {
-            return;
-        }
-        if (!$items) {
-            return;
-        }
-        foreach ($items as $item) {
-            $itemArray = $item->toArray(TableMap::TYPE_FIELDNAME);
-            $itemArray['shortTitle'] = $this->stripPrefix($itemArray['title']);
-            $this->data[$dataName][] = $itemArray;
-        }
-    }
-
     public function media($data)
     {
         $this->displayItem($data, MediaQuery::create(), 'media');
@@ -137,30 +93,5 @@ class GalleryPublic
             return;
         }
         $this->displayView($name, $this->data);
-    }
-
-    /**
-     * @param object $orm
-     * @param string $dataName
-     * @return bool
-     */
-    private function setItem($orm, $dataName)
-    {
-        $itemId = $this->data['vars'][0];
-        if (!$this->isNumber($itemId)) {
-            $this->error404('400 ' . ucfirst($dataName) . ' Not Found');
-            return false;
-        }
-        try {
-            $item = $orm->filterByPageid($itemId)->findOne();
-        } catch (Exception $error) {
-            $item = false;
-        }
-        if (!$item) {
-            $this->error404('404 ' . ucfirst($dataName) . ' Not Found');
-            return false;
-        }
-        $this->data[$dataName] = $item;
-        return true;
     }
 }

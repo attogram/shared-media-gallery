@@ -14,6 +14,7 @@ use Propel\Runtime\Map\TableMap;
 
 class GalleryAdmin
 {
+    use TraitQueryItem;
     use TraitTools;
     use TraitView;
 
@@ -27,21 +28,14 @@ class GalleryAdmin
         $this->displayView('admin/home', $data);
     }
 
-    public function media($data)
+    public function categoryList($data)
     {
         $this->data = $data;
-        $this->adminSearch(new MediaQuery());
-        $this->displayView('admin/media', $this->data);
+        $this->setItems(CategoryQuery::create(), 'categories', 100);
+        $this->displayView('admin/category.list', $this->data);
     }
 
-    public function mediaSave($data)
-    {
-        $this->data = $data;
-        $this->adminSave(new MediaQuery());
-        $this->displayView('admin/media.save', $this->data);
-    }
-
-    public function category($data)
+    public function categoryFind($data)
     {
         $this->data = $data;
         $limit = $this->getGet('limit');
@@ -50,7 +44,7 @@ class GalleryAdmin
         }
         $this->data['limit'] = $limit;
         $this->adminSearch(new CategoryQuery());
-        $this->displayView('admin/category', $this->data);
+        $this->displayView('admin/category.find', $this->data);
     }
 
     public function categorySave($data)
@@ -60,11 +54,36 @@ class GalleryAdmin
         $this->displayView('admin/category.save', $this->data);
     }
 
-    public function page($data)
+
+    public function mediaList($data)
+    {
+        $this->displayView('admin/media.list', $data);
+    }
+
+    public function mediaFind($data)
+    {
+        $this->data = $data;
+        $this->adminSearch(new MediaQuery());
+        $this->displayView('admin/media.find', $this->data);
+    }
+
+    public function mediaSave($data)
+    {
+        $this->data = $data;
+        $this->adminSave(new MediaQuery());
+        $this->displayView('admin/media.save', $this->data);
+    }
+
+    public function pageList($data)
+    {
+        $this->displayView('admin/page.list', $data);
+    }
+
+    public function pageFind($data)
     {
         $this->data = $data;
         $this->adminSearch(new PageQuery());
-        $this->displayView('admin/page', $this->data);
+        $this->displayView('admin/page.find', $this->data);
     }
 
     public function pageSave($data)
