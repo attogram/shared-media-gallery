@@ -16,9 +16,11 @@ plugins:
     checks:
       CleanCode/StaticAccess: # allow Object::method()
         enabled: false
-      Controversial/Superglobals: # allow $_SERVER in getServer()
+      Controversial/Superglobals: # allow $_SERVER, $_GET, $_POST, ...
         enabled: false
       Design/DevelopmentCodeFragment: # allow print_r()
+        enabled: false
+      Design/ExitExpression: # allow exit
         enabled: false
   phan:
     enabled: true

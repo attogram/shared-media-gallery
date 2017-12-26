@@ -51,7 +51,7 @@ class AdminSite
     private function getSiteData()
     {
         $site = SiteQuery::create()->findOneById(1);
-        if(!$site instanceof Site) {
+        if (!$site instanceof Site) {
             $site = new Site();
             $site->setTitle('Shared Media Gallery')->save();
         }

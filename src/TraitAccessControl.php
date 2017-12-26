@@ -16,8 +16,8 @@ trait TraitAccessControl
         if (!$allowedIps) {
             $this->error403('Access Control Error');
         }
-        $ip = $this->getServer('REMOTE_ADDR');
-        if (!in_array($ip, $allowedIps)) {
+        $remoteIp = $this->getServer('REMOTE_ADDR');
+        if (!in_array($remoteIp, $allowedIps)) {
             $this->error403('Access Denied');
         }
     }
@@ -44,5 +44,4 @@ trait TraitAccessControl
         print '403 ' . $msg;
         exit;
     }
-
 }
