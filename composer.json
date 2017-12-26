@@ -9,7 +9,8 @@
         "php": ">=5.5",
         "attogram/router": "@dev",
         "attogram/shared-media-orm": "^1.0@dev",
-        "twig/twig": "~2.0"
+        "twig/twig": "~2.0",
+        "vlucas/phpdotenv": "^2.5@dev"
     },
     "autoload": {
         "psr-4": {

@@ -49,7 +49,7 @@ trait TraitView
     {
         header('HTTP/1.0 404 Not Found');
         if (!$message) {
-            $message = '404 Not Found';
+            $message = '404 Page Not Found';
         }
         $this->data['message'] = $message;
         $this->displayView('error', $this->data);

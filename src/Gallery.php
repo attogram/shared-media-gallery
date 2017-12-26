@@ -10,7 +10,7 @@ class Gallery
     use TraitDatabase;
     use TraitView;
 
-    const VERSION = '0.1.3';
+    const VERSION = '0.1.4';
 
     private $router;
     private $data = [];
@@ -76,5 +76,6 @@ class Gallery
         $this->router->allow('/admin/site/save/', 'AdminSite::save');
         $this->router->allow('/admin/source/', 'AdminSource::source');
         $this->router->allow('/admin/source/save', 'AdminSource::save');
+        $this->router->allow('/admin/logoff', 'AdminSite::logoff');
     }
 }

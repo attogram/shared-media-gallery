@@ -25,7 +25,7 @@ trait TraitTools
     private function getGet(string $name)
     {
         if (!empty($_GET[$name])) {
-            return urldecode($_GET[$name]);
+            return $_GET[$name];
         }
     }
 
@@ -39,6 +39,19 @@ trait TraitTools
     {
         if (!empty($_POST[$name])) {
             return $_POST[$name];
+        }
+    }
+
+    /**
+     * get the value of a global _SERVER variable
+     *
+     * @param string $name
+     * @return mixed
+     */
+    private function getServer(string $name)
+    {
+        if (!empty($_SERVER[$name])) {
+            return $_SERVER[$name];
         }
     }
 
