@@ -6,6 +6,7 @@ use Attogram\SharedMedia\Orm\PageQuery;
 
 class AdminPage
 {
+    use TraitAccessControl;
     use TraitQueryAdmin;
     use TraitQueryItem;
     use TraitTools;
@@ -15,6 +16,7 @@ class AdminPage
 
     public function pageList($data)
     {
+        $this->accessControl();
         $this->data = $data;
         $this->setItems(PageQuery::create(), 'pages');
         $this->displayView('admin/page.list', $this->data);
@@ -22,6 +24,7 @@ class AdminPage
 
     public function pageFind($data)
     {
+        $this->accessControl();
         $this->data = $data;
         $this->adminSearch(new PageQuery());
         $this->displayView('admin/page.find', $this->data);
@@ -29,6 +32,7 @@ class AdminPage
 
     public function pageSave($data)
     {
+        $this->accessControl();
         $this->data = $data;
         $this->adminSave(new PageQuery());
         $this->displayView('admin/page.save', $this->data);

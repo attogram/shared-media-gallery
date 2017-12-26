@@ -6,6 +6,7 @@ use Attogram\SharedMedia\Orm\MediaQuery;
 
 class AdminMedia
 {
+    use TraitAccessControl;
     use TraitQueryAdmin;
     use TraitQueryItem;
     use TraitTools;
@@ -15,6 +16,7 @@ class AdminMedia
 
     public function mediaList($data)
     {
+        $this->accessControl();
         $this->data = $data;
         $this->setItems(MediaQuery::create(), 'medias');
         $this->displayView('admin/media.list', $this->data);
@@ -22,6 +24,7 @@ class AdminMedia
 
     public function mediaFind($data)
     {
+        $this->accessControl();
         $this->data = $data;
         $this->adminSearch(new MediaQuery());
         $this->displayView('admin/media.find', $this->data);
@@ -29,6 +32,7 @@ class AdminMedia
 
     public function mediaSave($data)
     {
+        $this->accessControl();
         $this->data = $data;
         $this->adminSave(new MediaQuery());
         $this->displayView('admin/media.save', $this->data);

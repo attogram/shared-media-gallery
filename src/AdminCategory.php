@@ -7,6 +7,7 @@ use Attogram\SharedMedia\Orm\CategoryQuery;
 
 class AdminCategory
 {
+    use TraitAccessControl;
     use TraitQueryAdmin;
     use TraitQueryItem;
     use TraitTools;
@@ -16,6 +17,7 @@ class AdminCategory
 
     public function categoryList($data)
     {
+        $this->accessControl();
         $this->data = $data;
         $this->setItems(CategoryQuery::create(), 'categories', 100);
         $this->displayView('admin/category.list', $this->data);
@@ -23,6 +25,7 @@ class AdminCategory
 
     public function categoryFind($data)
     {
+        $this->accessControl();
         $this->data = $data;
         $limit = $this->getGet('limit');
         if (!$limit || !$this->isNumber($limit)) {
@@ -35,6 +38,7 @@ class AdminCategory
 
     public function categorySave($data)
     {
+        $this->accessControl();
         $this->data = $data;
         $this->adminSave(new CategoryQuery());
         $this->displayView('admin/category.save', $this->data);
