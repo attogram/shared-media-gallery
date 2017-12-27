@@ -7,6 +7,7 @@ use Attogram\SharedMedia\Orm\PageQuery;
 class AdminPage
 {
     use TraitAccessControl;
+    use TraitEnvironment;
     use TraitQueryAdmin;
     use TraitQueryItem;
     use TraitTools;

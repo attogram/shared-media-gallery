@@ -21,25 +21,6 @@ trait TraitAccessControl
     }
 
     /**
-     * Get list of Allowed IP Addresses from the .env file, or exit with error 403
-     * @return array
-     */
-    private function getAllowedIps()
-    {
-        try {
-            $dotenv = new Dotenv(__DIR__ . '/../');
-            $dotenv->load();
-        } catch (InvalidPathException $error) {
-            $this->error403('Env Not Found');
-        }
-        $envAllowedIps = getenv('ALLOWED_IPS');
-        if (!$envAllowedIps) {
-            $this->error403('Allow List Not Found');
-        }
-        return explode(',', $envAllowedIps);
-    }
-
-    /**
      * Get Remote IP Address, or exit with error 403
      * @return string
      */

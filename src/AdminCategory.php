@@ -8,6 +8,7 @@ use Attogram\SharedMedia\Orm\CategoryQuery;
 class AdminCategory
 {
     use TraitAccessControl;
+    use TraitEnvironment;
     use TraitQueryAdmin;
     use TraitQueryItem;
     use TraitTools;

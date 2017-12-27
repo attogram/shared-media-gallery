@@ -9,6 +9,7 @@ use Propel\Runtime\Map\TableMap;
 class AdminSource
 {
     use TraitAccessControl;
+    use TraitEnvironment;
     use TraitView;
 
     public function source($data)

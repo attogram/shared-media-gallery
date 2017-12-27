@@ -7,6 +7,7 @@ use Attogram\SharedMedia\Orm\MediaQuery;
 class AdminMedia
 {
     use TraitAccessControl;
+    use TraitEnvironment;
     use TraitQueryAdmin;
     use TraitQueryItem;
     use TraitTools;

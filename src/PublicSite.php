@@ -21,7 +21,7 @@ class PublicSite
                 ->setOffset(rand(1, $data['category_count'] - 1))
                 ->findOne();
         } catch (Exception $error) {
-            $data['media'] = ['title' => 'Error', 'pageid' => 0];
+            // error
         }
         $this->displayView('home', $data);
     }

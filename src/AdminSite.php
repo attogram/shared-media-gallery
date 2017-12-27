@@ -9,6 +9,7 @@ use Propel\Runtime\Map\TableMap;
 class AdminSite
 {
     use TraitAccessControl;
+    use TraitEnvironment;
     use TraitTools;
     use TraitView;
 
