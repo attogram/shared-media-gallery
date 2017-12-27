@@ -7,25 +7,25 @@ use Dotenv\Exception\InvalidPathException;
 
 trait TraitEnvironment
 {
-	private $dotenv;
+    private $dotenv;
 
-	/**
-	 * load the .env file
-	 * @return bool
-	 */
-	private function setEnvironment()
-	{
-		if ($this->dotenv instanceof Dotenv) {
-			return true;
-		}
+    /**
+     * load the .env file
+     * @return bool
+     */
+    private function setEnvironment()
+    {
+        if ($this->dotenv instanceof Dotenv) {
+            return true;
+        }
         try {
             $this->dotenv = new Dotenv(__DIR__ . '/../');
             $this->dotenv->load();
         } catch (InvalidPathException $error) {
             return false;
         }
-		return true;
-	}
+        return true;
+    }
 
     /**
      * Get list of Allowed IP Addresses
@@ -34,8 +34,8 @@ trait TraitEnvironment
     private function getAllowedIps()
     {
         if (!$this->setEnvironment()) {
-			return [];
-		}
+            return [];
+        }
         $envAllowedIps = getenv('ALLOWED_IPS');
         return explode(',', $envAllowedIps);
     }
