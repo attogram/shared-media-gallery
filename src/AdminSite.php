@@ -57,7 +57,7 @@ class AdminSite
     {
         try {
             $site = SiteQuery::create()->findOneById(1);
-        } catch(Exception $error) {
+        } catch (Exception $error) {
             $site = new Site();
         }
         if (!$site instanceof Site) {

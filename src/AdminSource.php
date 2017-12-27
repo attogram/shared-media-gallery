@@ -41,12 +41,12 @@ class AdminSource
     {
         foreach (Sources::$sources as $title => $url) {
             try {
-                $source = SourceQuery::create()
+                SourceQuery::create()
                     ->filterByTitle($title)
                     ->filterByHost($url)
                     ->filterByEndpoint($url)
                     ->findOneOrCreate();
-            } catch(Exception $error) {
+            } catch (Exception $error) {
                 print '<pre>ERROR: seedSources: title='.$title.' url='.$url
                 .' error: ' . $error->getMessage() . '</pre>';
             }
