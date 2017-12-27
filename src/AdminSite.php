@@ -4,6 +4,7 @@ namespace Attogram\SharedMedia\Gallery;
 
 use Attogram\SharedMedia\Orm\Site;
 use Attogram\SharedMedia\Orm\SiteQuery;
+use Exception;
 use Propel\Runtime\Map\TableMap;
 
 class AdminSite
@@ -50,11 +51,15 @@ class AdminSite
     }
 
     /**
-     * @return Site
+     * @return Site|null
      */
     private function getSiteData()
     {
-        $site = SiteQuery::create()->findOneById(1);
+        try {
+            $site = SiteQuery::create()->findOneById(1);
+        } catch(Exception $error) {
+            $site = new Site();
+        }
         if (!$site instanceof Site) {
             $site = new Site();
             $site->setTitle('Shared Media Gallery')->save();
