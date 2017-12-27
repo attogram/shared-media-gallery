@@ -50,8 +50,7 @@ trait TraitView
     protected function error404(string $message = 'Page Not Found')
     {
         header('HTTP/1.0 404 Not Found');
-        $data['message'] = '404 ' . $message;
-        $this->displayView('error', $data);
+        $this->displayView('error', ['message' => '404 ' . $message]);
         exit;
     }
 }
