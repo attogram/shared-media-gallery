@@ -33,7 +33,7 @@ class Gallery
         list($className, $methodName) = explode('::', $control);
         $className = 'Attogram\\SharedMedia\\Gallery\\' . $className;
         if (!is_callable([$className, $methodName])) {
-            $this->error404('Control Not Found');
+            $this->error404('404 Control Not Found');
         }
         $this->setupDatabase();
         $this->data['media_count'] = $this->getMediaCount();
