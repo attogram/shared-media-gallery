@@ -28,9 +28,9 @@ class AdminSite
     public function saveSettings($data)
     {
         $this->accessControl();
-		if (!$this->isPost()) {
-			$this->error403('POST ONLY');
-		}
+        if (!$this->isPost()) {
+            $this->error403('POST ONLY');
+        }
         $data['title'] = $this->getPost('title');
         $data['about'] = $this->getPost('about');
         $data['header'] = $this->getPost('header');
@@ -60,9 +60,9 @@ class AdminSite
         }
         return $site;
     }
-	
-	public function database($data)
-	{
+
+    public function database($data)
+    {
         $this->displayView('admin/site.database', $data);
-	}
+    }
 }

@@ -27,12 +27,12 @@ class Gallery
         $this->data['title'] = 'Shared Media Gallery';
         $this->data['version'] = self::VERSION;
         if (!$control) {
-            $this->error404('404 Page Not Found');
+            $this->error404();
         }
         list($className, $methodName) = explode('::', $control);
         $className = 'Attogram\\SharedMedia\\Gallery\\' . $className;
         if (!is_callable([$className, $methodName])) {
-            $this->error404('404 Control Not Found');
+            $this->error404('Control Not Found');
         }
         $this->setupDatabase();
         $this->data['media_count'] = $this->getMediaCount();
@@ -50,7 +50,7 @@ class Gallery
      */
     private function setRoutes()
     {
-        // Public Routes
+        // Public Gallery Routes
         $this->router->allow('/', 'PublicSite::home');
         $this->router->allow('/about/', 'PublicSite::about');
         $this->router->allow('/category/', 'PublicCategory::categories');
@@ -59,20 +59,25 @@ class Gallery
         $this->router->allow('/media/?/', 'PublicMedia::media');
         $this->router->allow('/page/', 'PublicPage::pages');
         $this->router->allow('/page/?/', 'PublicPage::page');
-        // Admin Routes
+        // Site Admin Routes
         $this->router->allow('/admin/', 'AdminSite::home');
-		$this->router->allow('/admin/site/settings/', 'AdminSite::settings');
+        $this->router->allow('/admin/site/settings/', 'AdminSite::settings');
         $this->router->allow('/admin/site/settings/save/', 'AdminSite::saveSettings');
         $this->router->allow('/admin/site/database/', 'AdminSite::database');
+        // Category Admin Routes
         $this->router->allow('/admin/category/list/', 'AdminCategory::categoryList');
         $this->router->allow('/admin/category/find/', 'AdminCategory::categoryFind');
         $this->router->allow('/admin/category/save/', 'AdminCategory::categorySave');
+        $this->router->allow('/admin/category/?/subcats/', 'AdminCategory::categorySubcats');
+        // Media Admin Routes
         $this->router->allow('/admin/media/list/', 'AdminMedia::mediaList');
         $this->router->allow('/admin/media/find/', 'AdminMedia::mediaFind');
         $this->router->allow('/admin/media/save/', 'AdminMedia::mediaSave');
+        // Page Admin Routes
         $this->router->allow('/admin/page/list/', 'AdminPage::pageList');
         $this->router->allow('/admin/page/find/', 'AdminPage::pageFind');
         $this->router->allow('/admin/page/save/', 'AdminPage::pageSave');
+        // Source Admin Routes
         $this->router->allow('/admin/source/', 'AdminSource::source');
         $this->router->allow('/admin/source/save', 'AdminSource::save');
     }

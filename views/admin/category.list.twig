@@ -22,7 +22,7 @@
 				<div class="catname"><span class="title">{{ category.shortTitle|e }}</span></div>
                 <div class="catfiles">{{ category.files|default('?') }}</div>
                 <div class="catfiles">-</div>
-                <div class="catfiles">{{ category.subcats|default('?') }}</div>
+                <div class="catfiles"><a href="{{ uriBase }}/admin/category/{{ category.pageid }}/subcats/">import</a>&nbsp;{{ category.subcats|default('?') }}</div>
                 <div class="catfiles">{{ category.pages|default('?') }}</div>
                 <div class="catfiles">{{ category.hidden ? 'H' : 'P' }}</div>
                 <div class="catfiles">{{ category.source_id }}</div>

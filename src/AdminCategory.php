@@ -43,4 +43,24 @@ class AdminCategory
         $this->adminSave(new CategoryQuery());
         $this->displayView('admin/category.save', $this->data);
     }
+
+    public function categorySubcats($data)
+    {
+        $this->accessControl();
+        $categoryId = (int) $data['vars'][0];
+        if (!$categoryId || !$this->isNumber($categoryId)) {
+            $this->error404('Category Not Found');
+        }
+
+        $category = new CategoryQuery();
+        $category->setApiPageid($categoryId);
+        $category->setApiLimit(500);
+
+        $subcats = $category->subcats();
+
+        $this->data = $data;
+        $this->data['subcats'] = $subcats;
+
+        $this->displayView('admin/category.subcats', $this->data);
+    }
 }
