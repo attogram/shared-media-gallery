@@ -6,6 +6,7 @@ use Attogram\SharedMedia\Orm\CategoryQuery;
 
 class PublicCategory
 {
+    use TraitErrors;
     use TraitQueryItem;
     use TraitTools;
     use TraitView;

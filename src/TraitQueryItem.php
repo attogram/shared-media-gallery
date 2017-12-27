@@ -46,8 +46,7 @@ trait TraitQueryItem
     {
         $itemId = $this->data['vars'][0];
         if (!$this->isNumber($itemId)) {
-            $this->error404('400 ' . ucfirst($dataName) . ' Not Found');
-            return false;
+            $this->error404('404 ' . ucfirst($dataName) . ' Not Found');
         }
         try {
             $item = $orm->filterByPageid($itemId)->findOne();
@@ -56,7 +55,6 @@ trait TraitQueryItem
         }
         if (!$item) {
             $this->error404('404 ' . ucfirst($dataName) . ' Not Found');
-            return false;
         }
         $this->data[$dataName] = $item;
         return true;

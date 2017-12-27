@@ -36,21 +36,9 @@ trait TraitView
         }
         try {
             $this->twig->display($view.'.twig', $data);
-        } catch (Twig_Error_Loader $error) {
+        } catch (Exception $error) {
             print '<span style="background-color:yellow;padding:10px;">'
                 . 'View Not Found: <strong>' . $view . '</strong></span>';
         }
-    }
-
-    /**
-     * Send 404 error with message, then exit
-     * @param string $message
-     * @return void
-     */
-    protected function error404(string $message = 'Page Not Found')
-    {
-        header('HTTP/1.0 404 Not Found');
-        $this->displayView('error', ['message' => '404 ' . $message]);
-        exit;
     }
 }

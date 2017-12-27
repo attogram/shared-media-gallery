@@ -9,6 +9,7 @@ class AdminCategory
 {
     use TraitAccessControl;
     use TraitEnvironment;
+    use TraitErrors;
     use TraitQueryAdmin;
     use TraitQueryItem;
     use TraitTools;

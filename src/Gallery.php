@@ -8,6 +8,7 @@ class Gallery
 {
     use TraitCounts;
     use TraitDatabase;
+    use TraitErrors;
     use TraitView;
 
     const VERSION = '0.1.5';

@@ -7,6 +7,7 @@ use Exception;
 
 class PublicSite
 {
+    use TraitErrors;
     use TraitQueryItem;
     use TraitTools;
     use TraitView;
@@ -18,7 +19,7 @@ class PublicSite
     {
         try {
             $data['media'] = MediaQuery::create()
-                ->setOffset(rand(1, $data['category_count'] - 1))
+                ->setOffset(rand(1, $data['media_count'] - 1))
                 ->findOne();
         } catch (Exception $error) {
             //$data['error'] = $error->getMessage();

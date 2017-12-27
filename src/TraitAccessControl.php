@@ -32,15 +32,4 @@ trait TraitAccessControl
         }
         return $remoteIp;
     }
-
-    /**
-     * Send 403 Error with message, then exit
-     * @param string $msg
-     */
-    private function error403($msg = 'Forbidden')
-    {
-        header('HTTP/1.0 403 Forbidden');
-        print '403 ' . $msg;
-        exit;
-    }
 }

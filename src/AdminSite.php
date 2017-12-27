@@ -11,6 +11,7 @@ class AdminSite
 {
     use TraitAccessControl;
     use TraitEnvironment;
+    use TraitErrors;
     use TraitTools;
     use TraitView;
 
