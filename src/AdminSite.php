@@ -18,16 +18,19 @@ class AdminSite
         $this->displayView('admin/home', $data);
     }
 
-    public function site($data)
+    public function settings($data)
     {
         $this->accessControl();
         $data['site'] = $this->getSiteData()->toArray(TableMap::TYPE_FIELDNAME);
-        $this->displayView('admin/site', $data);
+        $this->displayView('admin/site.settings', $data);
     }
 
-    public function save($data)
+    public function saveSettings($data)
     {
         $this->accessControl();
+		if (!$this->isPost()) {
+			$this->error403('POST ONLY');
+		}
         $data['title'] = $this->getPost('title');
         $data['about'] = $this->getPost('about');
         $data['header'] = $this->getPost('header');
@@ -42,7 +45,7 @@ class AdminSite
             ->save();
         $data['site'] = $site->toArray(TableMap::TYPE_FIELDNAME);
         $data['saved'] = true;
-        $this->displayView('admin/site', $data);
+        $this->displayView('admin/site.settings', $data);
     }
 
     /**
@@ -57,4 +60,9 @@ class AdminSite
         }
         return $site;
     }
+	
+	public function database($data)
+	{
+        $this->displayView('admin/site.database', $data);
+	}
 }

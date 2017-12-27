@@ -43,6 +43,17 @@ trait TraitTools
     }
 
     /**
+     * @return bool
+     */
+    private function isPost()
+    {
+        if (!empty($_POST)) {
+            return true;
+        }
+        return false;
+    }
+
+    /**
      * get the value of a global _SERVER variable
      *
      * @param string $name

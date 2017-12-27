@@ -51,6 +51,7 @@ trait TraitAccessControl
         }
         return $remoteIp;
     }
+
     /**
      * Send 403 Error with message, then exit
      * @param string $msg

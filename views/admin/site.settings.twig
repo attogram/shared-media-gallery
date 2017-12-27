@@ -6,7 +6,7 @@
 	{% if saved %}
 		<p>Site Settings SAVED</p>
 	{% endif %}
-	<form action="save/" method="POST">
+	<form action="{{ uriBase }}/admin/site/settings/save/" method="POST">
 	<br />Title: <input name="title" value="{{ site.title|e }}" type="text" size="40" />
 	<br />About: <textarea name="about" cols="70" rows="4" />{{ site.about|e }}</textarea>
 	<br />Header: <textarea name="header" cols="70" rows="8" />{{ site.header|e }}</textarea>

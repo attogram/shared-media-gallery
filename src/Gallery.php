@@ -10,7 +10,7 @@ class Gallery
     use TraitDatabase;
     use TraitView;
 
-    const VERSION = '0.1.4';
+    const VERSION = '0.1.5';
 
     private $router;
     private $data = [];
@@ -28,13 +28,11 @@ class Gallery
         $this->data['version'] = self::VERSION;
         if (!$control) {
             $this->error404('404 Page Not Found');
-            return;
         }
         list($className, $methodName) = explode('::', $control);
         $className = 'Attogram\\SharedMedia\\Gallery\\' . $className;
         if (!is_callable([$className, $methodName])) {
             $this->error404('404 Control Not Found');
-            return;
         }
         $this->setupDatabase();
         $this->data['media_count'] = $this->getMediaCount();
@@ -63,6 +61,9 @@ class Gallery
         $this->router->allow('/page/?/', 'PublicPage::page');
         // Admin Routes
         $this->router->allow('/admin/', 'AdminSite::home');
+		$this->router->allow('/admin/site/settings/', 'AdminSite::settings');
+        $this->router->allow('/admin/site/settings/save/', 'AdminSite::saveSettings');
+        $this->router->allow('/admin/site/database/', 'AdminSite::database');
         $this->router->allow('/admin/category/list/', 'AdminCategory::categoryList');
         $this->router->allow('/admin/category/find/', 'AdminCategory::categoryFind');
         $this->router->allow('/admin/category/save/', 'AdminCategory::categorySave');
@@ -72,10 +73,7 @@ class Gallery
         $this->router->allow('/admin/page/list/', 'AdminPage::pageList');
         $this->router->allow('/admin/page/find/', 'AdminPage::pageFind');
         $this->router->allow('/admin/page/save/', 'AdminPage::pageSave');
-        $this->router->allow('/admin/site/', 'AdminSite::site');
-        $this->router->allow('/admin/site/save/', 'AdminSite::save');
         $this->router->allow('/admin/source/', 'AdminSource::source');
         $this->router->allow('/admin/source/save', 'AdminSource::save');
-        $this->router->allow('/admin/logoff', 'AdminSite::logoff');
     }
 }

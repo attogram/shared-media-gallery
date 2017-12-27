@@ -37,21 +37,21 @@ trait TraitView
         try {
             $this->twig->display($view.'.twig', $data);
         } catch (Twig_Error_Loader $error) {
-            print 'ERROR: ' . $error->getMessage();
+            print '<span style="background-color:yellow;padding:10px;">'
+                . 'View Not Found: <strong>' . $view . '</strong></span>';
         }
     }
 
     /**
+     * Send 404 error with message, then exit
      * @param string $message
      * @return void
      */
-    protected function error404(string $message = '')
+    protected function error404(string $message = 'Page Not Found')
     {
         header('HTTP/1.0 404 Not Found');
-        if (!$message) {
-            $message = '404 Page Not Found';
-        }
-        $this->data['message'] = $message;
-        $this->displayView('error', $this->data);
+        $data['message'] = '404 ' . $message;
+        $this->displayView('error', $data);
+        exit;
     }
 }
