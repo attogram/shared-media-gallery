@@ -20,11 +20,11 @@ class PublicCategory
 
     public function categories()
     {
-        $this->displayItems($this->data, CategoryQuery::create(), 'categories', 100);
+        $this->displayItems(CategoryQuery::create(), 'categories', 100);
     }
 
     public function category()
     {
-        $this->displayItem($this->data, CategoryQuery::create(), 'category');
+        $this->displayItem(CategoryQuery::create(), 'category');
     }
 }

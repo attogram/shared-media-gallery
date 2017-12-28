@@ -20,11 +20,11 @@ class PublicMedia
 
     public function medias()
     {
-        $this->displayItems($this->data, MediaQuery::create(), 'medias');
+        $this->displayItems(MediaQuery::create(), 'medias');
     }
 
     public function media()
     {
-        $this->displayItem($this->data, MediaQuery::create(), 'media');
+        $this->displayItem(MediaQuery::create(), 'media');
     }
 }

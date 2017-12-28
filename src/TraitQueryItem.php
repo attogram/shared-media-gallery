@@ -77,17 +77,15 @@ trait TraitQueryItem
     }
 
     /**
-     * @param array    $data
      * @param object   $orm
      * @param string   $name
      * @param int      $limit
      */
-    private function displayItems($data, $orm, $name, $limit = 0)
+    private function displayItems($orm, $name, $limit = 0)
     {
-        $this->data = $data;
         $orm = $this->setupSearch($orm);
         $this->setItems($orm, $name, $limit);
-        $this->displayView($name, $this->data);
+        $this->displayView($name);
     }
 
     /**
@@ -95,12 +93,11 @@ trait TraitQueryItem
      * @param object   $orm
      * @param string   $name
      */
-    private function displayItem($data, $orm, $name)
+    private function displayItem($orm, $name)
     {
-        $this->data = $data;
         if (!$this->setItem($orm, $name)) {
             return;
         }
-        $this->displayView($name, $this->data);
+        $this->displayView($name);
     }
 }

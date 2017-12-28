@@ -20,11 +20,11 @@ class PublicPage
 
     public function pages()
     {
-        $this->displayItems($this->data, PageQuery::create(), 'pages');
+        $this->displayItems(PageQuery::create(), 'pages');
     }
 
     public function page()
     {
-        $this->displayItem($this->data, PageQuery::create(), 'page');
+        $this->displayItem(PageQuery::create(), 'page');
     }
 }
