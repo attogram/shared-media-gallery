@@ -5,6 +5,7 @@ namespace Attogram\SharedMedia\Gallery;
 use Throwable;
 use Twig_Environment;
 use Twig_Error_Loader;
+use Twig_Error_Syntax;
 use Twig_Extension_Debug;
 use Twig_Loader_Filesystem;
 
@@ -37,9 +38,12 @@ trait TraitView
         }
         try {
             $this->twig->display($view.'.twig', $data);
+        } catch (Twig_Error_Loader $error) {
+			print 'Load Error: ' . $view;
+        } catch (Twig_Error_Syntax $error) {
+			print 'Syntax Error: ' . $view;
         } catch (Throwable $error) {
-            print '<span style="background-color:yellow;padding:10px;">'
-                . 'View Not Found: <strong>' . $view . '</strong></span>';
+			print 'View Error: ' . $view;
         }
     }
 }

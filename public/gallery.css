@@ -19,8 +19,8 @@ video { background-clip:content-box; background-color:white; border:1px solid bl
 audio { background-clip:content-box; background-color:white; border:1px solid black; }
 .cattable { display:table; margin:0 auto; min-width:80%; }
 .catcon { display:table-row; padding:0; }
-.catfiles { border:1px solid lightgrey; display:table-cell; font-size:90%; min-width:42px; padding:0 10px 0 0; text-align:right; }
-.catname { border:1px solid lightgrey; display:table-cell; padding:0 0 0 10px; text-align:left; }
+.catfiles { border:1px solid lightgrey; display:table-cell; font-size:90%; min-width:42px; padding:0 10px 0 0; text-align:right; vertical-align:top; }
+.catname { border:1px solid lightgrey; display:table-cell; padding:0 0 0 10px; text-align:left; vertical-align:top; }
 .catname:hover { background-color:yellow; }
 .cathead { background-color:lightgrey; border-color:white; font-size:95%; font-style:italic; padding:2px 10px 2px 2px; }
 .media, .page { background-color:white; border:1px solid black; display:inline-block; margin:6px; padding:4px; vertical-align:top; }

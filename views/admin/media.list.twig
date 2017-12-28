@@ -1,8 +1,26 @@
 {{ include('header.twig') }}
 {{ include('menu.twig') }}
 <div class="content">
-	<h1>Media List</h1>
-	...
+    <h1>Media List</h1>
+    <div class="cattable">
+        <div class="catcon">
+            <div class="catname cathead">ID</div>
+            <div class="catname cathead">Pageid</div>
+            <div class="catname cathead">Thumb</div>
+            <div class="catname cathead">Title</div>
+            <div class="catname cathead">Description</div>
+            <div class="catname cathead">source</div>
+        </div>
+        {% for media in medias %}
+            <div class="catcon">
+                <div class="catname">{{ media.id }}</div>
+                <div class="catname"><span class="pageid">{{ media.pageid }}</span></div>
+                <div class="catname"><span class="title"><a href="{{ uriBase }}/media/{{ media.pageid }}/"><img src="{{ media.thumburl }}" width="{{ media.thumbwidth / 2}}" height="{{ media.thumbheight / 2}}"></a></span></div>
+                <div class="catname"><span class="title">{{ media.shortTitle|slice(0,20)|e }}...</span></div>
+                <div class="catname"><span class="title">{{ media.imagedescription|slice(0,100)|e }}...</span></div>
+                <div class="catname"><span class="title">{{ media.source_id|e }}</span></div>
+            </div>
+        {% endfor %}
+    </div>
 </div>
-
 {{ include('footer.twig') }}
