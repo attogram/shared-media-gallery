@@ -2,14 +2,10 @@
 
 use Attogram\SharedMedia\Gallery\Gallery;
 
-// Bootstrap ////////////////////////////////////
-$projectDir = '../';
-$lib = $projectDir . 'vendor/autoload.php';
+$lib = '../vendor/autoload.php';
 if (!is_readable($lib)) {
-    print 'ERROR: Autoloader Not Found: ' . $lib;
-    return false;
+    exit('ERROR: Autoloader Not Found: ' . $lib);
 }
 require_once($lib);
-/////////////////////////////////////////////////
 
-$gallery = new Gallery();
+new Gallery();

@@ -1,11 +1,11 @@
 {% if category %}
-	<span class="title"><a href="{{ uriBase }}/category/{{ category.pageid }}/">{{ category.title|e }}</a></span> 
-	&nbsp; <span class="pageid">{{ category.pageid }}</span>
-	&nbsp; {{ category.files|default('?') }} files
-	&nbsp; {{ category.subcats|default('?') }} subcats
-	&nbsp; {{ category.pages|default('?') }} pages
-	&nbsp; {{ category.size|default('?') }} size
-	&nbsp; [{{ category.hidden ? 'hidden' : 'public' }}]
+    <span class="title"><a href="{{ uriBase }}/category/{{ category.pageid }}/">{{ category.title|e }}</a></span>
+    &nbsp; <span class="pageid">{{ category.pageid }}</span>
+    &nbsp; {{ category.files|default('?') }} files
+    &nbsp; {{ category.subcats|default('?') }} subcats
+    &nbsp; {{ category.pages|default('?') }} pages
+    &nbsp; {{ category.size|default('?') }} size
+    &nbsp; [{{ category.hidden ? 'hidden' : 'public' }}]
 {% else %}
-	Category Not Found
+    Category Not Found
 {% endif %}

@@ -26,9 +26,9 @@
                     <span class="small">{{ media.imagedescription|slice(0,400)|e }}{% if media.imagedescription|length > 400 %}...{% endif %}</span>
                 </div>
                 <div class="cell left">
-					<a href="{{ uriBase }}/admin/media/{{ media.pageid }}/categories/">import</a>
-					<br />?
-				</div>
+                    <a href="{{ uriBase }}/admin/media/{{ media.pageid }}/categories/">import</a>
+                    <br />?
+                </div>
                 <div class="cell center">{{ media.source_id|e }}</div>
             </div>
         {% endfor %}

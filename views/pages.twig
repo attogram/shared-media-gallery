@@ -1,12 +1,12 @@
 {{ include('header.twig') }}
 {{ include('menu.twig') }}
 <div class="content">
-	<form method="GET" style="float:right;">
-		<input type="text" name="q" value="{{ query|e }}" size="16">
-		<input type="submit" value="Search {{ media_count|default('0') }} Media">
-	</form>
-	{% for page in pages %}
-		{{ dump(page) }}
-	{% endfor %}
+    <form method="GET" style="float:right;">
+        <input type="text" name="q" value="{{ query|e }}" size="16">
+        <input type="submit" value="Search {{ media_count|default('0') }} Media">
+    </form>
+    {% for page in pages %}
+        {{ dump(page) }}
+    {% endfor %}
 </div>
 {{ include('footer.twig') }}

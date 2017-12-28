@@ -13,8 +13,8 @@
         <column name="footer" type="LONGVARCHAR" />
         <column name="use_cdn" type="BOOLEAN" defaultValue="false"/>
         <column name="curation" type="BOOLEAN" defaultValue="false"/>
-		<behavior name="timestampable" />
+        <behavior name="timestampable" />
     </table>
-	
+
 </database>
 
