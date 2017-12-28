@@ -18,51 +18,47 @@ class AdminCategory
 
     private $data = [];
 
-    public function __construct()
+    public function __construct($data)
     {
+        $this->data = $data;
         $this->accessControl();
     }
 
-    public function categoryList($data)
+    public function categoryList()
     {
-        $this->data = $data;
         $this->setItems(CategoryQuery::create(), 'categories', 100);
-        $this->displayView('admin/category.list', $this->data);
+        $this->displayView('admin/category.list');
     }
 
-    public function categorySave($data)
+    public function categorySave()
     {
-        $this->data = $data;
         $this->adminSave(new CategoryQuery());
-        $this->displayView('admin/category.save', $this->data);
+        $this->displayView('admin/category.save');
     }
 
-    public function categorySearch($data)
+    public function categorySearch()
     {
-        $this->data = $data;
         $limit = $this->getGet('limit');
         if (!$limit || !$this->isNumber($limit)) {
             $limit = ApiBase::DEFAULT_LIMIT;
         }
         $this->data['limit'] = $limit;
         $this->adminSearch(new CategoryQuery());
-        $this->displayView('admin/category.search', $this->data);
+        $this->displayView('admin/category.search');
     }
 
-    public function categorySubcats($data)
+    public function categorySubcats()
     {
-        $this->data = $data;
         $this->setCategoryId();
         $this->setFromApi(new CategoryQuery(), $this->data['categoryId'], 'subcats', 'subcats');
-        $this->displayView('admin/category.subcats', $this->data);
+        $this->displayView('admin/category.subcats');
     }
 
-    public function categoryMedia($data)
+    public function categoryMedia()
     {
-        $this->data = $data;
         $this->setCategoryId();
         $this->setFromApi(new MediaQuery(), $this->data['categoryId'], 'getMediaInCategory', 'medias');
-        $this->displayView('admin/category.media', $this->data);
+        $this->displayView('admin/category.media');
     }
 
     private function setFromApi($orm, $pageid, $method, $itemName)

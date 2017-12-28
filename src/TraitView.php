@@ -28,16 +28,15 @@ trait TraitView
 
     /**
      * @param string $view
-     * @param array  $data
      * @return void
      */
-    private function displayView(string $view, array $data = [])
+    private function displayView(string $view)
     {
         if (!$this->twig) {
             $this->setupTwig();
         }
         try {
-            $this->twig->display($view.'.twig', $data);
+            $this->twig->display($view.'.twig', $this->data);
         } catch (Twig_Error_Loader | Twig_Error_Syntax | Throwable $error) {
             print 'Error: ' . get_class($error) . ': ' . $view;
         }

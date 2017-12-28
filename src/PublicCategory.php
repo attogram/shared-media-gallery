@@ -11,13 +11,20 @@ class PublicCategory
     use TraitTools;
     use TraitView;
 
-    public function categories($data)
+    private $data = [];
+
+    public function __construct($data)
     {
-        $this->displayItems($data, CategoryQuery::create(), 'categories', 100);
+        $this->data = $data;
     }
 
-    public function category($data)
+    public function categories()
     {
-        $this->displayItem($data, CategoryQuery::create(), 'category');
+        $this->displayItems($this->data, CategoryQuery::create(), 'categories', 100);
+    }
+
+    public function category()
+    {
+        $this->displayItem($this->data, CategoryQuery::create(), 'category');
     }
 }

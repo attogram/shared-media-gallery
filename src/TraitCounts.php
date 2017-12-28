@@ -6,10 +6,21 @@ use Attogram\SharedMedia\Orm\CategoryQuery;
 use Attogram\SharedMedia\Orm\MediaQuery;
 use Attogram\SharedMedia\Orm\PageQuery;
 use Attogram\SharedMedia\Orm\SourceQuery;
-use Exception;
+use Throwable;
 
 trait TraitCounts
 {
+    /**
+     * @return void
+     */
+    private function setCounts()
+    {
+        $this->data['category_count'] = $this->getCategoryCount();
+        $this->data['media_count'] = $this->getMediaCount();
+        $this->data['page_count'] = $this->getPageCount();
+        $this->data['source_count'] = $this->getSourceCount();
+    }
+
     /**
      * @return int
      */
@@ -49,7 +60,7 @@ trait TraitCounts
     {
         try {
             return $orm->count();
-        } catch (Exception $error) {
+        } catch (Throwable $error) {
             return 0;
         }
     }

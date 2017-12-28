@@ -15,32 +15,35 @@ class AdminSite
     use TraitTools;
     use TraitView;
 
-    public function __construct()
+    private $data = [];
+
+    public function __construct($data)
     {
+        $this->data = $data;
         $this->accessControl();
     }
 
-    public function home($data)
+    public function home()
     {
-        $this->displayView('admin/home', $data);
+        $this->displayView('admin/home');
     }
 
-    public function settings($data)
+    public function settings()
     {
         $data['site'] = $this->getSiteData()->toArray(TableMap::TYPE_FIELDNAME);
-        $this->displayView('admin/site.settings', $data);
+        $this->displayView('admin/site.settings');
     }
 
-    public function saveSettings($data)
+    public function saveSettings()
     {
         if (!$this->isPost()) {
             $this->error403('POST ONLY');
         }
-        $data['title'] = $this->getPost('title');
-        $data['about'] = $this->getPost('about');
-        $data['header'] = $this->getPost('header');
-        $data['footer'] = $this->getPost('footer');
-        $data['cdn'] = $this->getPost('cdn') === 'on' ? true : false;
+        $this->data['title'] = $this->getPost('title');
+        $this->data['about'] = $this->getPost('about');
+        $this->data['header'] = $this->getPost('header');
+        $this->data['footer'] = $this->getPost('footer');
+        $this->data['cdn'] = $this->getPost('cdn') === 'on' ? true : false;
         $site = $this->getSiteData();
         $site->setTitle($data['title'])
             ->setAbout($data['about'])
@@ -48,9 +51,14 @@ class AdminSite
             ->setFooter($data['footer'])
             ->setUseCdn($data['cdn'])
             ->save();
-        $data['site'] = $site->toArray(TableMap::TYPE_FIELDNAME);
-        $data['saved'] = true;
-        $this->displayView('admin/site.settings', $data);
+        $this->data['site'] = $site->toArray(TableMap::TYPE_FIELDNAME);
+        $this->data['saved'] = true;
+        $this->displayView('admin/site.settings');
+    }
+
+    public function database()
+    {
+        $this->displayView('admin/site.database');
     }
 
     /**
@@ -68,10 +76,5 @@ class AdminSite
             $site->setTitle('Shared Media Gallery')->save();
         }
         return $site;
-    }
-
-    public function database($data)
-    {
-        $this->displayView('admin/site.database', $data);
     }
 }

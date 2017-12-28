@@ -16,12 +16,15 @@ class AdminSource
     use TraitTools;
     use TraitView;
 
-    public function __construct()
+    private $data = [];
+
+    public function __construct($data)
     {
+        $this->data = $data;
         $this->accessControl();
     }
 
-    public function source($data)
+    public function source()
     {
         $this->seedSources();
         try {
@@ -32,12 +35,12 @@ class AdminSource
         } catch (Exception $error) {
             //
         }
-        $this->displayView('admin/source', $data);
+        $this->displayView('admin/source');
     }
 
-    public function save($data)
+    public function save()
     {
-        $this->displayView('admin/source.save', $data);
+        $this->displayView('admin/source.save');
     }
 
     private function seedSources()

@@ -11,13 +11,20 @@ class PublicMedia
     use TraitTools;
     use TraitView;
 
-    public function medias($data)
+    private $data = [];
+
+    public function __construct($data)
     {
-        $this->displayItems($data, MediaQuery::create(), 'medias');
+        $this->data = $data;
     }
 
-    public function media($data)
+    public function medias()
     {
-        $this->displayItem($data, MediaQuery::create(), 'media');
+        $this->displayItems($this->data, MediaQuery::create(), 'medias');
+    }
+
+    public function media()
+    {
+        $this->displayItem($this->data, MediaQuery::create(), 'media');
     }
 }

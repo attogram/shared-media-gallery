@@ -11,13 +11,20 @@ class PublicPage
     use TraitTools;
     use TraitView;
 
-    public function pages($data)
+    private $data = [];
+
+    public function __construct($data)
     {
-        $this->displayItems($data, PageQuery::create(), 'pages');
+        $this->data = $data;
     }
 
-    public function page($data)
+    public function pages()
     {
-        $this->displayItem($data, PageQuery::create(), 'page');
+        $this->displayItems($this->data, PageQuery::create(), 'pages');
+    }
+
+    public function page()
+    {
+        $this->displayItem($this->data, PageQuery::create(), 'page');
     }
 }

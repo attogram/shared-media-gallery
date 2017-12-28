@@ -15,29 +15,27 @@ class AdminPage
 
     private $data = [];
 
-    public function __construct()
+    public function __construct($data)
     {
+        $this->data = $data;
         $this->accessControl();
     }
 
-    public function pageList($data)
+    public function pageList()
     {
-        $this->data = $data;
         $this->setItems(PageQuery::create(), 'pages');
-        $this->displayView('admin/page.list', $this->data);
+        $this->displayView('admin/page.list');
     }
 
-    public function pageSearch($data)
+    public function pageSearch()
     {
-        $this->data = $data;
         $this->adminSearch(new PageQuery());
-        $this->displayView('admin/page.search', $this->data);
+        $this->displayView('admin/page.search');
     }
 
-    public function pageSave($data)
+    public function pageSave()
     {
-        $this->data = $data;
         $this->adminSave(new PageQuery());
-        $this->displayView('admin/page.save', $this->data);
+        $this->displayView('admin/page.save');
     }
 }

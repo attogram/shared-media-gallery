@@ -11,7 +11,7 @@ class Gallery
     use TraitErrors;
     use TraitView;
 
-    const VERSION = '0.1.5';
+    const VERSION = '0.1.6';
 
     private $router;
     private $data = [];
@@ -24,9 +24,6 @@ class Gallery
         $this->router = new Router();
         $this->setRoutes();
         $control = $this->router->match(); // get controller
-        $this->data['uriBase'] = $this->router->getUriBase();
-        $this->data['title'] = 'Shared Media Gallery';
-        $this->data['version'] = self::VERSION;
         if (!$control) {
             $this->error404();
         }
@@ -36,14 +33,9 @@ class Gallery
             $this->error404('404 Control Not Found');
         }
         $this->setupDatabase();
-        $this->data['media_count'] = $this->getMediaCount();
-        $this->data['category_count'] = $this->getCategoryCount();
-        $this->data['page_count'] = $this->getPageCount();
-        $this->data['source_count'] = $this->getSourceCount();
-        $this->data['uriRelative'] = $this->router->getUriRelative();
-        $this->data['vars'] = $this->router->getVars();
-        $class = new $className;
-        $class->{$methodName}($this->data); // call controller
+        $this->setData();
+        $class = new $className($this->data); // instantiate controller class
+        $class->{$methodName}(); // call controller method
     }
 
     /**
@@ -83,5 +75,20 @@ class Gallery
         // Source Admin Routes
         $this->router->allow('/admin/source/', 'AdminSource::source');
         $this->router->allow('/admin/source/save', 'AdminSource::save');
+    }
+
+    /**
+     * @return void
+     */
+    private function setData()
+    {
+        $this->data['title'] = 'Shared Media Gallery';
+        $this->data['version'] = self::VERSION;
+        $this->data['uriBase'] = $this->router->getUriBase();
+        $this->data['uriRelative'] = $this->router->getUriRelative();
+        if (!empty($this->router->getVars())) {
+			$this->data['vars'] = $this->router->getVars();
+		}
+        $this->setCounts(); // set counts for: category, media, page, source
     }
 }
