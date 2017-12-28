@@ -49,28 +49,19 @@ class AdminCategory
 
     public function categorySubcats($data)
     {
-        $this->data = $data;
-        $this->setFromApi(
-            new CategoryQuery(),
-            'subcats',
-            'subcats'
-        );
+        $this->setFromApi($data, new CategoryQuery(), 'subcats', 'subcats');
         $this->displayView('admin/category.subcats', $this->data);
     }
 
     public function categoryMedia($data)
     {
-        $this->data = $data;
-        $this->setFromApi(
-            new MediaQuery(),
-            'getMediaInCategory',
-            'medias'
-        );
+        $this->setFromApi($data, new MediaQuery(), 'getMediaInCategory', 'medias');
         $this->displayView('admin/category.media', $this->data);
     }
 
-    private function setFromApi($orm, $method, $itemName)
+    private function setFromApi($data, $orm, $method, $itemName)
     {
+        $this->data = $data;
         $this->accessControl();
         $this->setCategoryId();
         $orm->setApiPageid($this->data['categoryId']);
