@@ -69,6 +69,7 @@ class Gallery
         $this->router->allow('/admin/category/list/', 'AdminCategory::categoryList');
         $this->router->allow('/admin/category/find/', 'AdminCategory::categoryFind');
         $this->router->allow('/admin/category/save/', 'AdminCategory::categorySave');
+        $this->router->allow('/admin/category/?/media/', 'AdminCategory::categoryMedia');
         $this->router->allow('/admin/category/?/subcats/', 'AdminCategory::categorySubcats');
         // Media Admin Routes
         $this->router->allow('/admin/media/list/', 'AdminMedia::mediaList');

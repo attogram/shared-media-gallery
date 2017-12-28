@@ -4,6 +4,7 @@ namespace Attogram\SharedMedia\Gallery;
 
 use Attogram\SharedMedia\Api\Base as ApiBase;
 use Attogram\SharedMedia\Orm\CategoryQuery;
+use Attogram\SharedMedia\Orm\MediaQuery;
 
 class AdminCategory
 {
@@ -48,21 +49,45 @@ class AdminCategory
 
     public function categorySubcats($data)
     {
+        $this->getFromApi(
+            $data,
+            new CategoryQuery(),
+            'subcats',
+            'subcats',
+            'admin/category.subcats'
+        );
+    }
+
+    public function categoryMedia($data)
+    {
+        $this->getFromApi(
+            $data,
+            new MediaQuery(),
+            'getMediaInCategory',
+            'medias',
+            'admin/category.media'
+        );
+    }
+
+    private function getFromApi($data, $orm, $call, $dataName, $view)
+    {
         $this->accessControl();
-        $categoryId = (int) $data['vars'][0];
-        if (!$categoryId || !$this->isNumber($categoryId)) {
+        $this->data = $data;
+        $this->setCategoryId();
+        $orm->setApiPageid($this->data['categoryId']);
+        $orm->setApiLimit(50);
+        $this->data[$dataName] = $orm->{$call}();
+        $this->displayView($view, $this->data);
+    }
+
+    private function setCategoryId()
+    {
+        if (!isset($this->data['vars'][0])) {
             $this->error404('Category Not Found');
         }
-
-        $category = new CategoryQuery();
-        $category->setApiPageid($categoryId);
-        $category->setApiLimit(500);
-
-        $subcats = $category->subcats();
-
-        $this->data = $data;
-        $this->data['subcats'] = $subcats;
-
-        $this->displayView('admin/category.subcats', $this->data);
+        $this->data['categoryId'] = (int) $this->data['vars'][0];
+        if (!$this->data['categoryId'] || !$this->isNumber($this->data['categoryId'])) {
+            $this->error404('Category Not Found');
+        }
     }
 }
