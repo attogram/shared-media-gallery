@@ -15,9 +15,13 @@ class AdminPage
 
     private $data = [];
 
-    public function pageList($data)
+    public function __construct()
     {
         $this->accessControl();
+    }
+
+    public function pageList($data)
+    {
         $this->data = $data;
         $this->setItems(PageQuery::create(), 'pages');
         $this->displayView('admin/page.list', $this->data);
@@ -25,7 +29,6 @@ class AdminPage
 
     public function pageSearch($data)
     {
-        $this->accessControl();
         $this->data = $data;
         $this->adminSearch(new PageQuery());
         $this->displayView('admin/page.search', $this->data);
@@ -33,7 +36,6 @@ class AdminPage
 
     public function pageSave($data)
     {
-        $this->accessControl();
         $this->data = $data;
         $this->adminSave(new PageQuery());
         $this->displayView('admin/page.save', $this->data);

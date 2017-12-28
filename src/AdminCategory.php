@@ -18,10 +18,14 @@ class AdminCategory
 
     private $data = [];
 
+    public function __construct()
+    {
+        $this->accessControl();
+    }
+
     public function categoryList($data)
     {
         $this->data = $data;
-        $this->accessControl();
         $this->setItems(CategoryQuery::create(), 'categories', 100);
         $this->displayView('admin/category.list', $this->data);
     }
@@ -29,7 +33,6 @@ class AdminCategory
     public function categorySave($data)
     {
         $this->data = $data;
-        $this->accessControl();
         $this->adminSave(new CategoryQuery());
         $this->displayView('admin/category.save', $this->data);
     }
@@ -37,7 +40,6 @@ class AdminCategory
     public function categorySearch($data)
     {
         $this->data = $data;
-        $this->accessControl();
         $limit = $this->getGet('limit');
         if (!$limit || !$this->isNumber($limit)) {
             $limit = ApiBase::DEFAULT_LIMIT;
@@ -49,22 +51,23 @@ class AdminCategory
 
     public function categorySubcats($data)
     {
-        $this->setFromApi($data, new CategoryQuery(), 'subcats', 'subcats');
+        $this->data = $data;
+        $this->setCategoryId();
+        $this->setFromApi(new CategoryQuery(), $this->data['categoryId'], 'subcats', 'subcats');
         $this->displayView('admin/category.subcats', $this->data);
     }
 
     public function categoryMedia($data)
     {
-        $this->setFromApi($data, new MediaQuery(), 'getMediaInCategory', 'medias');
+        $this->data = $data;
+        $this->setCategoryId();
+        $this->setFromApi(new MediaQuery(), $this->data['categoryId'], 'getMediaInCategory', 'medias');
         $this->displayView('admin/category.media', $this->data);
     }
 
-    private function setFromApi($data, $orm, $method, $itemName)
+    private function setFromApi($orm, $pageid, $method, $itemName)
     {
-        $this->data = $data;
-        $this->accessControl();
-        $this->setCategoryId();
-        $orm->setApiPageid($this->data['categoryId']);
+        $orm->setApiPageid($pageid);
         $orm->setApiLimit(50);
         $this->data[$itemName] = $orm->{$method}();
     }

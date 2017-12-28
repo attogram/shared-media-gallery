@@ -75,6 +75,7 @@ class Gallery
         $this->router->allow('/admin/media/list/', 'AdminMedia::mediaList');
         $this->router->allow('/admin/media/search/', 'AdminMedia::mediaSearch');
         $this->router->allow('/admin/media/save/', 'AdminMedia::mediaSave');
+        $this->router->allow('/admin/media/?/categories/', 'AdminMedia::mediaCategories');
         // Page Admin Routes
         $this->router->allow('/admin/page/list/', 'AdminPage::pageList');
         $this->router->allow('/admin/page/search/', 'AdminPage::pageSearch');

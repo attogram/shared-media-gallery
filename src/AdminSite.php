@@ -15,22 +15,24 @@ class AdminSite
     use TraitTools;
     use TraitView;
 
-    public function home($data)
+    public function __construct()
     {
         $this->accessControl();
+    }
+
+    public function home($data)
+    {
         $this->displayView('admin/home', $data);
     }
 
     public function settings($data)
     {
-        $this->accessControl();
         $data['site'] = $this->getSiteData()->toArray(TableMap::TYPE_FIELDNAME);
         $this->displayView('admin/site.settings', $data);
     }
 
     public function saveSettings($data)
     {
-        $this->accessControl();
         if (!$this->isPost()) {
             $this->error403('POST ONLY');
         }

@@ -15,9 +15,13 @@ class AdminMedia
 
     private $data = [];
 
-    public function mediaList($data)
+    public function __construct()
     {
         $this->accessControl();
+    }
+
+    public function mediaList($data)
+    {
         $this->data = $data;
         $this->setItems(MediaQuery::create(), 'medias');
         $this->displayView('admin/media.list', $this->data);
@@ -25,7 +29,6 @@ class AdminMedia
 
     public function mediaSearch($data)
     {
-        $this->accessControl();
         $this->data = $data;
         $this->adminSearch(new MediaQuery());
         $this->displayView('admin/media.search', $this->data);
@@ -33,9 +36,14 @@ class AdminMedia
 
     public function mediaSave($data)
     {
-        $this->accessControl();
         $this->data = $data;
         $this->adminSave(new MediaQuery());
         $this->displayView('admin/media.save', $this->data);
+    }
+
+    public function mediaCategories($data)
+    {
+        $this->data = $data;
+        $this->displayView('admin/media.categories', $this->data);
     }
 }

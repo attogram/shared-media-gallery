@@ -16,9 +16,13 @@ class AdminSource
     use TraitTools;
     use TraitView;
 
-    public function source($data)
+    public function __construct()
     {
         $this->accessControl();
+    }
+
+    public function source($data)
+    {
         $this->seedSources();
         try {
             $sources = SourceQuery::create()->find();
@@ -33,7 +37,6 @@ class AdminSource
 
     public function save($data)
     {
-        $this->accessControl();
         $this->displayView('admin/source.save', $data);
     }
 
