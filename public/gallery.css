@@ -18,11 +18,12 @@ ul { display:block; line-height:1; list-style-position: inside; list-style-type:
 video { background-clip:content-box; background-color:white; border:1px solid black; }
 audio { background-clip:content-box; background-color:white; border:1px solid black; }
 
-.table { display:table; margin:0 auto; min-width:80%; }
-.row { display:table-row; padding:0; }
-.row:hover { background-color:yellow; }
-.cell { border:1px solid lightgrey; display:table-cell; vertical-align:top; }
-.header { background-color:lightgrey; border:1px solid darkgrey; font-size:80%; font-style:italic; }
+.table { display:table; }
+.row { display:table-row; }
+.row:hover { background-color:lightblue; }
+.cell { border:1px solid lightgrey; display:table-cell; padding:3px; vertical-align:top; }
+.cell:hover { border:1px solid black; }
+.header { background-color:lightgrey; border:1px solid darkgrey; font-size:85%; font-style:italic; }
 .right { text-align:right; }
 .left { text-align:left; }
 .center { text-align:center; }

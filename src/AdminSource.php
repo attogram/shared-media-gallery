@@ -24,9 +24,8 @@ class AdminSource
         $this->accessControl();
     }
 
-    public function source()
+    public function list()
     {
-        $this->seedSources();
         try {
             $sources = SourceQuery::create()->find();
             foreach ($sources as $source) {
@@ -35,7 +34,7 @@ class AdminSource
         } catch (Exception $error) {
             //
         }
-        $this->displayView('admin/source');
+        $this->displayView('admin/source.list');
     }
 
     public function save()

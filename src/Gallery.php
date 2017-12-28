@@ -80,7 +80,7 @@ class Gallery
         $this->router->allow('/admin/page/search/', 'AdminPage::pageSearch');
         $this->router->allow('/admin/page/save/', 'AdminPage::pageSave');
         // Source Admin Routes
-        $this->router->allow('/admin/source/', 'AdminSource::source');
+        $this->router->allow('/admin/source/list/', 'AdminSource::list');
         $this->router->allow('/admin/source/save', 'AdminSource::save');
     }
 
