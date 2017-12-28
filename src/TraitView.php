@@ -38,12 +38,8 @@ trait TraitView
         }
         try {
             $this->twig->display($view.'.twig', $data);
-        } catch (Twig_Error_Loader $error) {
-            print 'Load Error: ' . $view;
-        } catch (Twig_Error_Syntax $error) {
-            print 'Syntax Error: ' . $view;
-        } catch (Throwable $error) {
-            print 'View Error: ' . $view;
+        } catch (Twig_Error_Loader | Twig_Error_Syntax | Throwable $error) {
+            print 'Error: ' . get_class($error) . ': ' . $view;
         }
     }
 }
