@@ -26,7 +26,7 @@ audio { background-clip:content-box; background-color:white; border:1px solid bl
 .right { text-align:right; }
 .left { text-align:left; }
 .center { text-align:center; }
-.small { font-size:65%; display:block; }
+.small { display:block; font-size:65%; }
 
 .cattable { display:table; margin:0 auto; min-width:80%; }
 .catcon { display:table-row; padding:0; }

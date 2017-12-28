@@ -30,7 +30,7 @@ class AdminSource
         try {
             $sources = SourceQuery::create()->find();
             foreach ($sources as $source) {
-                $data['sources'][] = $source->toArray(TableMap::TYPE_FIELDNAME);
+                $this->data['sources'][] = $source->toArray(TableMap::TYPE_FIELDNAME);
             }
         } catch (Exception $error) {
             //

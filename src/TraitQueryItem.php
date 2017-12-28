@@ -89,7 +89,6 @@ trait TraitQueryItem
     }
 
     /**
-     * @param array    $data
      * @param object   $orm
      * @param string   $name
      */
