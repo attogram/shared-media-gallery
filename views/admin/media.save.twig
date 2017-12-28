@@ -12,13 +12,12 @@
     {% endif %}
 
     Saved Media:
-    <ul>
+    <br />
     {% for media in results %}
-         <li>
+         <div style="display:inline-block;border:1px solid black;">
          {{ include('thumb.media.twig') }}
-         </li>
+         </div>
     {% endfor %}
-    </ul>
 
 </div>
 {{ include('footer.twig') }}
