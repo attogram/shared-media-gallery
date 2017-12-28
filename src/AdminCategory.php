@@ -51,7 +51,6 @@ class AdminCategory
     {
         $this->data = $data;
         $this->setFromApi(
-            $data,
             new CategoryQuery(),
             'subcats',
             'subcats'
@@ -63,7 +62,6 @@ class AdminCategory
     {
         $this->data = $data;
         $this->setFromApi(
-            $data,
             new MediaQuery(),
             'getMediaInCategory',
             'medias'
