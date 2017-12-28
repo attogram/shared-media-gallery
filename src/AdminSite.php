@@ -30,7 +30,7 @@ class AdminSite
 
     public function settings()
     {
-        $data['site'] = $this->getSiteData()->toArray(TableMap::TYPE_FIELDNAME);
+        $this->data['site'] = $this->getSiteData()->toArray(TableMap::TYPE_FIELDNAME);
         $this->displayView('admin/site.settings');
     }
 
@@ -45,11 +45,11 @@ class AdminSite
         $this->data['footer'] = $this->getPost('footer');
         $this->data['cdn'] = $this->getPost('cdn') === 'on' ? true : false;
         $site = $this->getSiteData();
-        $site->setTitle($data['title'])
-            ->setAbout($data['about'])
-            ->setHeader($data['header'])
-            ->setFooter($data['footer'])
-            ->setUseCdn($data['cdn'])
+        $site->setTitle($this->data['title'])
+            ->setAbout($this->data['about'])
+            ->setHeader($this->data['header'])
+            ->setFooter($this->data['footer'])
+            ->setUseCdn($this->data['cdn'])
             ->save();
         $this->data['site'] = $site->toArray(TableMap::TYPE_FIELDNAME);
         $this->data['saved'] = true;

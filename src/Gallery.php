@@ -22,7 +22,8 @@ class Gallery
     public function __construct()
     {
         $this->router = new Router();
-        $this->setRoutes();
+        $this->setPublicRoutes();
+        $this->setAdminRoutes();
         $control = $this->router->match(); // get controller
         if (!$control) {
             $this->error404();
@@ -41,9 +42,8 @@ class Gallery
     /**
      * @return void
      */
-    private function setRoutes()
+    private function setPublicRoutes()
     {
-        // Public Gallery Routes
         $this->router->allow('/', 'PublicSite::home');
         $this->router->allow('/about/', 'PublicSite::about');
         $this->router->allow('/category/', 'PublicCategory::categories');
@@ -52,6 +52,13 @@ class Gallery
         $this->router->allow('/media/?/', 'PublicMedia::media');
         $this->router->allow('/page/', 'PublicPage::pages');
         $this->router->allow('/page/?/', 'PublicPage::page');
+    }
+
+    /**
+     * @return void
+     */
+    private function setAdminRoutes()
+    {
         // Site Admin Routes
         $this->router->allow('/admin/', 'AdminSite::home');
         $this->router->allow('/admin/site/settings/', 'AdminSite::settings');
@@ -87,8 +94,8 @@ class Gallery
         $this->data['uriBase'] = $this->router->getUriBase();
         $this->data['uriRelative'] = $this->router->getUriRelative();
         if (!empty($this->router->getVars())) {
-			$this->data['vars'] = $this->router->getVars();
-		}
+            $this->data['vars'] = $this->router->getVars();
+        }
         $this->setCounts(); // set counts for: category, media, page, source
     }
 }
