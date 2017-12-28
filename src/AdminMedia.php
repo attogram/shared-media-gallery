@@ -23,12 +23,12 @@ class AdminMedia
         $this->displayView('admin/media.list', $this->data);
     }
 
-    public function mediaFind($data)
+    public function mediaSearch($data)
     {
         $this->accessControl();
         $this->data = $data;
         $this->adminSearch(new MediaQuery());
-        $this->displayView('admin/media.find', $this->data);
+        $this->displayView('admin/media.search', $this->data);
     }
 
     public function mediaSave($data)

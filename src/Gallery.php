@@ -67,17 +67,17 @@ class Gallery
         $this->router->allow('/admin/site/database/', 'AdminSite::database');
         // Category Admin Routes
         $this->router->allow('/admin/category/list/', 'AdminCategory::categoryList');
-        $this->router->allow('/admin/category/find/', 'AdminCategory::categoryFind');
+        $this->router->allow('/admin/category/search/', 'AdminCategory::categorySearch');
         $this->router->allow('/admin/category/save/', 'AdminCategory::categorySave');
         $this->router->allow('/admin/category/?/media/', 'AdminCategory::categoryMedia');
         $this->router->allow('/admin/category/?/subcats/', 'AdminCategory::categorySubcats');
         // Media Admin Routes
         $this->router->allow('/admin/media/list/', 'AdminMedia::mediaList');
-        $this->router->allow('/admin/media/find/', 'AdminMedia::mediaFind');
+        $this->router->allow('/admin/media/search/', 'AdminMedia::mediaSearch');
         $this->router->allow('/admin/media/save/', 'AdminMedia::mediaSave');
         // Page Admin Routes
         $this->router->allow('/admin/page/list/', 'AdminPage::pageList');
-        $this->router->allow('/admin/page/find/', 'AdminPage::pageFind');
+        $this->router->allow('/admin/page/search/', 'AdminPage::pageSearch');
         $this->router->allow('/admin/page/save/', 'AdminPage::pageSave');
         // Source Admin Routes
         $this->router->allow('/admin/source/', 'AdminSource::source');

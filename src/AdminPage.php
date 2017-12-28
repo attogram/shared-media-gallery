@@ -23,12 +23,12 @@ class AdminPage
         $this->displayView('admin/page.list', $this->data);
     }
 
-    public function pageFind($data)
+    public function pageSearch($data)
     {
         $this->accessControl();
         $this->data = $data;
         $this->adminSearch(new PageQuery());
-        $this->displayView('admin/page.find', $this->data);
+        $this->displayView('admin/page.search', $this->data);
     }
 
     public function pageSave($data)
