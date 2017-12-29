@@ -36,7 +36,6 @@ class AdminPage
 
     public function save()
     {
-        $this->adminSave(new PageQuery());
-        $this->displayView('admin/page.save');
+        print 'AdminPage::save';
     }
 }
