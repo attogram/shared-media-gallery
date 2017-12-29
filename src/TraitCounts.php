@@ -15,42 +15,10 @@ trait TraitCounts
      */
     private function setCounts()
     {
-        $this->data['category_count'] = $this->getCategoryCount();
-        $this->data['media_count'] = $this->getMediaCount();
-        $this->data['page_count'] = $this->getPageCount();
-        $this->data['source_count'] = $this->getSourceCount();
-    }
-
-    /**
-     * @return int
-     */
-    private function getCategoryCount()
-    {
-        return $this->getCount(new CategoryQuery());
-    }
-
-    /**
-     * @return int
-     */
-    private function getMediaCount()
-    {
-        return $this->getCount(new MediaQuery());
-    }
-
-    /**
-     * @return int
-     */
-    private function getPageCount()
-    {
-        return $this->getCount(new PageQuery());
-    }
-
-    /**
-     * @return int
-     */
-    private function getSourceCount()
-    {
-        return $this->getCount(new SourceQuery());
+        $this->data['category_count'] = $this->getCount(new CategoryQuery());
+        $this->data['media_count'] = $this->getCount(new MediaQuery());
+        $this->data['page_count'] = $this->getCount(new PageQuery());
+        $this->data['source_count'] = $this->getCount(new SourceQuery());
     }
 
     /**
