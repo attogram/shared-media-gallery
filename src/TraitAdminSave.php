@@ -32,19 +32,19 @@ trait TraitAdminSave
     }
 
     /**
-     * @param object $orm
+     * @param object $ormQuery
      * @param int $pageid
      * @return bool
      */
-    private function updateItemIfExists($orm, $pageid)
+    private function updateItemIfExists($ormQuery, $pageid)
     {
-        $result = $orm->filterBySourceId($this->sourceId)
+        $result = $ormQuery->filterBySourceId($this->sourceId)
             ->filterByPageid($pageid)
             ->findOne();
         if (!$result) {
             return false;
         }
-        $this->setValues($orm)
+        $this->setValues($ormQuery)
             ->save();
         return true;
     }
