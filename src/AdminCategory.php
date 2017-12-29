@@ -18,6 +18,7 @@ class AdminCategory
     use TraitView;
 
     private $data = [];
+    private $values = [];
 
     public function __construct($data)
     {
@@ -48,7 +49,7 @@ class AdminCategory
         $size = $this->getPost('size');
         $hidden = $this->getPost('hidden');
         foreach ($pageids as $pageid) {
-            $values = [
+            $this->values = [
                 'title' => $title[$pageid],
                 'files' => $files[$pageid],
                 'subcats' => $subcats[$pageid],
@@ -56,38 +57,50 @@ class AdminCategory
                 'size' => $size[$pageid],
                 'hidden' => $hidden[$pageid],
             ];
-            $exists = CategoryQuery::create()
-                ->filterBySourceId($sourceId)
-                ->filterByPageid($pageid)
-                ->findOne();
-            if ($exists instanceof Category) {
-                $exists = $this->setCategoryValues($exists, $values);
-                $exists->save();
+            if ($this->updateCategoryIfExists($sourceId, $pageid)) {
                 continue;
             }
-            $orm = new Category();
-            $orm = $this->setCategoryValues($orm, $values);
-            $orm->setPageid($pageid)
+            $this->setCategoryValues(new Category())
                 ->setSourceId($sourceId)
+                ->setPageid($pageid)
                 ->save();
         }
         $this->redirect301($this->data['uriBase'] . '/admin/category/list/');
     }
 
     /**
-     * @param  \Attogram\SharedMedia\Orm\Category $orm
-     * @param  array $values
-     * @return \Attogram\SharedMedia\Orm\Category
+     * @param int $sourceId
+     * @param int $pageid
+     * @return bool
      */
-    private function setCategoryValues($orm, $values)
+    private function updateCategoryIfExists($sourceId, $pageid)
+    {
+            $orm = CategoryQuery::create()
+                ->filterBySourceId($sourceId)
+                ->filterByPageid($pageid)
+                ->findOne();
+            if (!$orm instanceof Category) {
+                return false;
+            }
+            $this->setCategoryValues($orm)
+                ->save();
+            return true;
+    }
+
+    /**
+     * @param object $orm
+     * @param array $values
+     * @return object
+     */
+    private function setCategoryValues($orm)
     {
         return $orm
-            ->setTitle($values['title'])
-            ->setFiles($values['files'])
-            ->setSubcats($values['subcats'])
-            ->setPages($values['pages'])
-            ->setSize($values['size'])
-            ->setHidden($values['hidden']);
+            ->setTitle($this->values['title'])
+            ->setFiles($this->values['files'])
+            ->setSubcats($this->values['subcats'])
+            ->setPages($this->values['pages'])
+            ->setSize($this->values['size'])
+            ->setHidden($this->values['hidden']);
     }
 
     public function search()
