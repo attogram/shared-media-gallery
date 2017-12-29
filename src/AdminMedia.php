@@ -32,6 +32,7 @@ class AdminMedia
 
     public function search()
     {
+        $this->data['sourceSelect'] = $this->getSourcePulldown();
         $this->adminSearch(new MediaQuery());
         $this->displayView('admin/media.search');
     }

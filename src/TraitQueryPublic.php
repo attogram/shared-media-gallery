@@ -3,6 +3,7 @@
 namespace Attogram\SharedMedia\Gallery;
 
 use Attogram\SharedMedia\Orm\CategoryQuery;
+use Attogram\SharedMedia\Orm\SourceQuery;
 use Propel\Runtime\ActiveQuery\Criteria;
 use Propel\Runtime\Map\TableMap;
 use Throwable;
@@ -10,6 +11,21 @@ use Throwable;
 trait TraitQueryPublic
 {
     private $defaultItemsPerPage = 20;
+
+    /**
+     * @return string HTML <select> fragment
+     */
+    private function getSourcePulldown()
+    {
+        $sources = SourceQuery::create()->find();
+        $select = '<select name="source_id">';
+        foreach ($sources as $source) {
+            $select .= '<option value="' . $source->getId() . '">'
+            . $source->getTitle() . ' @ ' . $source->getHost() . '</option>';
+        }
+        $select .= '</select>';
+        return $select;
+    }
 
     /**
      * @return mixed

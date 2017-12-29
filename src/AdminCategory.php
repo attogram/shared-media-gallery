@@ -109,6 +109,7 @@ class AdminCategory
 
     public function search()
     {
+        $this->data['sourceSelect'] = $this->getSourcePulldown();
         $limit = $this->getGet('limit');
         if (!$limit || !$this->isNumber($limit)) {
             $limit = ApiBase::DEFAULT_LIMIT;

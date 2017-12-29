@@ -29,6 +29,7 @@ class AdminPage
 
     public function search()
     {
+        $this->data['sourceSelect'] = $this->getSourcePulldown();
         $this->adminSearch(new PageQuery());
         $this->displayView('admin/page.search');
     }
