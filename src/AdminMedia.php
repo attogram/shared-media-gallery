@@ -8,6 +8,7 @@ use Attogram\SharedMedia\Orm\MediaQuery;
 class AdminMedia
 {
     use TraitAccessControl;
+    use TraitAdminSave;
     use TraitEnvironment;
     use TraitErrors;
     use TraitQueryAdmin;
@@ -46,7 +47,7 @@ class AdminMedia
             foreach ($this->getFieldNames() as $field) {
                 $this->values[$field] = $this->{$field}[$pageid];
             }
-            if (!$this->updateMediaIfExists($this->sourceId, $pageid)) {
+            if (!$this->updateMediaIfExists($pageid)) {
                 $this->setValues(new Media())
                     ->setSourceId($this->sourceId)
                     ->setPageid($pageid)
@@ -73,30 +74,14 @@ class AdminMedia
         ];
     }
 
-    private function setPostVars()
-    {
-        $this->pageids = $this->getPost('pageid');
-        if (empty($this->pageids) || !is_array($this->pageids)) {
-            $this->error404('404 Media Not Selected');
-        }
-        $this->sourceId = $this->getPost('source_id');
-        if (!$this->sourceId) {
-            $this->error404('404 Source Not Found');
-        }
-        foreach ($this->getFieldNames() as $field) {
-            $this->{$field} = $this->getPost($field);
-        }
-    }
-
     /**
-     * @param int $sourceId
      * @param int $pageid
      * @return bool
      */
-    private function updateMediaIfExists($sourceId, $pageid)
+    private function updateMediaIfExists($pageid)
     {
         $orm = MediaQuery::create()
-            ->filterBySourceId($sourceId)
+            ->filterBySourceId($this->sourceId)
             ->filterByPageid($pageid)
             ->findOne();
         if (!$orm instanceof Media) {
@@ -105,18 +90,6 @@ class AdminMedia
         $this->setValues($orm)
             ->save();
         return true;
-    }
-
-    /**
-     * @param object $orm
-     * @return object
-     */
-    private function setValues($orm)
-    {
-        foreach ($this->getFieldNames() as $field) {
-            $orm->{'set' . ucfirst($field)}($this->values[$field]);
-        }
-        return $orm;
     }
 
     public function categories()

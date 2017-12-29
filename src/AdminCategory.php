@@ -10,6 +10,7 @@ use Attogram\SharedMedia\Orm\MediaQuery;
 class AdminCategory
 {
     use TraitAccessControl;
+    use TraitAdminSave;
     use TraitEnvironment;
     use TraitErrors;
     use TraitQueryAdmin;
@@ -39,7 +40,7 @@ class AdminCategory
             foreach ($this->getFieldNames() as $field) {
                 $this->values[$field] = $this->{$field}[$pageid];
             }
-            if (!$this->updateCategoryIfExists($this->sourceId, $pageid)) {
+            if (!$this->updateCategoryIfExists($pageid)) {
                 $this->setValues(new Category())
                     ->setSourceId($this->sourceId)
                     ->setPageid($pageid)
@@ -61,30 +62,14 @@ class AdminCategory
         ];
     }
 
-    private function setPostVars()
-    {
-        $this->pageids = $this->getPost('pageid');
-        if (empty($this->pageids) || !is_array($this->pageids)) {
-            $this->error404('404 Category Not Selected');
-        }
-        $this->sourceId = $this->getPost('source_id');
-        if (!$this->sourceId) {
-            $this->error404('404 Source Not Found');
-        }
-        foreach ($this->getFieldNames() as $field) {
-            $this->{$field} = $this->getPost($field);
-        }
-    }
-
     /**
-     * @param int $sourceId
      * @param int $pageid
      * @return bool
      */
-    private function updateCategoryIfExists($sourceId, $pageid)
+    private function updateCategoryIfExists($pageid)
     {
         $orm = CategoryQuery::create()
-            ->filterBySourceId($sourceId)
+            ->filterBySourceId($this->sourceId)
             ->filterByPageid($pageid)
             ->findOne();
         if (!$orm instanceof Category) {
@@ -93,18 +78,6 @@ class AdminCategory
         $this->setValues($orm)
             ->save();
         return true;
-    }
-
-    /**
-     * @param object $orm
-     * @return object
-     */
-    private function setValues($orm)
-    {
-        foreach ($this->getFieldNames() as $field) {
-            $orm->{'set' . ucfirst($field)}($this->values[$field]);
-        }
-        return $orm;
     }
 
     public function search()
