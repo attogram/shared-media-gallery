@@ -19,6 +19,7 @@ class AdminCategory
     use TraitView;
 
     private $data = [];
+    private $fieldNames = [];
 
     public function __construct($data)
     {
@@ -34,13 +35,14 @@ class AdminCategory
 
     public function save()
     {
+        $this->setFieldNames();
         $this->adminSave(new CategoryQuery(), new Category());
         $this->redirect301($this->data['uriBase'] . '/admin/category/list/');
     }
 
-    private function getFieldNames()
+    private function setFieldNames()
     {
-        return [
+        $this->fieldNames = [
             'title',
             'files',
             'subcats',

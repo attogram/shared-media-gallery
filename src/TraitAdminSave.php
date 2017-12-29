@@ -14,7 +14,7 @@ trait TraitAdminSave
         if (!$this->sourceId) {
             $this->error404('404 Source Not Found');
         }
-        foreach ($this->getFieldNames() as $field) {
+        foreach ($this->fieldNames as $field) {
             $this->{$field} = $this->getPost($field);
         }
     }
@@ -25,7 +25,7 @@ trait TraitAdminSave
      */
     private function setValues($ormQuery)
     {
-        foreach ($this->getFieldNames() as $field) {
+        foreach ($this->fieldNames as $field) {
             $ormQuery->{'set' . ucfirst($field)}($this->values[$field]);
         }
         return $ormQuery;
@@ -57,7 +57,7 @@ trait TraitAdminSave
     {
         $this->setPostVars();
         foreach ($this->pageids as $pageid) {
-            foreach ($this->getFieldNames() as $field) {
+            foreach ($this->fieldNames as $field) {
                 $this->values[$field] = $this->{$field}[$pageid];
             }
             if (!$this->updateItemIfExists($ormQuery, $pageid)) {

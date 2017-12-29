@@ -17,6 +17,7 @@ class AdminMedia
     use TraitView;
 
     private $data = [];
+    private $fieldNames = [];
 
     public function __construct($data)
     {
@@ -42,13 +43,14 @@ class AdminMedia
 
     public function save()
     {
+        $this->setFieldNames();
         $this->adminSave(new MediaQuery(), new Media());
         $this->redirect301($this->data['uriBase'] . '/admin/media/list/');
     }
 
-    private function getFieldNames()
+    private function setFieldNames()
     {
-        return [
+        $this->fieldNames = [
             'title',
             'url', 'mime', 'width', 'height', 'size',
             'sha1',
