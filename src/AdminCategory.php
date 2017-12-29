@@ -26,7 +26,10 @@ class AdminCategory
 
     public function categoryList()
     {
-        $this->setItems(CategoryQuery::create(), 'categories', 100);
+        $orm = CategoryQuery::create()
+            ->joinWith('Source')
+            ->withColumn('source.title');
+        $this->setItems($orm, 'categories', 100);
         $this->displayView('admin/category.list');
     }
 

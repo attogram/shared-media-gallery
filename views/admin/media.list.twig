@@ -29,9 +29,10 @@
                     <a href="{{ uriBase }}/admin/media/{{ media.pageid }}/categories/">import</a>
                     <br />?
                 </div>
-                <div class="cell center">{{ media.source_id|e }}</div>
+                <div class="cell center">{{ media.sourcetitle|e }}</div>
             </div>
         {% endfor %}
     </div>
+    <pre>{{dump(medias)}}</pre>
 </div>
 {{ include('footer.twig') }}

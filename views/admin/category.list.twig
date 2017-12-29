@@ -25,7 +25,7 @@
                 <div class="catfiles"><a href="{{ uriBase }}/admin/category/{{ category.pageid }}/subcats/">import</a>&nbsp;{{ category.subcats|default('?') }}</div>
                 <div class="catfiles">{{ category.pages|default('?') }}</div>
                 <div class="catfiles">{{ category.hidden ? 'H' : 'P' }}</div>
-                <div class="catfiles">{{ category.source_id }}</div>
+                <div class="catfiles">{{ category.sourcetitle|e }}</div>
             </div>
         {% endfor %}
     </div>

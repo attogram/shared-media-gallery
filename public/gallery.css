@@ -23,7 +23,7 @@ audio { background-clip:content-box; background-color:white; border:1px solid bl
 .row:hover { background-color:lightblue; }
 .cell { border:1px solid lightgrey; display:table-cell; padding:3px; vertical-align:top; }
 .cell:hover { border:1px solid black; }
-.header { background-color:lightgrey; border:1px solid darkgrey; font-size:85%; font-style:italic; }
+.header { background-color:lightgrey; border:1px solid darkgrey; font-size:85%; font-style:italic; font-weight:bold; }
 .right { text-align:right; }
 .left { text-align:left; }
 .center { text-align:center; }
