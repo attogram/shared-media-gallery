@@ -46,13 +46,12 @@ class AdminMedia
             foreach ($this->getFieldNames() as $field) {
                 $this->values[$field] = $this->{$field}[$pageid];
             }
-            if ($this->updateMediaIfExists($this->sourceId, $pageid)) {
-                continue;
+            if (!$this->updateMediaIfExists($this->sourceId, $pageid)) {
+                $this->setMediaValues(new Media())
+                    ->setSourceId($this->sourceId)
+                    ->setPageid($pageid)
+                    ->save();
             }
-            $this->setMediaValues(new Media())
-                ->setSourceId($this->sourceId)
-                ->setPageid($pageid)
-                ->save();
         }
         $this->redirect301($this->data['uriBase'] . '/admin/media/list/');
     }

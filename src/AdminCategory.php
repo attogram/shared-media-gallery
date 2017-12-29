@@ -44,13 +44,12 @@ class AdminCategory
                 'size' => $this->size[$pageid],
                 'hidden' => $this->hidden[$pageid],
             ];
-            if ($this->updateCategoryIfExists($this->sourceId, $pageid)) {
-                continue;
+            if (!$this->updateCategoryIfExists($this->sourceId, $pageid)) {
+                $this->setCategoryValues(new Category())
+                    ->setSourceId($this->sourceId)
+                    ->setPageid($pageid)
+                    ->save();
             }
-            $this->setCategoryValues(new Category())
-                ->setSourceId($this->sourceId)
-                ->setPageid($pageid)
-                ->save();
         }
         $this->redirect301($this->data['uriBase'] . '/admin/category/list/');
     }
