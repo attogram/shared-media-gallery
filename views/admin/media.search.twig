@@ -14,12 +14,39 @@
         <hr />
         query: {{ query|e }}  limit: {{ limit|e }}
         <form action="{{ uriBase }}/admin/media/save/" name="cats" method="POST">
+        <input name="source_id" value="1" type="hidden" />
         <br />
         <input type="submit" value="  Save selected   ">
         <br />
         {% for media in results %}
             <div style="display:inline-block;border:1px solid black;">
-                <input name="pageid[]" value="{{ media.pageid }}" type="checkbox" />{{ include('thumb.media.twig') }}
+                <img src="{{ media.thumburl|e }}" width="{{ media.thumbwidth|e }}" height="{{ media.thumbheight|e }}" />
+                <br /><input name="pageid[]" value="{{ media.pageid }}" type="checkbox" />
+                <span class="pageid">{{ media.pageid }}</span>
+                <input name="title[{{ media.pageid }}]" value="{{ media.title|e }}" type="hidden" />
+                <input name="url[{{ media.pageid }}]" value="{{ media.url|e }}" type="hidden" />
+                <input name="mime[{{ media.pageid }}]" value="{{ media.mime|e }}" type="hidden" />
+                <input name="width[{{ media.pageid }}]" value="{{ media.width|e }}" type="hidden" />
+                <input name="height[{{ media.pageid }}]" value="{{ media.height|e }}" type="hidden" />
+                <input name="size[{{ media.pageid }}]" value="{{ media.size|e }}" type="hidden" />
+                <input name="sha1[{{ media.pageid }}]" value="{{ media.sha1|e }}" type="hidden" />
+                <input name="thumburl[{{ media.pageid }}]" value="{{ media.thumburl|e }}" type="hidden" />
+                <input name="thumbmime[{{ media.pageid }}]" value="{{ media.thumbmime|e }}" type="hidden" />
+                <input name="thumbwidth[{{ media.pageid }}]" value="{{ media.thumbwidth|e }}" type="hidden" />
+                <input name="thumbheight[{{ media.pageid }}]" value="{{ media.thumbheight|e }}" type="hidden" />
+                <input name="thumbsize[{{ media.pageid }}]" value="{{ media.thumbsize|e }}" type="hidden" />
+                <input name="descriptionurl[{{ media.pageid }}]" value="{{ media.descriptionurl|e }}" type="hidden" />
+                <input name="descriptionurlshort[{{ media.pageid }}]" value="{{ media.descriptionurlshort|e }}" type="hidden" />
+                <input name="imagedescription[{{ media.pageid }}]" value="{{ media.imagedescription|e }}" type="hidden" />
+                <input name="datetimeoriginal[{{ media.pageid }}]" value="{{ media.datetimeoriginal|e }}" type="hidden" />
+                <input name="artist[{{ media.pageid }}]" value="{{ media.artist|e }}" type="hidden" />
+                <input name="licenseshortname[{{ media.pageid }}]" value="{{ media.licenseshortname|e }}" type="hidden" />
+                <input name="usageterms[{{ media.pageid }}]" value="{{ media.usageterms|e }}" type="hidden" />
+                <input name="attributionrequired[{{ media.pageid }}]" value="{{ media.attributionrequired|e }}" type="hidden" />
+                <input name="restrictions[{{ media.pageid }}]" value="{{ media.restrictions|e }}" type="hidden" />
+                <input name="timestamp[{{ media.pageid }}]" value="{{ media.timestamp|e }}" type="hidden" />
+                <input name="user[{{ media.pageid }}]" value="{{ media.user|e }}" type="hidden" />
+                <input name="userid[{{ media.pageid }}]" value="{{ media.userid|e }}" type="hidden" />
             </div>
         {% endfor %}
         <br /><br />
