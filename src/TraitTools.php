@@ -78,12 +78,12 @@ trait TraitTools
             return '';
         }
         return preg_replace(
-            array('/^File:/', '/^Category:/'),
+            ['/^File:/', '/^Category:/'],
             '',
             $string
         );
     }
-	
+
     /**
      * @param string $url
      */
@@ -93,7 +93,7 @@ trait TraitTools
         header('Location: ' . $url);
         exit;
     }
-	
+
     /**
      * @param string $url
      */
