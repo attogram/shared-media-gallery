@@ -1,10 +1,10 @@
 {{ include('header.twig') }}
 {{ include('menu.twig') }}
 <div class="content">
-	<form method="GET" style="float:right;">
-		<input type="text" name="q" value="{{ query|e }}" size="16">
-		<input type="submit" value="Search {{ category_count|default('0') }} Categories">
-	</form>
+    <form method="GET" style="float:right;">
+        <input type="text" name="q" value="{{ query|e }}" size="16">
+        <input type="submit" value="Search {{ category_count|default('0') }} Categories">
+    </form>
     <div class="table">
         <div class="row">
             <div class="cell header"># Media</div>
@@ -15,11 +15,11 @@
             <div class="row">
                 <div class="cell left">{{ category.files|default('?') }}</div>
                 <div class="cell left">
-					<span class="title">
-						<a href="{{ uriBase }}/category/{{ category.pageid }}/">{{ category.shortTitle|e }}</a>
-					</span>
+                    <span class="title">
+                        <a href="{{ uriBase }}/category/{{ category.pageid }}/">{{ category.shortTitle|e }}</a>
+                    </span>
                 </div>
-				<div class="cell left small">{{ category.sourcetitle|e }}</div>
+                <div class="cell left small">{{ category.sourcetitle|e }}</div>
             </div>
         {% endfor %}
     </div>
