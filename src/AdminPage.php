@@ -21,19 +21,19 @@ class AdminPage
         $this->accessControl();
     }
 
-    public function pageList()
+    public function list()
     {
         $this->setItems(PageQuery::create(), 'pages');
         $this->displayView('admin/page.list');
     }
 
-    public function pageSearch()
+    public function search()
     {
         $this->adminSearch(new PageQuery());
         $this->displayView('admin/page.search');
     }
 
-    public function pageSave()
+    public function save()
     {
         $this->adminSave(new PageQuery());
         $this->displayView('admin/page.save');

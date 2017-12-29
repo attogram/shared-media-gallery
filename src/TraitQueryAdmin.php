@@ -29,6 +29,7 @@ trait TraitQueryAdmin
     }
 
     /**
+     * @deprecated
      * @param object $api
      * @return void
      */
@@ -54,6 +55,7 @@ trait TraitQueryAdmin
     }
 
     /**
+     * @deprecated
      * @param object $api
      * @param object $result
      * @return void

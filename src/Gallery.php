@@ -64,20 +64,20 @@ class Gallery
         $this->router->allow('/admin/site/settings/', 'AdminSite::settings');
         $this->router->allow('/admin/site/settings/save/', 'AdminSite::saveSettings');
         // Category Admin
-        $this->router->allow('/admin/category/list/', 'AdminCategory::categoryList');
-        $this->router->allow('/admin/category/search/', 'AdminCategory::categorySearch');
-        $this->router->allow('/admin/category/save/', 'AdminCategory::categorySave');
-        $this->router->allow('/admin/category/?/media/', 'AdminCategory::categoryMedia');
-        $this->router->allow('/admin/category/?/subcats/', 'AdminCategory::categorySubcats');
+        $this->router->allow('/admin/category/list/', 'AdminCategory::list');
+        $this->router->allow('/admin/category/search/', 'AdminCategory::search');
+        $this->router->allow('/admin/category/save/', 'AdminCategory::save');
+        $this->router->allow('/admin/category/?/media/', 'AdminCategory::media');
+        $this->router->allow('/admin/category/?/subcats/', 'AdminCategory::subcats');
         // Media Admin
-        $this->router->allow('/admin/media/list/', 'AdminMedia::mediaList');
-        $this->router->allow('/admin/media/search/', 'AdminMedia::mediaSearch');
-        $this->router->allow('/admin/media/save/', 'AdminMedia::mediaSave');
-        $this->router->allow('/admin/media/?/categories/', 'AdminMedia::mediaCategories');
+        $this->router->allow('/admin/media/list/', 'AdminMedia::list');
+        $this->router->allow('/admin/media/search/', 'AdminMedia::search');
+        $this->router->allow('/admin/media/save/', 'AdminMedia::save');
+        $this->router->allow('/admin/media/?/categories/', 'AdminMedia::categories');
         // Page Admin
-        $this->router->allow('/admin/page/list/', 'AdminPage::pageList');
-        $this->router->allow('/admin/page/search/', 'AdminPage::pageSearch');
-        $this->router->allow('/admin/page/save/', 'AdminPage::pageSave');
+        $this->router->allow('/admin/page/list/', 'AdminPage::list');
+        $this->router->allow('/admin/page/search/', 'AdminPage::search');
+        $this->router->allow('/admin/page/save/', 'AdminPage::save');
         // Source Admin
         $this->router->allow('/admin/source/list/', 'AdminSource::list');
         $this->router->allow('/admin/source/save/', 'AdminSource::save');

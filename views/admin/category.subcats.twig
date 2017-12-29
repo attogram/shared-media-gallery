@@ -5,13 +5,18 @@
     {% if subcats %}
         <hr />
         <form action="{{ uriBase }}/admin/category/save/" name="cats" method="POST">
-        <br />
+        <input name="source_id" value="1" type="hidden" />
         <input type="submit" value="  Save selected   ">
         <br />
         {% for category in subcats %}
-             <br />
-             <input name="pageid[]" value="{{ category.pageid }}" type="checkbox" />
+             <br /><input name="pageid[]" value="{{ category.pageid }}" type="checkbox" />
              {{ include('thumb.category.twig') }}
+             <input name="title[{{ category.pageid }}]" value="{{ category.title|e }}" type="hidden" />
+             <input name="files[{{ category.pageid }}]" value="{{ category.files }}" type="hidden" />
+             <input name="subcats[{{ category.pageid }}]" value="{{ category.subcats }}" type="hidden" />
+             <input name="pages[{{ category.pageid }}]" value="{{ category.pages }}" type="hidden" />
+             <input name="size[{{ category.pageid }}]" value="{{ category.size }}" type="hidden" />
+             <input name="hidden[{{ category.pageid }}]" value="{{ category.hidden }}" type="hidden" />
         {% endfor %}
         <br /><br />
         <input type="submit" value="  Save selected   ">

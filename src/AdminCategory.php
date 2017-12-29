@@ -3,6 +3,7 @@
 namespace Attogram\SharedMedia\Gallery;
 
 use Attogram\SharedMedia\Api\Base as ApiBase;
+use Attogram\SharedMedia\Orm\Category;
 use Attogram\SharedMedia\Orm\CategoryQuery;
 use Attogram\SharedMedia\Orm\MediaQuery;
 
@@ -24,19 +25,72 @@ class AdminCategory
         $this->accessControl();
     }
 
-    public function categoryList()
+    public function list()
     {
         $this->setItems($this->getCategoryQuery(), 'categories', 100);
         $this->displayView('admin/category.list');
     }
 
-    public function categorySave()
+    public function save()
     {
-        $this->adminSave(new CategoryQuery());
-        $this->displayView('admin/category.save');
+        $pageids = $this->getPost('pageid');
+        if (empty($pageids) || !is_array($pageids)) {
+            $this->error404('404 Category Not Selected');
+        }
+        $sourceId = $this->getPost('source_id');
+        if (!$sourceId) {
+            $this->error404('404 Source Not Found');
+        }
+        $title = $this->getPost('title');
+        $files = $this->getPost('files');
+        $subcats = $this->getPost('subcats');
+        $pages = $this->getPost('pages');
+        $size = $this->getPost('size');
+        $hidden = $this->getPost('hidden');
+        foreach ($pageids as $pageid) {
+            $values = [
+                'title' => $title[$pageid],
+                'files' => $files[$pageid],
+                'subcats' => $subcats[$pageid],
+                'pages' => $pages[$pageid],
+                'size' => $size[$pageid],
+                'hidden' => $hidden[$pageid],
+            ];
+            $exists = CategoryQuery::create()
+                ->filterBySourceId($sourceId)
+                ->filterByPageid($pageid)
+                ->findOne();
+            if ($exists instanceof Category) {
+                $exists = $this->setCategoryValues($exists, $values);
+                $exists->save();
+                continue;
+            }
+            $orm = new Category();
+            $orm = $this->setCategoryValues($orm, $values);
+            $orm->setPageid($pageid)
+                ->setSourceId($sourceId)
+                ->save();
+        }
+        $this->redirect301($this->data['uriBase'] . '/admin/category/list/');
     }
 
-    public function categorySearch()
+    /**
+     * @param  \Attogram\SharedMedia\Orm\Category $orm
+     * @param  array $values
+     * @return \Attogram\SharedMedia\Orm\Category
+     */
+    private function setCategoryValues($orm, $values)
+    {
+        return $orm
+            ->setTitle($values['title'])
+            ->setFiles($values['files'])
+            ->setSubcats($values['subcats'])
+            ->setPages($values['pages'])
+            ->setSize($values['size'])
+            ->setHidden($values['hidden']);
+    }
+
+    public function search()
     {
         $limit = $this->getGet('limit');
         if (!$limit || !$this->isNumber($limit)) {
@@ -47,14 +101,14 @@ class AdminCategory
         $this->displayView('admin/category.search');
     }
 
-    public function categorySubcats()
+    public function subcats()
     {
         $this->setCategoryId();
         $this->setFromApi(new CategoryQuery(), $this->data['categoryId'], 'subcats', 'subcats');
         $this->displayView('admin/category.subcats');
     }
 
-    public function categoryMedia()
+    public function media()
     {
         $this->setCategoryId();
         $this->setFromApi(new MediaQuery(), $this->data['categoryId'], 'getMediaInCategory', 'medias');

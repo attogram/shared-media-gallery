@@ -21,7 +21,7 @@ class AdminMedia
         $this->accessControl();
     }
 
-    public function mediaList()
+    public function list()
     {
         $orm = MediaQuery::create()
             ->joinWith('Source')
@@ -30,19 +30,19 @@ class AdminMedia
         $this->displayView('admin/media.list');
     }
 
-    public function mediaSearch()
+    public function search()
     {
         $this->adminSearch(new MediaQuery());
         $this->displayView('admin/media.search');
     }
 
-    public function mediaSave()
+    public function save()
     {
         $this->adminSave(new MediaQuery());
         $this->displayView('admin/media.save');
     }
 
-    public function mediaCategories()
+    public function categories()
     {
         $this->displayView('admin/media.categories');
     }
