@@ -6,8 +6,8 @@ use Attogram\SharedMedia\Api\Sources;
 use Attogram\SharedMedia\Gallery\Seeder;
 use Attogram\SharedMedia\Orm\Source;
 use Attogram\SharedMedia\Orm\SourceQuery;
-use Exception;
 use Propel\Runtime\Map\TableMap;
+use Throwable;
 
 class AdminSource
 {
@@ -31,30 +31,15 @@ class AdminSource
             foreach ($sources as $source) {
                 $this->data['sources'][] = $source->toArray(TableMap::TYPE_FIELDNAME);
             }
-        } catch (Exception $error) {
-            //
+        } catch (Throwable $error) {
+            // ...
         }
         $this->displayView('admin/source.list');
     }
 
     public function save()
     {
+		// ...
         $this->displayView('admin/source.save');
-    }
-
-    private function seedSources()
-    {
-        foreach (Sources::$sources as $title => $url) {
-            try {
-                SourceQuery::create()
-                    ->filterByTitle($title)
-                    ->filterByHost($url)
-                    ->filterByEndpoint($url)
-                    ->findOneOrCreate();
-            } catch (Exception $error) {
-                print '<pre>ERROR: seedSources: title='.$title.' url='.$url
-                .' error: ' . $error->getMessage() . '</pre>';
-            }
-        }
     }
 }
