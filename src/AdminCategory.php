@@ -19,7 +19,6 @@ class AdminCategory
     use TraitView;
 
     private $data = [];
-    private $values = [];
 
     public function __construct($data)
     {

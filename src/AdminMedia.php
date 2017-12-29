@@ -42,7 +42,7 @@ class AdminMedia
 
     public function save()
     {
-		$this->adminSave(new MediaQuery(), new Media());
+        $this->adminSave(new MediaQuery(), new Media());
         $this->redirect301($this->data['uriBase'] . '/admin/media/list/');
     }
 
