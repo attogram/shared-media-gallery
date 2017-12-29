@@ -2,7 +2,7 @@
 
 namespace Attogram\SharedMedia\Gallery;
 
-use Exception;
+use Throwable;
 use Propel\Runtime\Map\TableMap;
 
 trait TraitQueryAdmin
@@ -46,7 +46,7 @@ trait TraitQueryAdmin
             try {
                 $result->setSourceId(1);
                 $this->adminSaveOrUpdate($api, $result);
-            } catch (Exception $error) {
+            } catch (Throwable $error) {
                 $this->data['errors'][] = 'adminSave: pageid:'
                     . $result->getPageid() . ': ' . $error->getMessage();
             }

@@ -4,7 +4,7 @@ namespace Attogram\SharedMedia\Gallery;
 
 use Attogram\SharedMedia\Orm\Site;
 use Attogram\SharedMedia\Orm\SiteQuery;
-use Exception;
+use Throwable;
 use Propel\Runtime\Map\TableMap;
 
 class AdminSite
@@ -68,7 +68,7 @@ class AdminSite
     {
         try {
             $site = SiteQuery::create()->findOneById(1);
-        } catch (Exception $error) {
+        } catch (Throwable $error) {
             $site = new Site();
         }
         if (!$site instanceof Site) {

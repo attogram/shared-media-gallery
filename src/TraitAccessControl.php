@@ -2,9 +2,6 @@
 
 namespace Attogram\SharedMedia\Gallery;
 
-use Dotenv\Dotenv;
-use Dotenv\Exception\InvalidPathException;
-
 trait TraitAccessControl
 {
     /**
