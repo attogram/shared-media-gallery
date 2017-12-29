@@ -25,6 +25,8 @@ plugins:
   phan:
     enabled: true
     checks:
+      PhanCompatiblePHP7:
+        enabled: false
       PhanTypeMismatchArgument:
         enabled: false
       PhanTypeMismatchForeach:
