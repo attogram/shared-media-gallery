@@ -11,7 +11,7 @@ class Gallery
     use TraitErrors;
     use TraitView;
 
-    const VERSION = '0.1.6';
+    const VERSION = '0.1.7';
 
     private $router;
     private $data = [];
@@ -81,7 +81,9 @@ class Gallery
         $this->router->allow('/admin/page/save/', 'AdminPage::pageSave');
         // Source Admin Routes
         $this->router->allow('/admin/source/list/', 'AdminSource::list');
-        $this->router->allow('/admin/source/save', 'AdminSource::save');
+        $this->router->allow('/admin/source/save/', 'AdminSource::save');
+        $this->router->allow('/admin/source/?/delete/', 'AdminSource::delete');
+        $this->router->allow('/admin/source/?/edit/', 'AdminSource::edit');
     }
 
     /**

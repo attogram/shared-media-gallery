@@ -1,13 +1,22 @@
 {{ include('header.twig') }}
 {{ include('menu.twig') }}
+<form action="{{ uriBase }}/admin/source/save/" method="POST">
 <div class="content">
     <h1>Source List</h1>
     <div class="table">
+        <div class="row">
+            <div class="cell left"></div>
+            <div class="cell left"><input name="t" type="text" size="10" /></div>
+            <div class="cell left"><input name="h" type="text" size="40" /></div>
+            <div class="cell left"><input name="e" type="text" size="20" /></div>
+			<div class="cell left"><input type="submit" value=" Add Source " /></div>
+        </div>
         <div class="row">
             <div class="cell header">ID</div>
             <div class="cell header">Title</div>
             <div class="cell header">Host</div>
             <div class="cell header">Endpoint</div>
+            <div class="cell header">...</div>
         </div>
         {% for source in sources %}
             <div class="row">
@@ -15,8 +24,10 @@
                 <div class="cell left">{{ source.title|e }}</div>
                 <div class="cell left"><a target="_blank" href="{{ source.host|e }}">{{ source.host|e }}</a></div>
                 <div class="cell left"><a target="_blank" href="{{ source.host|e }}{{ source.endpoint|e }}">{{ source.endpoint|e }}</a></div>
+				<div class="cell left">(<a href="{{ uriBase }}/admin/source/{{ source.id }}/delete/">delete</a>)&nbsp;(<a href="{{ uriBase }}/admin/source/{{ source.id }}/edit/">edit</a>)</div>
             </div>
         {% endfor %}
     </div>
 </div>
+</form>
 {{ include('footer.twig') }}

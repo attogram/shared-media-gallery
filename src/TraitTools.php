@@ -83,4 +83,24 @@ trait TraitTools
             $string
         );
     }
+	
+    /**
+     * @param string $url
+     */
+    private function redirect301($url)
+    {
+        header('HTTP/1.1 301 Moved Permanently');
+        header('Location: ' . $url);
+        exit;
+    }
+	
+    /**
+     * @param string $url
+     */
+    private function redirect302($url)
+    {
+        header('HTTP/1.1 302 Found');
+        header('Location: ' . $url);
+        exit;
+    }
 }
