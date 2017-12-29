@@ -36,22 +36,29 @@ class AdminCategory
     {
         $this->setPostVars();
         foreach ($this->pageids as $pageid) {
-            $this->values = [
-                'title' => $this->title[$pageid],
-                'files' => $this->files[$pageid],
-                'subcats' => $this->subcats[$pageid],
-                'pages' => $this->pages[$pageid],
-                'size' => $this->size[$pageid],
-                'hidden' => $this->hidden[$pageid],
-            ];
+            foreach ($this->getFieldNames() as $field) {
+                $this->values[$field] = $this->{$field}[$pageid];
+            }
             if (!$this->updateCategoryIfExists($this->sourceId, $pageid)) {
-                $this->setCategoryValues(new Category())
+                $this->setValues(new Category())
                     ->setSourceId($this->sourceId)
                     ->setPageid($pageid)
                     ->save();
             }
         }
         $this->redirect301($this->data['uriBase'] . '/admin/category/list/');
+    }
+
+    private function getFieldNames()
+    {
+        return [
+            'title',
+            'files',
+            'subcats',
+            'pages',
+            'size',
+            'hidden',
+        ];
     }
 
     private function setPostVars()
@@ -64,12 +71,9 @@ class AdminCategory
         if (!$this->sourceId) {
             $this->error404('404 Source Not Found');
         }
-        $this->title = $this->getPost('title');
-        $this->files = $this->getPost('files');
-        $this->subcats = $this->getPost('subcats');
-        $this->pages = $this->getPost('pages');
-        $this->size = $this->getPost('size');
-        $this->hidden = $this->getPost('hidden');
+        foreach ($this->getFieldNames() as $field) {
+            $this->{$field} = $this->getPost($field);
+        }
     }
 
     /**
@@ -86,7 +90,7 @@ class AdminCategory
         if (!$orm instanceof Category) {
             return false;
         }
-        $this->setCategoryValues($orm)
+        $this->setValues($orm)
             ->save();
         return true;
     }
@@ -95,15 +99,12 @@ class AdminCategory
      * @param object $orm
      * @return object
      */
-    private function setCategoryValues($orm)
+    private function setValues($orm)
     {
-        return $orm
-            ->setTitle($this->values['title'])
-            ->setFiles($this->values['files'])
-            ->setSubcats($this->values['subcats'])
-            ->setPages($this->values['pages'])
-            ->setSize($this->values['size'])
-            ->setHidden($this->values['hidden']);
+        foreach ($this->getFieldNames() as $field) {
+            $orm->{'set' . ucfirst($field)}($this->values[$field]);
+        }
+        return $orm;
     }
 
     public function search()

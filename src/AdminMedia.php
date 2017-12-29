@@ -47,7 +47,7 @@ class AdminMedia
                 $this->values[$field] = $this->{$field}[$pageid];
             }
             if (!$this->updateMediaIfExists($this->sourceId, $pageid)) {
-                $this->setMediaValues(new Media())
+                $this->setValues(new Media())
                     ->setSourceId($this->sourceId)
                     ->setPageid($pageid)
                     ->save();
@@ -72,6 +72,7 @@ class AdminMedia
             'user', 'userid',
         ];
     }
+
     private function setPostVars()
     {
         $this->pageids = $this->getPost('pageid');
@@ -101,7 +102,7 @@ class AdminMedia
         if (!$orm instanceof Media) {
             return false;
         }
-        $this->setMediaValues($orm)
+        $this->setValues($orm)
             ->save();
         return true;
     }
@@ -110,7 +111,7 @@ class AdminMedia
      * @param object $orm
      * @return object
      */
-    private function setMediaValues($orm)
+    private function setValues($orm)
     {
         foreach ($this->getFieldNames() as $field) {
             $orm->{'set' . ucfirst($field)}($this->values[$field]);
