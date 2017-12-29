@@ -2,34 +2,31 @@
 {{ include('menu.twig') }}
 <div class="content">
     <h1>Category List</h1>
-
-    <div class="cattable">
-        <div class="catcon">
-            <div class="catname cathead">ID</div>
-            <div class="catname cathead">Pageid</div>
-            <div class="catname cathead">Title</div>
-            <div class="catfiles cathead">remote<br />media</div>
-            <div class="catfiles cathead">local<br />media</div>
-            <div class="catfiles cathead">Subcats</div>
-            <div class="catfiles cathead">Pages</div>
-            <div class="catfiles cathead">H/P</div>
-            <div class="catfiles cathead">source</div>
-        </div>
+    <div class="table">
+        <div class="row">
+            <div class="cell header">ID</div>
+            <div class="cell header">Pageid</div>
+            <div class="cell header">Title</div>
+            <div class="cell header">Remote<br />media</div>
+            <div class="cell header">Local<br />media</div>
+            <div class="cell header">Subcats</div>
+            <div class="cell header">Pages</div>
+            <div class="cell header">H/P</div>
+            <div class="cell header">Source</div>
+		</div>
         {% for category in categories %}
-            <div class="catcon">
-                <div class="catname">{{ category.id }}</div>
-                <div class="catname"><span class="pageid">{{ category.pageid }}</span></div>
-                <div class="catname"><span class="title">{{ category.shortTitle|e }}</span></div>
-                <div class="catfiles"><a href="{{ uriBase }}/admin/category/{{ category.pageid }}/media/">import</a>&nbsp;{{ category.files|default('?') }}</div>
-                <div class="catfiles">-</div>
-                <div class="catfiles"><a href="{{ uriBase }}/admin/category/{{ category.pageid }}/subcats/">import</a>&nbsp;{{ category.subcats|default('?') }}</div>
-                <div class="catfiles">{{ category.pages|default('?') }}</div>
-                <div class="catfiles">{{ category.hidden ? 'H' : 'P' }}</div>
-                <div class="catfiles">{{ category.sourcetitle|e }}</div>
+            <div class="row">
+                <div class="cell left">{{ category.id }}</div>
+                <div class="cell left"><span class="pageid">{{ category.pageid }}</span></div>
+                <div class="cell left"><span class="title">{{ category.shortTitle|e }}</span></div>
+                <div class="cell left"><a href="{{ uriBase }}/admin/category/{{ category.pageid }}/media/">import</a>&nbsp;{{ category.files|default('?') }}</div>
+                <div class="cell left">-</div>
+                <div class="cell left"><a href="{{ uriBase }}/admin/category/{{ category.pageid }}/subcats/">import</a>&nbsp;{{ category.subcats|default('?') }}</div>
+                <div class="cell left">{{ category.pages|default('?') }}</div>
+                <div class="cell left">{{ category.hidden ? 'H' : 'P' }}</div>
+                <div class="cell left">{{ category.sourcetitle|e }}</div>
             </div>
         {% endfor %}
     </div>
-
 </div>
-
 {{ include('footer.twig') }}

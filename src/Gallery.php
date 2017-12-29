@@ -11,7 +11,7 @@ class Gallery
     use TraitErrors;
     use TraitView;
 
-    const VERSION = '0.1.7';
+    const VERSION = '0.1.8';
 
     private $router;
     private $data = [];
@@ -22,8 +22,8 @@ class Gallery
     public function __construct()
     {
         $this->router = new Router();
-        $this->setPublicRoutes();
-        $this->setAdminRoutes();
+        $this->allowPublicRoutes();
+        $this->allowAdminRoutes();
         $control = $this->router->match(); // get controller
         if (!$control) {
             $this->error404();
@@ -31,7 +31,7 @@ class Gallery
         list($className, $methodName) = explode('::', $control);
         $className = 'Attogram\\SharedMedia\\Gallery\\' . $className;
         if (!is_callable([$className, $methodName])) {
-            $this->error404('404 Control Not Found');
+            $this->error404('404 Controller Not Found');
         }
         $this->setupDatabase();
         $this->setData();
@@ -42,7 +42,7 @@ class Gallery
     /**
      * @return void
      */
-    private function setPublicRoutes()
+    private function allowPublicRoutes()
     {
         $this->router->allow('/', 'PublicSite::home');
         $this->router->allow('/about/', 'PublicSite::about');
@@ -57,29 +57,28 @@ class Gallery
     /**
      * @return void
      */
-    private function setAdminRoutes()
+    private function allowAdminRoutes()
     {
-        // Site Admin Routes
+        // Site Admin
         $this->router->allow('/admin/', 'AdminSite::home');
         $this->router->allow('/admin/site/settings/', 'AdminSite::settings');
         $this->router->allow('/admin/site/settings/save/', 'AdminSite::saveSettings');
-        $this->router->allow('/admin/site/database/', 'AdminSite::database');
-        // Category Admin Routes
+        // Category Admin
         $this->router->allow('/admin/category/list/', 'AdminCategory::categoryList');
         $this->router->allow('/admin/category/search/', 'AdminCategory::categorySearch');
         $this->router->allow('/admin/category/save/', 'AdminCategory::categorySave');
         $this->router->allow('/admin/category/?/media/', 'AdminCategory::categoryMedia');
         $this->router->allow('/admin/category/?/subcats/', 'AdminCategory::categorySubcats');
-        // Media Admin Routes
+        // Media Admin
         $this->router->allow('/admin/media/list/', 'AdminMedia::mediaList');
         $this->router->allow('/admin/media/search/', 'AdminMedia::mediaSearch');
         $this->router->allow('/admin/media/save/', 'AdminMedia::mediaSave');
         $this->router->allow('/admin/media/?/categories/', 'AdminMedia::mediaCategories');
-        // Page Admin Routes
+        // Page Admin
         $this->router->allow('/admin/page/list/', 'AdminPage::pageList');
         $this->router->allow('/admin/page/search/', 'AdminPage::pageSearch');
         $this->router->allow('/admin/page/save/', 'AdminPage::pageSave');
-        // Source Admin Routes
+        // Source Admin
         $this->router->allow('/admin/source/list/', 'AdminSource::list');
         $this->router->allow('/admin/source/save/', 'AdminSource::save');
         $this->router->allow('/admin/source/?/delete/', 'AdminSource::delete');

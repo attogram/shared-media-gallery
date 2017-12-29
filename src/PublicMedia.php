@@ -7,7 +7,7 @@ use Attogram\SharedMedia\Orm\MediaQuery;
 class PublicMedia
 {
     use TraitErrors;
-    use TraitQueryItem;
+    use TraitQueryPublic;
     use TraitTools;
     use TraitView;
 

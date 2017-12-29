@@ -12,7 +12,7 @@ class AdminCategory
     use TraitEnvironment;
     use TraitErrors;
     use TraitQueryAdmin;
-    use TraitQueryItem;
+    use TraitQueryPublic;
     use TraitTools;
     use TraitView;
 
@@ -26,10 +26,7 @@ class AdminCategory
 
     public function categoryList()
     {
-        $orm = CategoryQuery::create()
-            ->joinWith('Source')
-            ->withColumn('source.title');
-        $this->setItems($orm, 'categories', 100);
+        $this->setItems($this->getCategoryQuery(), 'categories', 100);
         $this->displayView('admin/category.list');
     }
 

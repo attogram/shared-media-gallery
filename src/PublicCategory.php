@@ -7,7 +7,7 @@ use Attogram\SharedMedia\Orm\CategoryQuery;
 class PublicCategory
 {
     use TraitErrors;
-    use TraitQueryItem;
+    use TraitQueryPublic;
     use TraitTools;
     use TraitView;
 
@@ -20,7 +20,7 @@ class PublicCategory
 
     public function categories()
     {
-        $this->displayItems(CategoryQuery::create(), 'categories', 100);
+        $this->displayItems($this->getCategoryQuery(), 'categories', 250);
     }
 
     public function category()

@@ -2,14 +2,25 @@
 
 namespace Attogram\SharedMedia\Gallery;
 
+use Attogram\SharedMedia\Orm\CategoryQuery;
 use Exception;
 use Propel\Runtime\ActiveQuery\Criteria;
 use Propel\Runtime\Map\TableMap;
 
-trait TraitQueryItem
+
+trait TraitQueryPublic
 {
     private $defaultItemsPerPage = 20;
 
+	/**
+	 * @return CategoryQuery
+	 */
+	private function getCategoryQuery()
+	{
+        return CategoryQuery::create()
+            ->joinWith('Source')
+            ->withColumn('source.title');
+	}
      /**
      * @param object $orm
      * @param string $dataName

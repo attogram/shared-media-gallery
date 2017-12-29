@@ -7,7 +7,7 @@ use Attogram\SharedMedia\Orm\PageQuery;
 class PublicPage
 {
     use TraitErrors;
-    use TraitQueryItem;
+    use TraitQueryPublic;
     use TraitTools;
     use TraitView;
 

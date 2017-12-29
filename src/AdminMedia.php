@@ -9,7 +9,7 @@ class AdminMedia
     use TraitAccessControl;
     use TraitEnvironment;
     use TraitQueryAdmin;
-    use TraitQueryItem;
+    use TraitQueryPublic;
     use TraitTools;
     use TraitView;
 
