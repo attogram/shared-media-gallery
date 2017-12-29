@@ -12,15 +12,15 @@ trait TraitQueryPublic
 {
     private $defaultItemsPerPage = 20;
 
-	/**
-	 * @return CategoryQuery
-	 */
-	private function getCategoryQuery()
-	{
+    /**
+     * @return mixed
+     */
+    private function getCategoryQuery()
+    {
         return CategoryQuery::create()
             ->joinWith('Source')
             ->withColumn('source.title');
-	}
+    }
      /**
      * @param object $orm
      * @param string $dataName
