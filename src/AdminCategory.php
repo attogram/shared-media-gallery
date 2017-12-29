@@ -75,21 +75,20 @@ class AdminCategory
      */
     private function updateCategoryIfExists($sourceId, $pageid)
     {
-            $orm = CategoryQuery::create()
-                ->filterBySourceId($sourceId)
-                ->filterByPageid($pageid)
-                ->findOne();
-            if (!$orm instanceof Category) {
-                return false;
-            }
-            $this->setCategoryValues($orm)
-                ->save();
-            return true;
+		$orm = CategoryQuery::create()
+			->filterBySourceId($sourceId)
+			->filterByPageid($pageid)
+			->findOne();
+		if (!$orm instanceof Category) {
+			return false;
+		}
+		$this->setCategoryValues($orm)
+			->save();
+        return true;
     }
 
     /**
      * @param object $orm
-     * @param array $values
      * @return object
      */
     private function setCategoryValues($orm)
