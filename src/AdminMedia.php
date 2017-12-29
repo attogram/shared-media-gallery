@@ -42,18 +42,7 @@ class AdminMedia
 
     public function save()
     {
-        $this->setPostVars();
-        foreach ($this->pageids as $pageid) {
-            foreach ($this->getFieldNames() as $field) {
-                $this->values[$field] = $this->{$field}[$pageid];
-            }
-            if (!$this->updateMediaIfExists($pageid)) {
-                $this->setValues(new Media())
-                    ->setSourceId($this->sourceId)
-                    ->setPageid($pageid)
-                    ->save();
-            }
-        }
+		$this->adminSave(new MediaQuery(), new Media());
         $this->redirect301($this->data['uriBase'] . '/admin/media/list/');
     }
 
@@ -72,24 +61,6 @@ class AdminMedia
             'timestamp',
             'user', 'userid',
         ];
-    }
-
-    /**
-     * @param int $pageid
-     * @return bool
-     */
-    private function updateMediaIfExists($pageid)
-    {
-        $orm = MediaQuery::create()
-            ->filterBySourceId($this->sourceId)
-            ->filterByPageid($pageid)
-            ->findOne();
-        if (!$orm instanceof Media) {
-            return false;
-        }
-        $this->setValues($orm)
-            ->save();
-        return true;
     }
 
     public function categories()

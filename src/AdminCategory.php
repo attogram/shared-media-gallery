@@ -35,18 +35,7 @@ class AdminCategory
 
     public function save()
     {
-        $this->setPostVars();
-        foreach ($this->pageids as $pageid) {
-            foreach ($this->getFieldNames() as $field) {
-                $this->values[$field] = $this->{$field}[$pageid];
-            }
-            if (!$this->updateCategoryIfExists($pageid)) {
-                $this->setValues(new Category())
-                    ->setSourceId($this->sourceId)
-                    ->setPageid($pageid)
-                    ->save();
-            }
-        }
+        $this->adminSave(new CategoryQuery(), new Category());
         $this->redirect301($this->data['uriBase'] . '/admin/category/list/');
     }
 
@@ -60,24 +49,6 @@ class AdminCategory
             'size',
             'hidden',
         ];
-    }
-
-    /**
-     * @param int $pageid
-     * @return bool
-     */
-    private function updateCategoryIfExists($pageid)
-    {
-        $orm = CategoryQuery::create()
-            ->filterBySourceId($this->sourceId)
-            ->filterByPageid($pageid)
-            ->findOne();
-        if (!$orm instanceof Category) {
-            return false;
-        }
-        $this->setValues($orm)
-            ->save();
-        return true;
     }
 
     public function search()

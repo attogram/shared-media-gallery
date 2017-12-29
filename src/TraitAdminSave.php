@@ -20,14 +20,52 @@ trait TraitAdminSave
     }
 
     /**
-     * @param object $orm
+     * @param object $ormQuery
      * @return object
      */
-    private function setValues($orm)
+    private function setValues($ormQuery)
     {
         foreach ($this->getFieldNames() as $field) {
-            $orm->{'set' . ucfirst($field)}($this->values[$field]);
+            $ormQuery->{'set' . ucfirst($field)}($this->values[$field]);
         }
-        return $orm;
+        return $ormQuery;
+    }
+
+    /**
+     * @param object $orm
+     * @param int $pageid
+     * @return bool
+     */
+    private function updateItemIfExists($orm, $pageid)
+    {
+        $result = $orm->filterBySourceId($this->sourceId)
+            ->filterByPageid($pageid)
+            ->findOne();
+        if (!$result) {
+            return false;
+        }
+        $this->setValues($orm)
+            ->save();
+        return true;
+    }
+
+    /**
+     * @param object $ormQuery
+     * @param object $ormItem
+     */
+    private function adminSave($ormQuery, $ormItem)
+    {
+        $this->setPostVars();
+        foreach ($this->pageids as $pageid) {
+            foreach ($this->getFieldNames() as $field) {
+                $this->values[$field] = $this->{$field}[$pageid];
+            }
+            if (!$this->updateItemIfExists($ormQuery, $pageid)) {
+                $this->setValues($ormItem)
+                    ->setSourceId($this->sourceId)
+                    ->setPageid($pageid)
+                    ->save();
+            }
+        }
     }
 }
