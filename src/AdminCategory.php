@@ -34,38 +34,43 @@ class AdminCategory
 
     public function save()
     {
-        $pageids = $this->getPost('pageid');
-        if (empty($pageids) || !is_array($pageids)) {
-            $this->error404('404 Category Not Selected');
-        }
-        $sourceId = $this->getPost('source_id');
-        if (!$sourceId) {
-            $this->error404('404 Source Not Found');
-        }
-        $title = $this->getPost('title');
-        $files = $this->getPost('files');
-        $subcats = $this->getPost('subcats');
-        $pages = $this->getPost('pages');
-        $size = $this->getPost('size');
-        $hidden = $this->getPost('hidden');
-        foreach ($pageids as $pageid) {
+        $this->setPostVars();
+        foreach ($this->pageids as $pageid) {
             $this->values = [
-                'title' => $title[$pageid],
-                'files' => $files[$pageid],
-                'subcats' => $subcats[$pageid],
-                'pages' => $pages[$pageid],
-                'size' => $size[$pageid],
-                'hidden' => $hidden[$pageid],
+                'title' => $this->title[$pageid],
+                'files' => $this->files[$pageid],
+                'subcats' => $this->subcats[$pageid],
+                'pages' => $this->pages[$pageid],
+                'size' => $this->size[$pageid],
+                'hidden' => $this->hidden[$pageid],
             ];
-            if ($this->updateCategoryIfExists($sourceId, $pageid)) {
+            if ($this->updateCategoryIfExists($this->sourceId, $pageid)) {
                 continue;
             }
             $this->setCategoryValues(new Category())
-                ->setSourceId($sourceId)
+                ->setSourceId($this->sourceId)
                 ->setPageid($pageid)
                 ->save();
         }
         $this->redirect301($this->data['uriBase'] . '/admin/category/list/');
+    }
+
+    private function setPostVars()
+    {
+        $this->pageids = $this->getPost('pageid');
+        if (empty($this->pageids) || !is_array($this->pageids)) {
+            $this->error404('404 Category Not Selected');
+        }
+        $this->sourceId = $this->getPost('source_id');
+        if (!$this->sourceId) {
+            $this->error404('404 Source Not Found');
+        }
+        $this->title = $this->getPost('title');
+        $this->files = $this->getPost('files');
+        $this->subcats = $this->getPost('subcats');
+        $this->pages = $this->getPost('pages');
+        $this->size = $this->getPost('size');
+        $this->hidden = $this->getPost('hidden');
     }
 
     /**
@@ -75,15 +80,15 @@ class AdminCategory
      */
     private function updateCategoryIfExists($sourceId, $pageid)
     {
-		$orm = CategoryQuery::create()
-			->filterBySourceId($sourceId)
-			->filterByPageid($pageid)
-			->findOne();
-		if (!$orm instanceof Category) {
-			return false;
-		}
-		$this->setCategoryValues($orm)
-			->save();
+        $orm = CategoryQuery::create()
+            ->filterBySourceId($sourceId)
+            ->filterByPageid($pageid)
+            ->findOne();
+        if (!$orm instanceof Category) {
+            return false;
+        }
+        $this->setCategoryValues($orm)
+            ->save();
         return true;
     }
 
