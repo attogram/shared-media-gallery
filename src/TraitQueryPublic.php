@@ -3,10 +3,9 @@
 namespace Attogram\SharedMedia\Gallery;
 
 use Attogram\SharedMedia\Orm\CategoryQuery;
-use Exception;
 use Propel\Runtime\ActiveQuery\Criteria;
 use Propel\Runtime\Map\TableMap;
-
+use Throwable;
 
 trait TraitQueryPublic
 {
@@ -35,7 +34,7 @@ trait TraitQueryPublic
         $page = 1;
         try {
             $items = $orm->orderByTitle()->paginate($page, $itemsPerPage);
-        } catch (Exception $error) {
+        } catch (Throwable $error) {
             return;
         }
         if (!$items) {
@@ -61,7 +60,7 @@ trait TraitQueryPublic
         }
         try {
             $item = $orm->filterByPageid($itemId)->findOne();
-        } catch (Exception $error) {
+        } catch (Throwable $error) {
             $item = false;
         }
         if (!$item) {
