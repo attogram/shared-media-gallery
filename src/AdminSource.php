@@ -40,23 +40,23 @@ class AdminSource
 
     public function save()
     {
-		$title = $this->getPost('t');
-		$host = $this->getPost('h');
-		$endpoint = $this->getPost('e');
-		$listUrl = $this->data['uriBase'] . '/admin/source/list/';
-		if (!$title || !$host || !$endpoint) {
-			$this->redirect302($listUrl);
-		}
-		$source = new Source();
-		try {
-			$source
-				->setTitle($title)
-				->setHost($host)
-				->setEndpoint($endpoint)
-				->save();
-		} catch (Throwable $error) {
-			$this->error403('ERROR: ' . $error->getMessage());
-		}
+        $title = $this->getPost('t');
+        $host = $this->getPost('h');
+        $endpoint = $this->getPost('e');
+        $listUrl = $this->data['uriBase'] . '/admin/source/list/';
+        if (!$title || !$host || !$endpoint) {
+            $this->redirect302($listUrl);
+        }
+        $source = new Source();
+        try {
+            $source
+                ->setTitle($title)
+                ->setHost($host)
+                ->setEndpoint($endpoint)
+                ->save();
+        } catch (Throwable $error) {
+            $this->error403('ERROR: ' . $error->getMessage());
+        }
         $this->redirect302($listUrl);
     }
 }
