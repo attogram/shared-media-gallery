@@ -4,18 +4,17 @@
     <h1>Media List</h1>
     <div class="table">
         <div class="row">
-            <div class="cell header">ID<br />Pageid</div>
+            <div class="cell header small">ID<br />Source<br />Pageid</div>
             <div class="cell header">Thumb</div>
             <div class="cell header">Title<br />Description</div>
             <div class="cell header">Categories</div>
-            <div class="cell header">Source</div>
         </div>
         {% for media in medias %}
             <div class="row">
-                <div class="cell left">
+                <div class="cell left small">
                     {{ media.id }}
-                    <br />
-                    <span class="pageid">{{ media.pageid }}</span>
+                    <br /><span class="small">{{ media.sourcetitle|e }}</span>
+                    <br /><span class="pageid">{{ media.pageid }}</span>
                 </div>
                 <div class="cell center">
                     <span class="title"><a href="{{ uriBase }}/media/{{ media.pageid }}/"><img src="{{ media.thumburl }}" width="{{ media.thumbwidth / 2}}" height="{{ media.thumbheight / 2}}"></a></span>
@@ -29,7 +28,6 @@
                     <a href="{{ uriBase }}/admin/media/{{ media.pageid }}/categories/">import</a>
                     <br />?
                 </div>
-                <div class="cell center">{{ media.sourcetitle|e }}</div>
             </div>
         {% endfor %}
     </div>
