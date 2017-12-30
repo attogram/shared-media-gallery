@@ -49,7 +49,7 @@ trait TraitAdminSave
     private function updateItemIfExists($ormQueryName)
     {
         $ormQuery = new $ormQueryName;
-        $ormItem = $this->getItem($ormQuery, $this->pageid);
+        $ormItem = $this->getItem($ormQuery);
         if (!$ormItem) {
             return false;
         }
