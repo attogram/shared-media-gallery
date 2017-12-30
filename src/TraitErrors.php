@@ -4,19 +4,6 @@ namespace Attogram\SharedMedia\Gallery;
 
 trait TraitErrors
 {
-    private $verbose = true;
-
-    /**
-     * Print a message if in verbose mode
-     * @param mixed $message
-     */
-    private function verbose($msg)
-    {
-        if ($this->verbose) {
-            print '<pre>'.print_r($msg, true).'</pre>';
-        }
-    }
-
     /**
      * Send 500 error with message, then exit
      * @param string $message

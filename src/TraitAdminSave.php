@@ -84,6 +84,23 @@ trait TraitAdminSave
 
     /**
      * @param string $ormName
+     * @param int $pageid
+     */
+	private function saveItem($ormName, $pageid)
+	{
+		try {
+			$item = new $ormName;
+			$item = $this->setValues($item)
+				->setSourceId($this->sourceId)
+				->setPageid($pageid);
+			$item->save();
+		} catch (Throwable $error) {
+			$this->fatalError($error->getMessage());
+		}
+	}
+	
+    /**
+     * @param string $ormName
      */
     private function adminSave($ormName)
     {
@@ -93,15 +110,7 @@ trait TraitAdminSave
                 $this->values[$field] = $this->{$field}[$pageid];
             }
             if (!$this->updateItemIfExists($ormName . 'Query', $pageid)) {
-                try {
-                    $item = new $ormName;
-                    $item = $this->setValues($item)
-                        ->setSourceId($this->sourceId)
-                        ->setPageid($pageid);
-                    $item->save();
-                } catch (Throwable $error) {
-                    $this->fatalError($error->getMessage());
-                }
+				$this->saveItem($ormName, $pageid);
             }
         }
     }
