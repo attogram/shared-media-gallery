@@ -36,7 +36,7 @@ class AdminCategory
     public function save()
     {
         $this->setFieldNames();
-        $this->adminSave(new CategoryQuery(), new Category());
+        $this->adminSave('Attogram\\SharedMedia\\Orm\\Category');
         $this->redirect301($this->data['uriBase'] . '/admin/category/list/');
     }
 

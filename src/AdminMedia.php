@@ -44,7 +44,7 @@ class AdminMedia
     public function save()
     {
         $this->setFieldNames();
-        $this->adminSave(new MediaQuery(), new Media());
+        $this->adminSave('Attogram\\SharedMedia\\Orm\\Media');
         $this->redirect301($this->data['uriBase'] . '/admin/media/list/');
     }
 

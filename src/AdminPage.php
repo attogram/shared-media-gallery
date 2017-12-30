@@ -7,7 +7,9 @@ use Attogram\SharedMedia\Orm\PageQuery;
 class AdminPage
 {
     use TraitAccessControl;
+    use TraitAdminSave;
     use TraitEnvironment;
+    use TraitErrors;
     use TraitQueryAdmin;
     use TraitQueryPublic;
     use TraitTools;
@@ -36,6 +38,14 @@ class AdminPage
 
     public function save()
     {
-        print 'AdminPage::save';
+        $this->setFieldNames();
+        $this->adminSave('Attogram\\SharedMedia\\Orm\\Page');
+        $this->redirect301($this->data['uriBase'] . '/admin/page/list/');
+    }
+
+    private function setFieldNames()
+    {
+        $this->fieldNames = [
+        ];
     }
 }

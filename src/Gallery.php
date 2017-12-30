@@ -10,7 +10,7 @@ class Gallery
     use TraitErrors;
     use TraitView;
 
-    const VERSION = '0.1.8';
+    const VERSION = '0.1.9';
 
     private $router;
     private $data = [];
@@ -30,7 +30,7 @@ class Gallery
         list($className, $methodName) = explode('::', $control);
         $className = 'Attogram\\SharedMedia\\Gallery\\' . $className;
         if (!is_callable([$className, $methodName])) {
-            $this->error404('404 Controller Not Found');
+            $this->error404('Controller Not Found');
         }
         $this->setupDatabase();
         $this->setData();

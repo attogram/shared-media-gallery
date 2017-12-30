@@ -14,6 +14,7 @@
         <hr />
         query: {{ query|e }}  limit: {{ limit|e }}
         <form action="{{ uriBase }}/admin/page/save/" name="cats" method="POST">
+		<input name="source_id" value="1" type="hidden" /
         <br />
         <input type="submit" value="  Save selected   ">
         <br />
