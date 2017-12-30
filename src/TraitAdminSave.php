@@ -7,6 +7,9 @@ use Throwable;
 
 trait TraitAdminSave
 {
+
+    private $pageid;
+
     /**
      * @param string $ormName
      */
@@ -17,8 +20,9 @@ trait TraitAdminSave
             foreach ($this->fieldNames as $field) {
                 $this->values[$field] = $this->{$field}[$pageid];
             }
-            if (!$this->updateItemIfExists($ormName . 'Query', $pageid)) {
-                $this->saveItem($ormName, $pageid);
+            $this->pageid = $pageid;
+            if (!$this->updateItemIfExists($ormName . 'Query')) {
+                $this->saveItem($ormName);
             }
         }
     }
@@ -40,13 +44,12 @@ trait TraitAdminSave
 
     /**
      * @param string $ormQueryName
-     * @param int $pageid
      * @return bool
      */
-    private function updateItemIfExists($ormQueryName, $pageid)
+    private function updateItemIfExists($ormQueryName)
     {
         $ormQuery = new $ormQueryName;
-        $ormItem = $this->getItem($ormQuery, $pageid);
+        $ormItem = $this->getItem($ormQuery, $this->pageid);
         if (!$ormItem) {
             return false;
         }
@@ -61,15 +64,14 @@ trait TraitAdminSave
 
     /**
      * @param string $ormName
-     * @param int $pageid
      */
-    private function saveItem($ormName, $pageid)
+    private function saveItem($ormName)
     {
         try {
             $item = new $ormName;
             $item = $this->setValues($item)
                 ->setSourceId($this->sourceId)
-                ->setPageid($pageid);
+                ->setPageid($this->pageid);
             $item->save();
         } catch (Throwable $error) {
             $this->fatalError($error->getMessage());
@@ -95,16 +97,14 @@ trait TraitAdminSave
 
     /**
      * @param object $ormQuery
-     * @param int $pageid
-     * @return object - ormItem
+     * @return mixed
      */
-    private function getItem($ormQuery, $pageid)
+    private function getItem($ormQuery)
     {
         try {
             $query = $ormQuery
                 ->filterBySourceId($this->sourceId)
-                ->filterByPageid($pageid)
-                ->keepQuery(false);
+                ->filterByPageid($this->pageid);
             $ormItem = $query->findOne();
         } catch (Throwable $error) {
             $this->fatalError($error->getMessage());
