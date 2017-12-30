@@ -23,7 +23,7 @@ trait TraitCounts
 
     /**
      * @param ojbect $orm
-	 * return int
+     * return int
      */
     private function getCount($orm)
     {

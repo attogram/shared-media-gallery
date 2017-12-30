@@ -44,7 +44,7 @@ class AdminSource
         $host = $this->getPost('h');
         $endpoint = $this->getPost('e');
         if (!$title || !$host || !$endpoint) {
-            $this->redirect302($listUrl);
+            $this->redirect302($this->listUrl);
         }
         $source = new Source();
         try {
