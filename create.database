@@ -1,11 +1,13 @@
-echo Insert SQL: Shared Media ORM
+echo Creating Database: Shared Media ORM tables
+
 vendor/bin/propel sql:insert \
     --platform=sqlite \
     --connection='default=sqlite:database/gallery.sq3' \
     --sql-dir=vendor/attogram/shared-media-orm/config/ \
     --config-dir=vendor/attogram/shared-media-orm/config/
-	
-echo Insert SQL: Gallery site
+
+echo Creating Database: Shared Media Gallery tables and data
+
 vendor/bin/propel sql:insert
 
-echo Done.
+echo Created Database.
