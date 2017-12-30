@@ -7,6 +7,22 @@ use Throwable;
 
 trait TraitAdminSave
 {
+    /**
+     * @param string $ormName
+     */
+    private function adminSave($ormName)
+    {
+        $this->setPostVars();
+        foreach ($this->pageids as $pageid) {
+            foreach ($this->fieldNames as $field) {
+                $this->values[$field] = $this->{$field}[$pageid];
+            }
+            if (!$this->updateItemIfExists($ormName . 'Query', $pageid)) {
+                $this->saveItem($ormName, $pageid);
+            }
+        }
+    }
+
     private function setPostVars()
     {
         $this->pageids = $this->getPost('pageid');
@@ -20,45 +36,6 @@ trait TraitAdminSave
         foreach ($this->fieldNames as $field) {
             $this->{$field} = $this->getPost($field);
         }
-    }
-
-    /**
-     * @param object $ormQuery
-     * @return object
-     */
-    private function setValues($ormQuery)
-    {
-        foreach ($this->fieldNames as $field) {
-            try {
-                $ormQuery->{'set' . ucfirst($field)}($this->values[$field]);
-            } catch (Throwable $error) {
-                $this->fatalError($error->getMessage());
-            }
-        }
-        $ormQuery->setUpdatedAt(new DateTime());
-        return $ormQuery;
-    }
-
-    /**
-     * @param object $ormQuery
-     * @param int $pageid
-     * @return object - ormItem
-     */
-    private function getItem($ormQuery, $pageid)
-    {
-        try {
-            $query = $ormQuery
-                ->filterBySourceId($this->sourceId)
-                ->filterByPageid($pageid)
-                ->keepQuery(false);
-            $ormItem = $query->findOne();
-        } catch (Throwable $error) {
-            $this->fatalError($error->getMessage());
-        }
-        if (!$ormItem) {
-            return;
-        }
-        return $ormItem;
     }
 
     /**
@@ -100,18 +77,41 @@ trait TraitAdminSave
     }
 
     /**
-     * @param string $ormName
+     * @param object $ormQuery
+     * @return object
      */
-    private function adminSave($ormName)
+    private function setValues($ormQuery)
     {
-        $this->setPostVars();
-        foreach ($this->pageids as $pageid) {
-            foreach ($this->fieldNames as $field) {
-                $this->values[$field] = $this->{$field}[$pageid];
-            }
-            if (!$this->updateItemIfExists($ormName . 'Query', $pageid)) {
-                $this->saveItem($ormName, $pageid);
+        foreach ($this->fieldNames as $field) {
+            try {
+                $ormQuery->{'set' . ucfirst($field)}($this->values[$field]);
+            } catch (Throwable $error) {
+                $this->fatalError($error->getMessage());
             }
         }
+        $ormQuery->setUpdatedAt(new DateTime());
+        return $ormQuery;
+    }
+
+    /**
+     * @param object $ormQuery
+     * @param int $pageid
+     * @return object - ormItem
+     */
+    private function getItem($ormQuery, $pageid)
+    {
+        try {
+            $query = $ormQuery
+                ->filterBySourceId($this->sourceId)
+                ->filterByPageid($pageid)
+                ->keepQuery(false);
+            $ormItem = $query->findOne();
+        } catch (Throwable $error) {
+            $this->fatalError($error->getMessage());
+        }
+        if (!$ormItem) {
+            return;
+        }
+        return $ormItem;
     }
 }
