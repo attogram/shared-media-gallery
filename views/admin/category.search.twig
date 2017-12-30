@@ -11,12 +11,12 @@
     </form>
 
     {% if query %}
-        <hr />
-        query: {{ query|e }}  limit: {{ limit|e }}
         <form action="{{ uriBase }}/admin/category/save/" name="cats" method="POST">
         <input name="source_id" value="1" type="hidden" />
-        <br />
-        <input type="submit" value="  Save selected   ">
+		<hr />query: {{ query|e }}  
+		<br />limit: {{ limit|e }}
+		<br />source_id: {{ source_id }}
+        <br /><input type="submit" value="  Save selected   ">
         <br />
         {% for category in results %}
              <br /><input name="pageid[]" value="{{ category.pageid }}" type="checkbox" />

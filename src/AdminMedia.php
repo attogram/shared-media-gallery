@@ -9,9 +9,9 @@ class AdminMedia
 {
     use TraitAccessControl;
     use TraitAdminSave;
+    use TraitAdminSearch;
     use TraitEnvironment;
     use TraitErrors;
-    use TraitQueryAdmin;
     use TraitQueryPublic;
     use TraitTools;
     use TraitView;
