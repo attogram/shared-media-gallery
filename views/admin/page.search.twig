@@ -12,7 +12,7 @@
 
     {% if query %}
         <form action="{{ uriBase }}/admin/page/save/" name="cats" method="POST">
-        <input name="endpoint" value="{{ endpoint }}" type="hidden" />
+        <input name="source" value="{{ source }}" type="hidden" />
         <hr />query: {{ query|e }}
         <br />limit: {{ limit|e }}
         <br />source: {{ apiUrl|e }}
