@@ -2,8 +2,6 @@
 
 namespace Attogram\SharedMedia\Gallery;
 
-use Attogram\SharedMedia\Orm\PageQuery;
-
 class AdminPage
 {
     use TraitAccessControl;
@@ -16,6 +14,7 @@ class AdminPage
     use TraitView;
 
     private $data = [];
+    private $fieldNames = [];
 
     public function __construct($data)
     {
@@ -25,15 +24,8 @@ class AdminPage
 
     public function list()
     {
-        $this->setItems(PageQuery::create(), 'pages');
+        $this->setItems($this->getPageQuery(), 'pages');
         $this->displayView('admin/page.list');
-    }
-
-    public function search()
-    {
-        $this->data['sourceSelect'] = $this->getSourcePulldown();
-        $this->adminSearch(new PageQuery());
-        $this->displayView('admin/page.search');
     }
 
     public function save()
@@ -46,6 +38,18 @@ class AdminPage
     private function setFieldNames()
     {
         $this->fieldNames = [
+            'title',
+            'displaytitle',
+            'page_image_free',
+            'wikibase_item',
+            'disambiguation',
+            'defaultsort',
         ];
+    }
+
+    public function search()
+    {
+        $this->adminSearch($this->getPageQuery());
+        $this->displayView('admin/page.search');
     }
 }

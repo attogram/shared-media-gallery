@@ -2,11 +2,6 @@
 
 namespace Attogram\SharedMedia\Gallery;
 
-use Attogram\SharedMedia\Api\Base as ApiBase;
-use Attogram\SharedMedia\Orm\Category;
-use Attogram\SharedMedia\Orm\CategoryQuery;
-use Attogram\SharedMedia\Orm\MediaQuery;
-
 class AdminCategory
 {
     use TraitAccessControl;
@@ -54,27 +49,31 @@ class AdminCategory
 
     public function search()
     {
-        $this->data['sourceSelect'] = $this->getSourcePulldown();
-        $limit = $this->getGet('limit');
-        if (!$limit || !$this->isNumber($limit)) {
-            $limit = ApiBase::DEFAULT_LIMIT;
-        }
-        $this->data['limit'] = $limit;
-        $this->adminSearch(new CategoryQuery());
+        $this->adminSearch($this->getCategoryQuery());
         $this->displayView('admin/category.search');
     }
 
     public function subcats()
     {
         $this->setCategoryId();
-        $this->setFromApi(new CategoryQuery(), $this->data['categoryId'], 'subcats', 'subcats');
+        $this->setFromApi(
+            $this->getCategoryQuery(),
+            $this->data['categoryId'],
+            'subcats',
+            'subcats'
+        );
         $this->displayView('admin/category.subcats');
     }
 
     public function media()
     {
         $this->setCategoryId();
-        $this->setFromApi(new MediaQuery(), $this->data['categoryId'], 'getMediaInCategory', 'medias');
+        $this->setFromApi(
+            $this->getMediaQuery(),
+            $this->data['categoryId'],
+            'getMediaInCategory',
+            'medias'
+        );
         $this->displayView('admin/category.media');
     }
 

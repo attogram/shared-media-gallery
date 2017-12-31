@@ -1,0 +1,11 @@
+{% if sources %}
+    Source:
+    <select name="source">
+        {% for src in sources %}
+            <option value="{{ src.id }}"{% if src.id == source %} selected="selected"{% endif %}>{{ src.title }} = {{ src.host }}</option>
+        {% endfor %}
+    </select>
+{% else %}
+    Error: Sources Not Found
+{% endif %}
+

@@ -2,8 +2,6 @@
 
 namespace Attogram\SharedMedia\Gallery;
 
-use Attogram\SharedMedia\Orm\CategoryQuery;
-
 class PublicCategory
 {
     use TraitErrors;
@@ -25,6 +23,6 @@ class PublicCategory
 
     public function category()
     {
-        $this->displayItem(CategoryQuery::create(), 'category');
+        $this->displayItem($this->getCategoryQuery(), 'category');
     }
 }

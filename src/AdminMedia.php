@@ -2,9 +2,6 @@
 
 namespace Attogram\SharedMedia\Gallery;
 
-use Attogram\SharedMedia\Orm\Media;
-use Attogram\SharedMedia\Orm\MediaQuery;
-
 class AdminMedia
 {
     use TraitAccessControl;
@@ -27,18 +24,8 @@ class AdminMedia
 
     public function list()
     {
-        $orm = MediaQuery::create()
-            ->joinWith('Source')
-            ->withColumn('source.title');
-        $this->setItems($orm, 'medias');
+        $this->setItems($this->getMediaQuery(), 'medias');
         $this->displayView('admin/media.list');
-    }
-
-    public function search()
-    {
-        $this->data['sourceSelect'] = $this->getSourcePulldown();
-        $this->adminSearch(new MediaQuery());
-        $this->displayView('admin/media.search');
     }
 
     public function save()
@@ -51,18 +38,20 @@ class AdminMedia
     private function setFieldNames()
     {
         $this->fieldNames = [
-            'title',
-            'url', 'mime', 'width', 'height', 'size',
-            'sha1',
+            'title', 'imagedescription',
+            'url', 'mime', 'width', 'height', 'size', 'sha1',
             'thumburl', 'thumbmime', 'thumbwidth', 'thumbheight', 'thumbsize',
             'descriptionurl', 'descriptionurlshort',
-            'imagedescription',
-            'datetimeoriginal',
-            'artist',
+            'datetimeoriginal', 'artist',
             'licenseshortname', 'usageterms', 'attributionrequired', 'restrictions',
-            'timestamp',
-            'user', 'userid',
+            'timestamp', 'user', 'userid',
         ];
+    }
+
+    public function search()
+    {
+        $this->adminSearch($this->getMediaQuery());
+        $this->displayView('admin/media.search');
     }
 
     public function categories()

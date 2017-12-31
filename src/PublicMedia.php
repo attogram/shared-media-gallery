@@ -2,8 +2,6 @@
 
 namespace Attogram\SharedMedia\Gallery;
 
-use Attogram\SharedMedia\Orm\MediaQuery;
-
 class PublicMedia
 {
     use TraitErrors;
@@ -20,11 +18,11 @@ class PublicMedia
 
     public function medias()
     {
-        $this->displayItems(MediaQuery::create(), 'medias');
+        $this->displayItems($this->getMediaQuery(), 'medias');
     }
 
     public function media()
     {
-        $this->displayItem(MediaQuery::create(), 'media');
+        $this->displayItem($this->getMediaQuery(), 'media');
     }
 }

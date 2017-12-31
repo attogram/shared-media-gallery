@@ -33,7 +33,7 @@ trait TraitAdminSave
         if (empty($this->pageids) || !is_array($this->pageids)) {
             $this->fatalError('Nothing Selected');
         }
-        $this->sourceId = $this->getPost('source_id');
+        $this->sourceId = $this->getPost('source');
         if (!$this->sourceId) {
             $this->fatalError('Source Not Found');
         }

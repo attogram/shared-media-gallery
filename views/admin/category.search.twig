@@ -1,21 +1,21 @@
 {{ include('header.twig') }}
 {{ include('menu.twig') }}
 <div class="content">
-    <h1>Search Categories</h1>
-	<br />
+    <h1>Category Search</h1> - (<a href="../list/">list</a>)
+    <br />
     <form action="">
         <input name="q" type="text" value="{{ query|e }}" size="30" />
         <input type="submit" value="   Search   " />
         &nbsp;&nbsp; limit: <input name="limit" value="{{ limit|e }}" type="text" size="5" />
-        &nbsp;&nbsp; source: {{ sourceSelect|raw }}
+        &nbsp;&nbsp; {{ include('admin/select.sources.twig') }}
     </form>
 
     {% if query %}
         <form action="{{ uriBase }}/admin/category/save/" name="cats" method="POST">
-        <input name="source_id" value="1" type="hidden" />
-		<hr />query: {{ query|e }}  
-		<br />limit: {{ limit|e }}
-		<br />source_id: {{ source_id }}
+        <input name="source" value="{{ source }}" type="hidden" />
+        <hr />query: {{ query|e }}
+        <br />limit: {{ limit|e }}
+        <br />source: {{ apiUrl|e }}
         <br /><input type="submit" value="  Save selected   ">
         <br />
         {% for category in results %}

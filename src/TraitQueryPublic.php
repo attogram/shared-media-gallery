@@ -2,8 +2,10 @@
 
 namespace Attogram\SharedMedia\Gallery;
 
+use Attogram\SharedMedia\Api\Base as ApiBase;
 use Attogram\SharedMedia\Orm\CategoryQuery;
-use Attogram\SharedMedia\Orm\SourceQuery;
+use Attogram\SharedMedia\Orm\MediaQuery;
+use Attogram\SharedMedia\Orm\PageQuery;
 use Propel\Runtime\ActiveQuery\Criteria;
 use Propel\Runtime\Map\TableMap;
 use Throwable;
@@ -12,30 +14,40 @@ trait TraitQueryPublic
 {
     private $defaultItemsPerPage = 20;
 
-    /**
-     * @return string HTML <select> fragment
-     */
-    private function getSourcePulldown()
+    private function setLimit()
     {
-        $sources = SourceQuery::create()->find();
-        $select = '<select name="source_id">';
-        foreach ($sources as $source) {
-            $select .= '<option value="' . $source->getId() . '">'
-            . $source->getTitle() . ' @ ' . $source->getHost() . '</option>';
+        $limit = $this->getGet('limit');
+        if (!$limit || !$this->isNumber($limit)) {
+            $limit = ApiBase::DEFAULT_LIMIT;
         }
-        $select .= '</select>';
-        return $select;
+        $this->data['limit'] = $limit;
     }
 
-    /**
-     * @return mixed
-     */
     private function getCategoryQuery()
     {
-        return CategoryQuery::create()
-            ->joinWith('Source')
-            ->withColumn('source.title');
+        return $this->joinWithSource(CategoryQuery::create());
     }
+
+    private function getMediaQuery()
+    {
+        return $this->joinWithSource(MediaQuery::create());
+    }
+
+    private function getPageQuery()
+    {
+        return $this->joinWithSource(PageQuery::create());
+    }
+
+    private function joinWithSource($ormQuery)
+    {
+        return $ormQuery
+            ->joinWith('Source')
+            ->withColumn('source.id')
+            ->withColumn('source.title')
+            ->withColumn('source.host')
+            ->withColumn('source.endpoint');
+    }
+
      /**
      * @param object $orm
      * @param string $dataName

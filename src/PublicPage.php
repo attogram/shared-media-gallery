@@ -2,8 +2,6 @@
 
 namespace Attogram\SharedMedia\Gallery;
 
-use Attogram\SharedMedia\Orm\PageQuery;
-
 class PublicPage
 {
     use TraitErrors;
@@ -20,11 +18,11 @@ class PublicPage
 
     public function pages()
     {
-        $this->displayItems(PageQuery::create(), 'pages');
+        $this->displayItems($this->getPageQuery(), 'pages');
     }
 
     public function page()
     {
-        $this->displayItem(PageQuery::create(), 'page');
+        $this->displayItem($this->getPageQuery(), 'page');
     }
 }
