@@ -23,12 +23,13 @@ trait TraitAdminSearch
      */
     private function adminSearch($api)
     {
+        $this->setSources();
+
         $this->data['query'] = $this->getGet('q');
         if (!$this->data['query']) {
-            return;
+            return; // no query, just show search form
         }
 
-        $this->setSources();
         if (!$this->data['source']) {
             $this->fatalError('Source Not Found');
         }

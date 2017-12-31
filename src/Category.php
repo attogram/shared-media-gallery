@@ -2,7 +2,7 @@
 
 namespace Attogram\SharedMedia\Gallery;
 
-class PublicCategory
+class Category
 {
     use TraitErrors;
     use TraitQueryPublic;

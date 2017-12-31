@@ -5,7 +5,7 @@ namespace Attogram\SharedMedia\Gallery;
 use Attogram\SharedMedia\Orm\MediaQuery;
 use Throwable;
 
-class PublicSite
+class Site
 {
     use TraitErrors;
     use TraitQueryPublic;

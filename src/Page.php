@@ -2,7 +2,7 @@
 
 namespace Attogram\SharedMedia\Gallery;
 
-class PublicMedia
+class Page
 {
     use TraitErrors;
     use TraitQueryPublic;
@@ -16,13 +16,13 @@ class PublicMedia
         $this->data = $data;
     }
 
-    public function medias()
+    public function pages()
     {
-        $this->displayItems($this->getMediaQuery(), 'medias');
+        $this->displayItems($this->getPageQuery(), 'pages');
     }
 
-    public function media()
+    public function page()
     {
-        $this->displayItem($this->getMediaQuery(), 'media');
+        $this->displayItem($this->getPageQuery(), 'page');
     }
 }

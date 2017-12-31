@@ -10,7 +10,7 @@ class Gallery
     use TraitErrors;
     use TraitView;
 
-    const VERSION = '0.1.9';
+    const VERSION = '0.1.10';
 
     private $router;
     private $data = [];
@@ -43,14 +43,14 @@ class Gallery
      */
     private function allowPublicRoutes()
     {
-        $this->router->allow('/', 'PublicSite::home');
-        $this->router->allow('/about/', 'PublicSite::about');
-        $this->router->allow('/category/', 'PublicCategory::categories');
-        $this->router->allow('/category/?/', 'PublicCategory::category');
-        $this->router->allow('/media/', 'PublicMedia::medias');
-        $this->router->allow('/media/?/', 'PublicMedia::media');
-        $this->router->allow('/page/', 'PublicPage::pages');
-        $this->router->allow('/page/?/', 'PublicPage::page');
+        $this->router->allow('/', 'Site::home');
+        $this->router->allow('/about/', 'Site::about');
+        $this->router->allow('/category/', 'Category::categories');
+        $this->router->allow('/category/?/', 'Category::category');
+        $this->router->allow('/media/', 'Media::medias');
+        $this->router->allow('/media/?/', 'Media::media');
+        $this->router->allow('/page/', 'Page::pages');
+        $this->router->allow('/page/?/', 'Page::page');
     }
 
     /**
