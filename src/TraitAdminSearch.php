@@ -8,7 +8,6 @@ use Propel\Runtime\Map\TableMap;
 
 trait TraitAdminSearch
 {
-    
     private function setSources()
     {
         $sources = SourceQuery::create()->find();
@@ -23,12 +22,12 @@ trait TraitAdminSearch
      * @return void
      */
     private function adminSearch($api)
-    {   
+    {
         $this->data['query'] = $this->getGet('q');
         if (!$this->data['query']) {
             return;
         }
-        
+
         $this->setSources();
         if (!$this->data['source']) {
             $this->fatalError('Source Not Found');
@@ -36,7 +35,7 @@ trait TraitAdminSearch
 
         $this->setLimit();
 
-        $this->data['apiUrl'] = 
+        $this->data['apiUrl'] =
             $this->data['sources'][$this->data['source']]['host']
             . $this->data['sources'][$this->data['source']]['endpoint'];
         $api->setApiEndpoint($this->data['apiUrl']);
