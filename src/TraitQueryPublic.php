@@ -12,7 +12,7 @@ use Throwable;
 
 trait TraitQueryPublic
 {
-    private $defaultItemsPerPage = 20;
+    private $defaultItemsPerPage = 50;
 
     private function setLimit()
     {
