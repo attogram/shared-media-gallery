@@ -2,15 +2,22 @@
 
 namespace Attogram\SharedMedia\Gallery;
 
-class Media
+class Media extends PublicItem
 {
-    use TraitPublicItem;
+    use TraitQueryPublic;
 
-    private $nameAll = 'medias';
-    private $nameOne = 'media';
-
-    private function getQuery()
+    public function getQuery()
     {
         return $this->getMediaQuery();
+    }
+
+    public function getNameAll()
+    {
+        return 'medias';
+    }
+
+    public function getNameOne()
+    {
+        return 'media';
     }
 }

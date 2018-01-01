@@ -2,7 +2,7 @@
 
 namespace Attogram\SharedMedia\Gallery;
 
-trait TraitPublicItem
+class PublicItem
 {
     use TraitErrors;
     use TraitQueryPublic;
@@ -18,11 +18,11 @@ trait TraitPublicItem
 
     public function getAll()
     {
-        $this->displayItems($this->getQuery(), $this->nameAll);
+        $this->displayItems($this->getQuery(), $this->getNameAll());
     }
 
     public function getOne()
     {
-        $this->displayItem($this->getQuery(), $this->nameOne);
+        $this->displayItem($this->getQuery(), $this->getNameOne());
     }
 }

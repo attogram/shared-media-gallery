@@ -2,15 +2,22 @@
 
 namespace Attogram\SharedMedia\Gallery;
 
-class Category
+class Category extends PublicItem
 {
-    use TraitPublicItem;
+    use TraitQueryPublic;
 
-    private $nameAll = 'categories';
-    private $nameOne = 'category';
-
-    private function getQuery()
+    public function getQuery()
     {
         return $this->getCategoryQuery();
+    }
+
+    public function getNameAll()
+    {
+        return 'categories';
+    }
+
+    public function getNameOne()
+    {
+        return 'category';
     }
 }

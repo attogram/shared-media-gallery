@@ -2,15 +2,22 @@
 
 namespace Attogram\SharedMedia\Gallery;
 
-class Page
+class Page extends PublicItem
 {
-    use TraitPublicItem;
+    use TraitQueryPublic;
 
-    private $nameAll = 'pages';
-    private $nameOne = 'page';
-
-    private function getQuery()
+    public function getQuery()
     {
         return $this->getPageQuery();
+    }
+
+    public function getNameAll()
+    {
+        return 'pages';
+    }
+
+    public function getNameOne()
+    {
+        return 'page';
     }
 }
