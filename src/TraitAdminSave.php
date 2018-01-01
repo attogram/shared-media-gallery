@@ -94,7 +94,6 @@ trait TraitAdminSave
     private function setValues($ormQuery)
     {
         foreach ($this->fieldNames as $field) {
-
             try {
                 $setMethod = 'set' . ucfirst(str_replace('_', '', $field));
                 $ormQuery->{$setMethod}($this->values[$field]);
