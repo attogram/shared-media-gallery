@@ -4,25 +4,13 @@ namespace Attogram\SharedMedia\Gallery;
 
 class Media
 {
-    use TraitErrors;
-    use TraitQueryPublic;
-    use TraitTools;
-    use TraitView;
+    use TraitPublicItem;
 
-    private $data = [];
+    private $nameAll = 'medias';
+    private $nameOne = 'media';
 
-    public function __construct($data)
+    private function getQuery()
     {
-        $this->data = $data;
-    }
-
-    public function getAll()
-    {
-        $this->displayItems($this->getMediaQuery(), 'medias');
-    }
-
-    public function getOne()
-    {
-        $this->displayItem($this->getMediaQuery(), 'media');
+        return $this->getMediaQuery();
     }
 }

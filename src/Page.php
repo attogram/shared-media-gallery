@@ -4,25 +4,13 @@ namespace Attogram\SharedMedia\Gallery;
 
 class Page
 {
-    use TraitErrors;
-    use TraitQueryPublic;
-    use TraitTools;
-    use TraitView;
+    use TraitPublicItem;
 
-    private $data = [];
+    private $nameAll = 'pages';
+    private $nameOne = 'page';
 
-    public function __construct($data)
+    private function getQuery()
     {
-        $this->data = $data;
-    }
-
-    public function getAll()
-    {
-        $this->displayItems($this->getPageQuery(), 'pages');
-    }
-
-    public function getOne()
-    {
-        $this->displayItem($this->getPageQuery(), 'page');
+        return $this->getPageQuery();
     }
 }

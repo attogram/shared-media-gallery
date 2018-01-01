@@ -4,25 +4,13 @@ namespace Attogram\SharedMedia\Gallery;
 
 class Category
 {
-    use TraitErrors;
-    use TraitQueryPublic;
-    use TraitTools;
-    use TraitView;
+    use TraitPublicItem;
 
-    private $data = [];
+    private $nameAll = 'categories';
+    private $nameOne = 'category';
 
-    public function __construct($data)
+    private function getQuery()
     {
-        $this->data = $data;
-    }
-
-    public function getAll()
-    {
-        $this->displayItems($this->getCategoryQuery(), 'categories', 250);
-    }
-
-    public function getOne()
-    {
-        $this->displayItem($this->getCategoryQuery(), 'category');
+        return $this->getCategoryQuery();
     }
 }
