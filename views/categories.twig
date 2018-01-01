@@ -7,18 +7,20 @@
     </form>
     <div class="table">
         <div class="row">
-            <div class="cell header"># Media</div>
             <div class="cell header">Category</div>
+            <div class="cell header"># Media</div>
+            <div class="cell header"># Pages</div>
             <div class="cell header">Source</div>
         </div>
         {% for category in categories %}
             <div class="row">
-                <div class="cell left">{{ category.files|default('?') }}</div>
                 <div class="cell left">
                     <span class="title">
                         <a href="{{ uriBase }}/category/{{ category.pageid }}/">{{ category.shortTitle|e }}</a>
                     </span>
                 </div>
+                <div class="cell right">{{ category.files|default('?') }}</div>
+                <div class="cell right">{{ category.pages|default('?') }}</div>
                 <div class="cell left small">{{ category.sourcetitle|e }}</div>
             </div>
         {% endfor %}

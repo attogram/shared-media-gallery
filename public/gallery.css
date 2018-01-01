@@ -31,3 +31,4 @@ audio { background-clip:content-box; background-color:white; border:1px solid bl
 .media { font-size:12px; }
 .title { font-weight:bold; margin:2px; }
 .pageid { background-color:black; color:white; font-family:monospace; font-weight:bold; margin:2px; }
+.debug { background-color:yellow; border:1px solid darkred; }

@@ -21,7 +21,13 @@
         {% for page in results %}
              <br />
              <input name="pageid[]" value="{{ page.pageid }}" type="checkbox" />
-             {{ dump(page) }}
+             {{ include('thumb.page.twig') }}
+             <input name="title[{{ page.pageid }}]" value="{{ page.title|e }}" type="hidden" />
+             <input name="displaytitle[{{ page.pageid }}]" value="{{ page.displaytitle|e }}" type="hidden" />
+             <input name="page_image_free[{{ page.pageid }}]" value="{{ page.page_image_free|e }}" type="hidden" />
+             <input name="wikibase_item[{{ page.pageid }}]" value="{{ page.wikibase_item|e }}" type="hidden" />
+             <input name="disambiguation[{{ page.pageid }}]" value="{{ page.disambiguation|e }}" type="hidden" />
+             <input name="defaultsort[{{ page.pageid }}]" value="{{ page.defaultsort|e }}" type="hidden" />
         {% endfor %}
         <br /><br />
         <input type="submit" value="  Save selected   ">

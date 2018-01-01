@@ -16,12 +16,12 @@ class Media
         $this->data = $data;
     }
 
-    public function medias()
+    public function getAll()
     {
         $this->displayItems($this->getMediaQuery(), 'medias');
     }
 
-    public function media()
+    public function getOne()
     {
         $this->displayItem($this->getMediaQuery(), 'media');
     }

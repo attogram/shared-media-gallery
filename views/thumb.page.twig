@@ -1,0 +1,12 @@
+{% if page %}
+    <span class="title"><a href="{{ uriBase }}/page/{{ page.pageid }}/">{{ page.title|e }}</a></span>
+    &nbsp; <span class="pageid">{{ page.pageid }}</span>
+    &nbsp; source_id:{{ page.source_id }} 
+    &nbsp; displaytitle:{{ page.displaytitle|e }} 
+    &nbsp; page_image_free:{{ page.page_image_free|e }} 
+    &nbsp; wikibase_item:{{ page.wikibase_item|e }} 
+    &nbsp; disambiguation:{{ page.disambiguation|e }} 
+    &nbsp; defaultsort:{{ page.defaultsort|e }} 
+{% else %}
+    Page Not Found
+{% endif %}

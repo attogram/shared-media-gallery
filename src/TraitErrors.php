@@ -4,11 +4,27 @@ namespace Attogram\SharedMedia\Gallery;
 
 trait TraitErrors
 {
+	private $debug = false;
+
+	/**
+     * Print debugging message
+     * @param string $message
+     */
+	private function debug(string $message = '')
+	{
+		if (!$this->debug) {
+			return;
+		}
+		print '<pre class="debug">DEBUG: ' 
+			. htmlentities(print_r($message, true))
+			. '</pre>';
+	}
+	
     /**
      * Send 500 error with message, then exit
      * @param string $message
      */
-    protected function fatalError(string $message = '')
+    private function fatalError(string $message = '')
     {
         $this->shutdown('500 Internal Server Error', $message);
     }
@@ -17,7 +33,7 @@ trait TraitErrors
      * Send 404 error with message, then exit
      * @param string $message
      */
-    protected function error404(string $message = '')
+    private function error404(string $message = '')
     {
         $this->shutdown('404 Page Not Found', $message);
     }

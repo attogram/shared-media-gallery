@@ -45,12 +45,12 @@ class Gallery
     {
         $this->router->allow('/', 'Site::home');
         $this->router->allow('/about/', 'Site::about');
-        $this->router->allow('/category/', 'Category::categories');
-        $this->router->allow('/category/?/', 'Category::category');
-        $this->router->allow('/media/', 'Media::medias');
-        $this->router->allow('/media/?/', 'Media::media');
-        $this->router->allow('/page/', 'Page::pages');
-        $this->router->allow('/page/?/', 'Page::page');
+        $this->router->allow('/category/', 'Category::getAll');
+        $this->router->allow('/category/?/', 'Category::getOne');
+        $this->router->allow('/media/', 'Media::getAll');
+        $this->router->allow('/media/?/', 'Media::getOne');
+        $this->router->allow('/page/', 'Page::getAll');
+        $this->router->allow('/page/?/', 'Page::getOne');
     }
 
     /**

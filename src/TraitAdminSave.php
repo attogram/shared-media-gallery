@@ -17,9 +17,7 @@ trait TraitAdminSave
     {
         $this->setPostVars();
         foreach ($this->pageids as $pageid) {
-            foreach ($this->fieldNames as $field) {
-                $this->values[$field] = $this->{$field}[$pageid];
-            }
+            $this->setValuesByPageid($pageid);
             $this->pageid = $pageid;
             if (!$this->updateItemIfExists($ormName . 'Query')) {
                 $this->saveItem($ormName);
@@ -41,6 +39,18 @@ trait TraitAdminSave
             $this->{$field} = $this->getPost($field);
         }
     }
+
+	private function setValuesByPageid($pageid)
+	{
+		foreach ($this->fieldNames as $field) {
+			if (!isset($this->{$field}[$pageid])) {
+				$this->fatalError(
+					'Field Array Value Not Found: ' . get_class($this) . ': ' . $field
+				);
+			}
+			$this->values[$field] = $this->{$field}[$pageid];
+		}
+	}
 
     /**
      * @param string $ormQueryName
@@ -85,8 +95,10 @@ trait TraitAdminSave
     private function setValues($ormQuery)
     {
         foreach ($this->fieldNames as $field) {
+			
             try {
-                $ormQuery->{'set' . ucfirst($field)}($this->values[$field]);
+				$setMethod = 'set' . ucfirst(str_replace('_', '', $field));
+                $ormQuery->{$setMethod}($this->values[$field]);
             } catch (Throwable $error) {
                 $this->fatalError($error->getMessage());
             }

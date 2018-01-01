@@ -16,12 +16,12 @@ class Page
         $this->data = $data;
     }
 
-    public function pages()
+    public function getAll()
     {
         $this->displayItems($this->getPageQuery(), 'pages');
     }
 
-    public function page()
+    public function getOne()
     {
         $this->displayItem($this->getPageQuery(), 'page');
     }

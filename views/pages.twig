@@ -1,12 +1,15 @@
 {{ include('header.twig') }}
 {{ include('menu.twig') }}
 <div class="content">
+	<h1>Pages</h1>
     <form method="GET" style="float:right;">
         <input type="text" name="q" value="{{ query|e }}" size="16">
         <input type="submit" value="Search {{ page_count|default('0') }} Pages">
     </form>
+	<ul>
     {% for page in pages %}
-        {{ dump(page) }}
+        <li>{{ include('thumb.page.twig') }}</li>
     {% endfor %}
+	</ul>
 </div>
 {{ include('footer.twig') }}

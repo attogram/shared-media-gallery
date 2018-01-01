@@ -16,12 +16,12 @@ class Category
         $this->data = $data;
     }
 
-    public function categories()
+    public function getAll()
     {
         $this->displayItems($this->getCategoryQuery(), 'categories', 250);
     }
 
-    public function category()
+    public function getOne()
     {
         $this->displayItem($this->getCategoryQuery(), 'category');
     }
