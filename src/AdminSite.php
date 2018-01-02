@@ -61,10 +61,10 @@ class AdminSite
         $this->displayView('admin/site.database');
     }
 
-	public function databaseNew()
-	{
-		print 'in dev';
-	}
+    public function databaseNew()
+    {
+        print 'in dev';
+    }
 
     /**
      * @return Site|null
