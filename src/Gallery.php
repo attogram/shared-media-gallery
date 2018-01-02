@@ -61,7 +61,9 @@ class Gallery
         // Site Admin
         $this->router->allow('/admin/', 'AdminSite::home');
         $this->router->allow('/admin/site/settings/', 'AdminSite::settings');
-        $this->router->allow('/admin/site/settings/save/', 'AdminSite::saveSettings');
+        $this->router->allow('/admin/site/settings/save/', 'AdminSite::settingsSave');
+        $this->router->allow('/admin/site/database/', 'AdminSite::database');
+        $this->router->allow('/admin/site/database/new/', 'AdminSite::databaseNew');
         // Category Admin
         $this->router->allow('/admin/category/list/', 'AdminCategory::list');
         $this->router->allow('/admin/category/search/', 'AdminCategory::search');

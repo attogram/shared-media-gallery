@@ -6,6 +6,7 @@
     &nbsp; {{ category.pages|default('?') }} pages
     &nbsp; {{ category.size|default('?') }} size
     &nbsp; [{{ category.hidden ? 'hidden' : 'public' }}]
+    &nbsp; source: {{ category.sourcetitle }} ({{ category.source_id }})
 {% else %}
     Category Not Found
 {% endif %}

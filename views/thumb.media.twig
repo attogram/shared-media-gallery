@@ -6,8 +6,8 @@
     <span class="pageid">{{ media.pageid }}</span>
     <br />
     <span class="title">{{ media.title|slice(0,18)|e }}{% if media.shortTitle|length > 18 %}...{% endif %}</span>
-	<br />{{ media.licenseshortname }}
-	
+    <br />{{ media.licenseshortname }}
+    <br />{{ media.sourcetitle }} ({{ media.source_id }})
 {% else %}
     Media Not Found
 {% endif %}

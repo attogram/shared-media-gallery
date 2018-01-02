@@ -34,7 +34,7 @@ class AdminSite
         $this->displayView('admin/site.settings');
     }
 
-    public function saveSettings()
+    public function settingsSave()
     {
         if (!$this->isPost()) {
             $this->error403('POST ONLY');
@@ -60,6 +60,11 @@ class AdminSite
     {
         $this->displayView('admin/site.database');
     }
+
+	public function databaseNew()
+	{
+		print 'in dev';
+	}
 
     /**
      * @return Site|null
