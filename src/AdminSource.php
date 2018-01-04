@@ -28,7 +28,17 @@ class AdminSource
     public function list()
     {
         try {
-            $sources = SourceQuery::create()->find();
+            $sources = SourceQuery::create()
+                ->addAsColumn(
+                    'category_count',
+                    '(SELECT COUNT(*) FROM category WHERE category.source_id = source.id)'
+                )->addAsColumn(
+                    'media_count',
+                    '(SELECT COUNT(*) FROM media WHERE media.source_id = source.id)'
+                )->addAsColumn(
+                    'page_count',
+                    '(SELECT COUNT(*) FROM page WHERE page.source_id = source.id)'
+                )->find();
             foreach ($sources as $source) {
                 $this->data['sources'][] = $source->toArray(TableMap::TYPE_FIELDNAME);
             }
