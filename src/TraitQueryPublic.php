@@ -48,6 +48,18 @@ trait TraitQueryPublic
             ->withColumn('source.endpoint');
     }
 
+    /**
+     * @param object   $orm
+     * @param string   $name
+     * @param int      $limit
+     */
+    private function displayItems($orm, $name, $limit = 0)
+    {
+        $orm = $this->setupSearch($orm);
+        $this->setItems($orm, $name, $limit);
+        $this->displayView($name);
+    }
+
      /**
      * @param object $orm
      * @param string $dataName
@@ -61,18 +73,24 @@ trait TraitQueryPublic
         }
         $page = 1;
         try {
-            $items = $orm->orderByTitle()->paginate($page, $itemsPerPage);
+            $items = $orm
+                ->orderByTitle()
+                ->paginate($page, $itemsPerPage);
+            if (!$items) {
+                return;
+            }
+            foreach ($items as $item) {
+                $itemArray = $item->toArray(TableMap::TYPE_FIELDNAME);
+                $itemArray['shortTitle'] = $this->stripPrefix($itemArray['title']);
+                $this->data[$dataName][] = $itemArray;
+            }
         } catch (Throwable $error) {
-            return;
+            $this->fatalError(
+                'setItems: ' . $error->getMessage()
+                . '<pre>Trace:  ' . $error->getTraceAsString()
+            );
         }
-        if (!$items) {
-            return;
-        }
-        foreach ($items as $item) {
-            $itemArray = $item->toArray(TableMap::TYPE_FIELDNAME);
-            $itemArray['shortTitle'] = $this->stripPrefix($itemArray['title']);
-            $this->data[$dataName][] = $itemArray;
-        }
+
     }
 
     /**
@@ -112,18 +130,6 @@ trait TraitQueryPublic
             $this->data['query'] = $query;
         }
         return $orm;
-    }
-
-    /**
-     * @param object   $orm
-     * @param string   $name
-     * @param int      $limit
-     */
-    private function displayItems($orm, $name, $limit = 0)
-    {
-        $orm = $this->setupSearch($orm);
-        $this->setItems($orm, $name, $limit);
-        $this->displayView($name);
     }
 
     /**
