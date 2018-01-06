@@ -90,7 +90,6 @@ trait TraitQueryPublic
                 . '<pre>Trace:  ' . $error->getTraceAsString()
             );
         }
-
     }
 
     /**
