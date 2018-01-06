@@ -1,4 +1,4 @@
-/* attogram/shared-media-gallery - gallery.css - v0.0.2 */
+/* attogram/shared-media-gallery - gallery.css - v0.0.3 */
 body { background-color:white; color:black; font-family:sans-serif,helvetica,arial; margin:0; }
 a { color:darkblue; text-decoration:none; }
 a:visited { color:darkblue; }
@@ -8,11 +8,9 @@ table td { padding:2px; vertical-align:top; }
 table th { background-color:white; font-size:75%; padding:4px; vertical-align:middle; }
 form { display:inline; }
 h1, h2, h3, h4, h5 { display:inline; }
-.menu { background-color:lightgrey; border:1px solid black; padding:10px; }
-.menu a { background-color:lightgrey; border:1px solid black; }
+.menu { background-color:lightgrey; padding:4px; }
 .content { background-color:white; border:1px solid black; color:black; padding:10px; }
-footer { background-color:lightgrey; border:1px solid black; font-size:80%; padding:10px; }
-footer a { background-color:lightgrey; border:1px solid black; }
+footer { background-color:lightgrey; font-size:80%; padding:10px; }
 img { background-clip:content-box; background-color:white; border:1px solid black; }
 ul { display:block; line-height:1; list-style-position: inside; list-style-type:disc; margin:0 0 0 7px; padding:0; }
 video { background-clip:content-box; background-color:white; border:1px solid black; }

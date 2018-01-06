@@ -10,7 +10,7 @@ class Gallery
     use TraitErrors;
     use TraitView;
 
-    const VERSION = '0.1.10';
+    const VERSION = '0.1.11';
 
     private $router;
     private $data = [];

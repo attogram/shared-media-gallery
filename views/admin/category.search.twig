@@ -1,5 +1,6 @@
 {{ include('header.twig') }}
 {{ include('menu.twig') }}
+{{ include('admin/menu.twig') }}
 <div class="content">
     <h1>Category Search</h1> - (<a href="../list/">list</a>)
     <br />
@@ -19,7 +20,8 @@
         <br /><input type="submit" value="  Save selected   ">
         <br />
         {% for category in results %}
-             <br /><input name="pageid[]" value="{{ category.pageid }}" type="checkbox" />
+             <br />
+             <input name="pageid[]" value="{{ category.pageid }}" type="checkbox" />
              {{ include('thumb.category.twig') }}
              <input name="title[{{ category.pageid }}]" value="{{ category.title|e }}" type="hidden" />
              <input name="files[{{ category.pageid }}]" value="{{ category.files }}" type="hidden" />

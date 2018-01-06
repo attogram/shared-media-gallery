@@ -1,22 +1,9 @@
 {{ include('header.twig') }}
 {{ include('menu.twig') }}
+{{ include('admin/menu.twig') }}
 <form action="{{ uriBase }}/admin/source/save/" method="POST">
 <div class="content">
     <h1>Source List</h1>
-    <div class="table">
-        <div class="row">
-            <div class="cell header">Title</div>
-            <div class="cell header">Host</div>
-            <div class="cell header">Endpoint</div>
-            <div class="cell header">&nbsp;</div>
-        </div>
-        <div class="row">
-            <div class="cell left"><input name="t" type="text" size="10" /></div>
-            <div class="cell left"><input name="h" type="text" size="40" /></div>
-            <div class="cell left"><input name="e" type="text" size="20" /></div>
-            <div class="cell left"><input type="submit" value=" Add Source " /></div>
-        </div>
-    </div>
     <div class="table">
         <div class="row">
             <div class="cell header">ID</div>
@@ -40,6 +27,21 @@
                 <div class="cell left">(<a href="{{ uriBase }}/admin/source/{{ source.id }}/delete/">delete</a>)&nbsp;(<a href="{{ uriBase }}/admin/source/{{ source.id }}/edit/">edit</a>)</div>
             </div>
         {% endfor %}
+    </div>
+	<br />
+    <div class="table">
+        <div class="row">
+            <div class="cell header">Title</div>
+            <div class="cell header">Host</div>
+            <div class="cell header">Endpoint</div>
+            <div class="cell header">&nbsp;</div>
+        </div>
+        <div class="row">
+            <div class="cell left"><input name="t" type="text" size="10" /></div>
+            <div class="cell left"><input name="h" type="text" size="40" /></div>
+            <div class="cell left"><input name="e" type="text" size="20" /></div>
+            <div class="cell left"><input type="submit" value=" Add Source " /></div>
+        </div>
     </div>
 </div>
 </form>

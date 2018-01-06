@@ -39,13 +39,19 @@ trait TraitAdminSave
         }
     }
 
+    /**
+     * @param int $pageid
+     */
     private function setValuesByPageid($pageid)
     {
+        if (!$pageid) {
+            $this->fatalError('setValuesByPageid: invalid pageid');
+        }
+        print '<pre>setValuesByPageid: pageid: ' . $pageid . '</pre>';
         foreach ($this->fieldNames as $field) {
             if (!isset($this->{$field}[$pageid])) {
-                $this->fatalError(
-                    'Field Array Value Not Found: ' . get_class($this) . ': ' . $field
-                );
+                $this->fatalError('setValuesByPageid: Field Array Value Not Found: pageid:'
+                    . $pageid . ' class:' . get_class($this) . ' field:' . $field);
             }
             $this->values[$field] = $this->{$field}[$pageid];
         }

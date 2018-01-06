@@ -1,5 +1,6 @@
 {{ include('header.twig') }}
 {{ include('menu.twig') }}
+{{ include('admin/menu.twig') }}
 <div class="content">
     <h1>Media Search</h1> - (<a href="../list/">list</a>)
     <br />
@@ -20,9 +21,8 @@
         <br />
         {% for media in results %}
             <div style="display:inline-block;border:1px solid black;">
-                <img src="{{ media.thumburl|e }}" width="{{ media.thumbwidth|e }}" height="{{ media.thumbheight|e }}" />
-                <br /><input name="pageid[]" value="{{ media.pageid }}" type="checkbox" />
-                <span class="pageid">{{ media.pageid }}</span>
+                <input name="pageid[]" value="{{ media.pageid }}" type="checkbox" />
+                {{ include('thumb.media.twig') }}
                 <input name="title[{{ media.pageid }}]" value="{{ media.title|e }}" type="hidden" />
                 <input name="url[{{ media.pageid }}]" value="{{ media.url|e }}" type="hidden" />
                 <input name="mime[{{ media.pageid }}]" value="{{ media.mime|e }}" type="hidden" />
