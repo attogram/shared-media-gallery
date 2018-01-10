@@ -13,8 +13,8 @@ trait TraitAdminSave
 {
     private $pageid;
     private $pageids;
-	private $sourceId;
-	private $values;
+    private $sourceId;
+    private $values;
 
     /**
      * @param string $ormName
@@ -52,7 +52,7 @@ trait TraitAdminSave
     private function setValuesByPageid($pageid)
     {
         if (!$pageid) {
-			$this->fatalError('setValuesByPageid: PAGEID NOT FOUND');
+            $this->fatalError('setValuesByPageid: PAGEID NOT FOUND');
         }
         foreach ($this->fieldNames as $field) {
             if (!isset($this->{$field}[$pageid])) {
@@ -140,13 +140,13 @@ trait TraitAdminSave
     /**
      * @param object $ormQuery
      */
-	private function adminDelete($ormQuery)
-	{
-		$this->setSourceIdAndPageid();
-		$item = $this->getItem($ormQuery);
-		if (!$item) {
-			$this->fatalError('No Item To Delete');
-		}
-		$item->delete();
-	}
+    private function adminDelete($ormQuery)
+    {
+        $this->setSourceIdAndPageid();
+        $item = $this->getItem($ormQuery);
+        if (!$item) {
+            $this->fatalError('No Item To Delete');
+        }
+        $item->delete();
+    }
 }

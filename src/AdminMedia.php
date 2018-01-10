@@ -67,9 +67,9 @@ class AdminMedia
         $this->displayView('admin/media.categories');
     }
 
-	public function delete()
-	{
-		$this->adminDelete($this->getMediaQuery());
+    public function delete()
+    {
+        $this->adminDelete($this->getMediaQuery());
         $this->redirect301($this->data['uriBase'] . '/admin/media/list/');
-	}
+    }
 }

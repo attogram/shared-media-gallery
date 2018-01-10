@@ -16,21 +16,21 @@ use Throwable;
  */
 trait TraitQueryPublic
 {
-	private $pageid;
-	private $sourceId;
+    private $pageid;
+    private $sourceId;
     private $defaultItemsPerPage = 50;
 
-	private function setSourceIdAndPageid()
-	{
-		if (empty($this->data['vars'][0]) || !$this->isNumber($this->data['vars'][0])) {
-			$this->fatalError('Invalid Source ID');
-		}
-		if (empty($this->data['vars'][1]) || !$this->isNumber($this->data['vars'][1])) {
-			$this->fatalError('Invalid Pageid');
-		}
+    private function setSourceIdAndPageid()
+    {
+        if (empty($this->data['vars'][0]) || !$this->isNumber($this->data['vars'][0])) {
+            $this->fatalError('Invalid Source ID');
+        }
+        if (empty($this->data['vars'][1]) || !$this->isNumber($this->data['vars'][1])) {
+            $this->fatalError('Invalid Pageid');
+        }
         $this->sourceId = $this->data['vars'][0];
         $this->pageid = $this->data['vars'][1];
-	}
+    }
 
     private function setLimit()
     {
