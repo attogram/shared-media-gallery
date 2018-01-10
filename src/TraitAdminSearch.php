@@ -3,9 +3,12 @@
 namespace Attogram\SharedMedia\Gallery;
 
 use Attogram\SharedMedia\Orm\SourceQuery;
-use Throwable;
 use Propel\Runtime\Map\TableMap;
 
+/**
+ * Trait TraitAdminSearch
+ * @package Attogram\SharedMedia\Gallery
+ */
 trait TraitAdminSearch
 {
     private function setSources()
@@ -48,7 +51,10 @@ trait TraitAdminSearch
         }
 
         foreach ($api->search($this->data['query']) as $result) {
-            $this->data['results'][] = $result->toArray(TableMap::TYPE_FIELDNAME);
+            $resultArray = $result->toArray(TableMap::TYPE_FIELDNAME);
+            $resultArray['sourceid'] = $this->data['source'];
+            $resultArray['sourcetitle'] = $this->data['sources'][$this->data['source']]['title'];
+            $this->data['results'][] = $resultArray;
         }
     }
 }

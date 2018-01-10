@@ -7,6 +7,10 @@ use Attogram\SharedMedia\Orm\SiteQuery;
 use Throwable;
 use Propel\Runtime\Map\TableMap;
 
+/**
+ * Class AdminSite
+ * @package Attogram\SharedMedia\Gallery
+ */
 class AdminSite
 {
     use TraitAccessControl;
@@ -17,6 +21,10 @@ class AdminSite
 
     private $data = [];
 
+    /**
+     * AdminSite constructor.
+     * @param array $data
+     */
     public function __construct($data)
     {
         $this->data = $data;
@@ -28,12 +36,18 @@ class AdminSite
         $this->displayView('admin/home');
     }
 
+    /**
+     * @throws \Propel\Runtime\Exception\PropelException
+     */
     public function settings()
     {
         $this->data['site'] = $this->getSiteData()->toArray(TableMap::TYPE_FIELDNAME);
         $this->displayView('admin/site.settings');
     }
 
+    /**
+     * @throws \Propel\Runtime\Exception\PropelException
+     */
     public function settingsSave()
     {
         if (!$this->isPost()) {
@@ -67,7 +81,8 @@ class AdminSite
     }
 
     /**
-     * @return Site|null
+     * @return Site
+     * @throws \Propel\Runtime\Exception\PropelException
      */
     private function getSiteData()
     {

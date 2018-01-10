@@ -2,23 +2,12 @@
 
 namespace Attogram\SharedMedia\Gallery;
 
+/**
+ * Trait TraitErrors
+ * @package Attogram\SharedMedia\Gallery
+ */
 trait TraitErrors
 {
-    private $debug = false;
-
-    /**
-     * Print debugging message
-     * @param string $message
-     */
-    private function debug(string $message = '')
-    {
-        if (!$this->debug) {
-            return;
-        }
-        print '<pre class="debug">DEBUG: '
-            . htmlentities(print_r($message, true))
-            . '</pre>';
-    }
 
     /**
      * Send 500 error with message, then exit

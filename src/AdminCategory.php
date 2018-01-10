@@ -2,6 +2,10 @@
 
 namespace Attogram\SharedMedia\Gallery;
 
+/**
+ * Class AdminCategory
+ * @package Attogram\SharedMedia\Gallery
+ */
 class AdminCategory
 {
     use TraitAccessControl;
@@ -16,6 +20,10 @@ class AdminCategory
     private $data = [];
     private $fieldNames = [];
 
+    /**
+     * AdminCategory constructor.
+     * @param array $data
+     */
     public function __construct($data)
     {
         $this->data = $data;
@@ -77,6 +85,12 @@ class AdminCategory
         $this->displayView('admin/category.media');
     }
 
+    /**
+     * @param object $orm
+     * @param int $pageid
+     * @param string $method
+     * @param string $itemName
+     */
     private function setFromApi($orm, $pageid, $method, $itemName)
     {
         $orm->setApiPageid($pageid);

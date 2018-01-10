@@ -20,6 +20,7 @@
         <br /><input type="submit" value="  Save selected   ">
         <br />
         {% for media in results %}
+			{% if media.pageid %}
             <div style="display:inline-block;border:1px solid black;">
                 <input name="pageid[]" value="{{ media.pageid }}" type="checkbox" />
                 {{ include('thumb.media.twig') }}
@@ -47,7 +48,8 @@
                 <input name="timestamp[{{ media.pageid }}]" value="{{ media.timestamp|e }}" type="hidden" />
                 <input name="user[{{ media.pageid }}]" value="{{ media.user|e }}" type="hidden" />
                 <input name="userid[{{ media.pageid }}]" value="{{ media.userid|e }}" type="hidden" />
-            </div>
+			</div>
+			{% endif %}
         {% endfor %}
         <br /><br />
         <input type="submit" value="  Save selected   ">

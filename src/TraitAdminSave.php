@@ -5,9 +5,16 @@ namespace Attogram\SharedMedia\Gallery;
 use DateTime;
 use Throwable;
 
+/**
+ * Trait TraitAdminSave
+ * @package Attogram\SharedMedia\Gallery
+ */
 trait TraitAdminSave
 {
     private $pageid;
+    private $pageids;
+	private $sourceId;
+	private $values;
 
     /**
      * @param string $ormName
@@ -28,7 +35,7 @@ trait TraitAdminSave
     {
         $this->pageids = $this->getPost('pageid');
         if (empty($this->pageids) || !is_array($this->pageids)) {
-            $this->fatalError('Nothing Selected');
+            $this->fatalError('Nothing Selected <pre>' . print_r($_POST,1));
         }
         $this->sourceId = $this->getPost('source');
         if (!$this->sourceId) {
@@ -45,9 +52,8 @@ trait TraitAdminSave
     private function setValuesByPageid($pageid)
     {
         if (!$pageid) {
-            $this->fatalError('setValuesByPageid: invalid pageid');
+			$this->fatalError('setValuesByPageid: PAGEID NOT FOUND');
         }
-        print '<pre>setValuesByPageid: pageid: ' . $pageid . '</pre>';
         foreach ($this->fieldNames as $field) {
             if (!isset($this->{$field}[$pageid])) {
                 $this->fatalError('setValuesByPageid: Field Array Value Not Found: pageid:'
@@ -113,7 +119,7 @@ trait TraitAdminSave
 
     /**
      * @param object $ormQuery
-     * @return mixed
+     * @return object
      */
     private function getItem($ormQuery)
     {
@@ -130,4 +136,17 @@ trait TraitAdminSave
         }
         return $ormItem;
     }
+
+    /**
+     * @param object $ormQuery
+     */
+	private function adminDelete($ormQuery)
+	{
+		$this->setSourceIdAndPageid();
+		$item = $this->getItem($ormQuery);
+		if (!$item) {
+			$this->fatalError('No Item To Delete');
+		}
+		$item->delete();
+	}
 }

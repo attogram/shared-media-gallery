@@ -2,11 +2,14 @@
 
 namespace Attogram\SharedMedia\Gallery;
 
+/**
+ * Trait TraitAccessControl
+ * @package Attogram\SharedMedia\Gallery
+ */
 trait TraitAccessControl
 {
     /**
      * Allow access by IP address, or exit with error 403
-     * @return void
      */
     private function accessControl()
     {

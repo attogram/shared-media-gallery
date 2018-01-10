@@ -2,9 +2,13 @@
 
 namespace Attogram\SharedMedia\Gallery;
 
-use Attogram\SharedMedia\Orm\MediaQuery;
+use Propel\Runtime\Map\TableMap;
 use Throwable;
 
+/**
+ * Class Site
+ * @package Attogram\SharedMedia\Gallery
+ */
 class Site
 {
     use TraitErrors;
@@ -14,6 +18,10 @@ class Site
 
     private $data = [];
 
+    /**
+     * Site constructor.
+     * @param array $data
+     */
     public function __construct($data)
     {
         $this->data = $data;
@@ -22,11 +30,12 @@ class Site
     public function home()
     {
         try {
-            $this->data['media'] = MediaQuery::create()
+            $media = $this->getMediaQuery()
                 ->setOffset(rand(1, $this->data['media_count'] - 1))
                 ->findOne();
+            $this->data['media'] = $media->toArray(TableMap::TYPE_FIELDNAME);
         } catch (Throwable $error) {
-            //print $error->getMessage();
+            print $error->getMessage();
         }
         $this->displayView('home');
     }

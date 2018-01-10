@@ -7,6 +7,10 @@ use Attogram\SharedMedia\Orm\SourceQuery;
 use Propel\Runtime\Map\TableMap;
 use Throwable;
 
+/**
+ * Class AdminSource
+ * @package Attogram\SharedMedia\Gallery
+ */
 class AdminSource
 {
     use TraitAccessControl;
@@ -18,6 +22,10 @@ class AdminSource
     private $data = [];
     private $listUrl = '';
 
+    /**
+     * AdminSource constructor.
+     * @param array $data
+     */
     public function __construct($data)
     {
         $this->data = $data;
@@ -25,10 +33,13 @@ class AdminSource
         $this->listUrl = $this->data['uriBase'] . '/admin/source/list/';
     }
 
-    public function list()
+    /**
+     * @return SourceQuery
+     */
+    private function getSourceQuery()
     {
         try {
-            $sources = SourceQuery::create()
+            return SourceQuery::create()
                 ->addAsColumn(
                     'category_count',
                     '(SELECT COUNT(*) FROM category WHERE category.source_id = source.id)'
@@ -38,12 +49,21 @@ class AdminSource
                 )->addAsColumn(
                     'page_count',
                     '(SELECT COUNT(*) FROM page WHERE page.source_id = source.id)'
-                )->find();
+                );
+        } catch (Throwable $error) {
+            $this->fatalError('getSourceQuery: ' . $error->getMessage());
+        }
+    }
+
+    public function list()
+    {
+        try {
+            $sources = $this->getSourceQuery()->find();
             foreach ($sources as $source) {
                 $this->data['sources'][] = $source->toArray(TableMap::TYPE_FIELDNAME);
             }
         } catch (Throwable $error) {
-            print $error->getMessage();
+            $this->fatalError($error->getMessage());
         }
         $this->displayView('admin/source.list');
     }
@@ -64,11 +84,14 @@ class AdminSource
                 ->setEndpoint($endpoint)
                 ->save();
         } catch (Throwable $error) {
-            $this->error403('ERROR: ' . $error->getMessage());
+            $this->fatalError($error->getMessage());
         }
         $this->redirect302($this->listUrl);
     }
 
+    /**
+     * @return void
+     */
     public function delete()
     {
         $sourceId = (int) $this->data['vars'][0];
@@ -85,11 +108,10 @@ class AdminSource
             $this->error404('404 Source ID Not Found');
         }
         try {
-            $source = SourceQuery::create()->findOneById($sourceId);
+            $source = $this->getSourceQuery()->findOneById($sourceId);
             $source->delete();
         } catch (Throwable $error) {
-            print $error->getMessage();
-            exit;
+            $this->fatalError($error->getMessage());
         }
         $this->redirect302($this->listUrl);
     }
@@ -112,14 +134,14 @@ class AdminSource
     private function setSource($sourceId)
     {
         try {
-            $source = SourceQuery::create()->findOneById($sourceId);
+            $source = $this->getSourceQuery()->findOneById($sourceId);
             if (!$source instanceof Source) {
                 return false;
             }
             $this->data['source'] = $source->toArray(TableMap::TYPE_FIELDNAME);
-            return true;
         } catch (Throwable $error) {
-            $this->error404('404 Source Query Failed');
+            $this->fatalError('setSource: Source Query Failed');
         }
+        return true;
     }
 }

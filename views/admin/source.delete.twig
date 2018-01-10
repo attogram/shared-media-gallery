@@ -8,7 +8,11 @@
 ID      : {{ source.id }} &nbsp;
 Title   : {{ source.title|e }} &nbsp;
 Host    : {{ source.host|e }} &nbsp;
-Endpoint: {{ source.endpoint|e }} &nbsp;</pre>
+Endpoint: {{ source.endpoint|e }} &nbsp;
+# Categ : {{ source.category_count|default('0') }} &nbsp;
+# Media : {{ source.media_count|default('0') }} &nbsp;
+# Pages : {{ source.page_count|default('0') }} &nbsp;
+</pre>
     <p>
         Delete this source?
     </p>

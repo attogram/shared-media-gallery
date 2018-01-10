@@ -3,7 +3,13 @@
 namespace Attogram\SharedMedia\Gallery;
 
 use Attogram\Router\Router;
+use Propel\Runtime\Connection\ConnectionManagerSingle;
+use Propel\Runtime\Propel;
 
+/**
+ * Class Gallery
+ * @package Attogram\SharedMedia\Gallery
+ */
 class Gallery
 {
     use TraitCounts;
@@ -15,9 +21,6 @@ class Gallery
     private $router;
     private $data = [];
 
-    /**
-     * @return void
-     */
     public function __construct()
     {
         $this->router = new Router();
@@ -38,24 +41,18 @@ class Gallery
         $class->{$methodName}(); // call controller method
     }
 
-    /**
-     * @return void
-     */
     private function allowPublicRoutes()
     {
         $this->router->allow('/', 'Site::home');
         $this->router->allow('/about/', 'Site::about');
         $this->router->allow('/category/', 'Category::getAll');
-        $this->router->allow('/category/?/', 'Category::getOne');
+        $this->router->allow('/category/?/?/', 'Category::getOne'); // {sourceid}/{pageid}
         $this->router->allow('/media/', 'Media::getAll');
-        $this->router->allow('/media/?/', 'Media::getOne');
+        $this->router->allow('/media/?/?/', 'Media::getOne'); // {sourceid}/{pageid}
         $this->router->allow('/page/', 'Page::getAll');
-        $this->router->allow('/page/?/', 'Page::getOne');
+        $this->router->allow('/page/?/?/', 'Page::getOne'); // {sourceid}/{pageid}
     }
 
-    /**
-     * @return void
-     */
     private function allowAdminRoutes()
     {
         // Site Admin
@@ -68,13 +65,14 @@ class Gallery
         $this->router->allow('/admin/category/list/', 'AdminCategory::list');
         $this->router->allow('/admin/category/search/', 'AdminCategory::search');
         $this->router->allow('/admin/category/save/', 'AdminCategory::save');
-        $this->router->allow('/admin/category/?/media/', 'AdminCategory::media');
-        $this->router->allow('/admin/category/?/subcats/', 'AdminCategory::subcats');
+        $this->router->allow('/admin/category/?/?/media/', 'AdminCategory::media'); // {sourceid}/{pageid}
+        $this->router->allow('/admin/category/?/?/subcats/', 'AdminCategory::subcats'); // {sourceid}/{pageid}
         // Media Admin
         $this->router->allow('/admin/media/list/', 'AdminMedia::list');
         $this->router->allow('/admin/media/search/', 'AdminMedia::search');
         $this->router->allow('/admin/media/save/', 'AdminMedia::save');
-        $this->router->allow('/admin/media/?/categories/', 'AdminMedia::categories');
+        $this->router->allow('/admin/media/?/?/categories/', 'AdminMedia::categories'); // {sourceid}/{pageid}
+        $this->router->allow('/admin/media/?/?/delete/', 'AdminMedia::delete'); // {sourceid}/{pageid}
         // Page Admin
         $this->router->allow('/admin/page/list/', 'AdminPage::list');
         $this->router->allow('/admin/page/search/', 'AdminPage::search');
@@ -86,9 +84,6 @@ class Gallery
         $this->router->allow('/admin/source/?/edit/', 'AdminSource::edit');
     }
 
-    /**
-     * @return void
-     */
     private function setData()
     {
         $this->data['title'] = 'Shared Media Gallery';
@@ -104,10 +99,10 @@ class Gallery
     private function setupDatabase()
     {
         $dsn = 'sqlite:' . __DIR__ . '/../database/gallery.sq3';
-        $serviceContainer = \Propel\Runtime\Propel::getServiceContainer();
+        $serviceContainer = Propel::getServiceContainer();
         $serviceContainer->checkVersion('2.0.0-dev');
         $serviceContainer->setAdapterClass('default', 'sqlite');
-        $manager = new \Propel\Runtime\Connection\ConnectionManagerSingle();
+        $manager = new ConnectionManagerSingle();
         $manager->setConfiguration([
           'dsn' => $dsn,
           'user' => 'root',

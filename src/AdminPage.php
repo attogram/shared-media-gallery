@@ -2,6 +2,10 @@
 
 namespace Attogram\SharedMedia\Gallery;
 
+/**
+ * Class AdminPage
+ * @package Attogram\SharedMedia\Gallery
+ */
 class AdminPage
 {
     use TraitAccessControl;
@@ -16,6 +20,10 @@ class AdminPage
     private $data = [];
     private $fieldNames = [];
 
+    /**
+     * AdminPage constructor.
+     * @param array $data
+     */
     public function __construct($data)
     {
         $this->data = $data;

@@ -1,4 +1,4 @@
-/* attogram/shared-media-gallery - gallery.css - v0.0.3 */
+/* attogram/shared-media-gallery - gallery.css - v0.0.4 */
 body { background-color:white; color:black; font-family:sans-serif,helvetica,arial; margin:0; }
 a { color:darkblue; text-decoration:none; }
 a:visited { color:darkblue; }
@@ -12,7 +12,7 @@ h1, h2, h3, h4, h5 { display:inline; }
 .content { background-color:white; border:1px solid black; color:black; padding:10px; }
 footer { background-color:lightgrey; font-size:80%; padding:10px; }
 img { background-clip:content-box; background-color:white; border:1px solid black; }
-ul { display:block; line-height:1; list-style-position: inside; list-style-type:disc; margin:0 0 0 7px; padding:0; }
+ul { display:block; line-height:1; list-style-position:inside; list-style-type:disc; margin:0 0 0 7px; padding:0; }
 video { background-clip:content-box; background-color:white; border:1px solid black; }
 audio { background-clip:content-box; background-color:white; border:1px solid black; }
 .table { display:table; }
@@ -25,8 +25,10 @@ audio { background-clip:content-box; background-color:white; border:1px solid bl
 .left { text-align:left; }
 .center { text-align:center; }
 .small { font-size:80%; }
+.vsmall { line-height:0.8; }
 .media, .page { background-color:white; border:1px solid black; display:inline-block; margin:6px; padding:4px; vertical-align:top; }
 .media { font-size:12px; }
-.title { font-weight:bold; margin:2px; }
-.pageid { background-color:black; color:white; font-family:monospace; font-weight:bold; margin:2px; }
+.title { font-weight:bold; margin:2px; border:1px solid black; }
+.source { font-weight:bold; margin:2px; border:1px solid black; }
+.pageid { background-color:salmon; color:black; font-family:monospace; padding:0 2px 0 2px; }
 .debug { background-color:yellow; border:1px solid darkred; }

@@ -5,20 +5,22 @@
     <h1>Media List</h1> - (<a href="../search/">search</a>)
     <div class="table">
         <div class="row">
-            <div class="cell header small">ID<br />Source<br />Pageid</div>
+            <div class="cell header">ID</div>
+            <div class="cell header small vsmall">Source<br />Pageid</div>
             <div class="cell header">Thumb</div>
             <div class="cell header">Title<br />Description</div>
             <div class="cell header">Categories</div>
+            <div class="cell header">Delete</div>
         </div>
         {% for media in medias %}
             <div class="row">
-                <div class="cell left small">
-                    {{ media.id }}
-                    <br /><span class="small">{{ media.sourcetitle|e }}</span>
+                <div class="cell left">{{ media.id }}</div>
+                <div class="cell left small vsmall">
+                    <span class="source">{{ media.sourcetitle|e }}</span>
                     <br /><span class="pageid">{{ media.pageid }}</span>
                 </div>
                 <div class="cell center">
-                    <span class="title"><a href="{{ uriBase }}/media/{{ media.pageid }}/"><img src="{{ media.thumburl }}" width="{{ media.thumbwidth / 2}}" height="{{ media.thumbheight / 2}}"></a></span>
+                    <span class="title"><a href="{{ uriBase }}/media/{{ media.sourceid }}/{{ media.pageid }}/"><img src="{{ media.thumburl }}" width="{{ media.thumbwidth / 2}}" height="{{ media.thumbheight / 2}}"></a></span>
                 </div>
                 <div class="cell left">
                     <span class="title">{{ media.title|e }}</span>
@@ -26,9 +28,12 @@
                     <span class="small">{{ media.imagedescription|slice(0,400)|e }}{% if media.imagedescription|length > 400 %}...{% endif %}</span>
                 </div>
                 <div class="cell left">
-                    <a href="{{ uriBase }}/admin/media/{{ media.pageid }}/categories/">import</a>
+                    <a href="{{ uriBase }}/admin/media/{{ media.sourceid }}/{{ media.pageid }}/categories/">import</a>
                     <br />?
                 </div>
+				<div class="cell left">
+					<a href="{{ uriBase }}/admin/media/{{ media.sourceid }}/{{ media.pageid }}/delete/">(delete)</a>
+				</div>
             </div>
         {% endfor %}
     </div>

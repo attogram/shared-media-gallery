@@ -10,9 +10,27 @@ use Propel\Runtime\ActiveQuery\Criteria;
 use Propel\Runtime\Map\TableMap;
 use Throwable;
 
+/**
+ * Trait TraitQueryPublic
+ * @package Attogram\SharedMedia\Gallery
+ */
 trait TraitQueryPublic
 {
+	private $pageid;
+	private $sourceId;
     private $defaultItemsPerPage = 50;
+
+	private function setSourceIdAndPageid()
+	{
+		if (empty($this->data['vars'][0]) || !$this->isNumber($this->data['vars'][0])) {
+			$this->fatalError('Invalid Source ID');
+		}
+		if (empty($this->data['vars'][1]) || !$this->isNumber($this->data['vars'][1])) {
+			$this->fatalError('Invalid Pageid');
+		}
+        $this->sourceId = $this->data['vars'][0];
+        $this->pageid = $this->data['vars'][1];
+	}
 
     private function setLimit()
     {
@@ -23,21 +41,34 @@ trait TraitQueryPublic
         $this->data['limit'] = $limit;
     }
 
+    /**
+     * @return object
+     */
     private function getCategoryQuery()
     {
         return $this->joinWithSource(CategoryQuery::create());
     }
 
+    /**
+     * @return object
+     */
     private function getMediaQuery()
     {
         return $this->joinWithSource(MediaQuery::create());
     }
 
+    /**
+     * @return object
+     */
     private function getPageQuery()
     {
         return $this->joinWithSource(PageQuery::create());
     }
 
+    /**
+     * @param object $ormQuery
+     * @return object
+     */
     private function joinWithSource($ormQuery)
     {
         return $ormQuery
@@ -93,29 +124,6 @@ trait TraitQueryPublic
     }
 
     /**
-     * @param object $orm
-     * @param string $dataName
-     * @return bool
-     */
-    private function setItem($orm, $dataName)
-    {
-        $itemId = $this->data['vars'][0];
-        if (!$this->isNumber($itemId)) {
-            $this->error404('404 ' . ucfirst($dataName) . ' Not Found');
-        }
-        try {
-            $item = $orm->filterByPageid($itemId)->findOne();
-        } catch (Throwable $error) {
-            $item = false;
-        }
-        if (!$item) {
-            $this->error404('404 ' . ucfirst($dataName) . ' Not Found');
-        }
-        $this->data[$dataName] = $item;
-        return true;
-    }
-
-    /**
      * Setup search query
      *
      * @param object $orm
@@ -137,9 +145,28 @@ trait TraitQueryPublic
      */
     private function displayItem($orm, $name)
     {
-        if (!$this->setItem($orm, $name)) {
-            return;
-        }
+        $this->setItem($orm, $name);
         $this->displayView($name);
+    }
+
+    /**
+     * @param object $orm
+     * @param string $dataName
+     */
+    private function setItem($orm, $dataName)
+    {
+        $this->setSourceIdAndPageid();
+        try {
+            $item = $orm
+                ->filterBySourceId($this->sourceId)
+                ->filterByPageid($this->pageid)
+                ->findOne();
+            if (!$item) {
+                $this->error404(ucfirst($dataName) . ' Not Found');
+            }
+            $this->data[$dataName] = $item->toArray(TableMap::TYPE_FIELDNAME);
+        } catch (Throwable $error) {
+            $this->fatalError($error->getMessage());
+        }
     }
 }

@@ -7,8 +7,13 @@ use Twig_Environment;
 use Twig_Extension_Debug;
 use Twig_Loader_Filesystem;
 
+/**
+ * Trait TraitView
+ * @package Attogram\SharedMedia\Gallery
+ */
 trait TraitView
 {
+    /** @var Twig_Environment $twig */
     private $twig = false;
 
     private function setupTwig()
@@ -26,7 +31,6 @@ trait TraitView
 
     /**
      * @param string $view
-     * @return void
      */
     private function displayView(string $view)
     {

@@ -1,12 +1,10 @@
 <div class="media">
 {% if media %}
-    <a href="{{ uriBase}}/media/{{ media.pageid }}/"><img src="{{ media.thumburl }}" width="{{ media.thumbwidth }}" height="{{ media.thumbheight }}"></a>
-    <br />
-    <span class="pageid">{{ media.pageid|default('PAGEID NOT FOUND') }}</span>
+    <a href="{{ uriBase}}/media/{{ media.sourceid }}/{{ media.pageid }}/"><img src="{{ media.thumburl }}" width="{{ media.thumbwidth }}" height="{{ media.thumbheight }}"></a>
     <br />
     <span class="title">{{ media.title|slice(0,18)|e }}{% if media.shortTitle|length > 18 %}...{% endif %}</span>
     <br />{{ media.licenseshortname|default('LICENSE NOT FOUND') }}
-    <br />{{ media.sourcetitle|default('SOURCE NOT FOUND') }}
+    <br /><span class="pageid">{{ media.sourcetitle|default('SOURCE NOT FOUND') }}:{{ media.pageid|default('PAGEID NOT FOUND') }}</span>
 {% else %}
     MEDIA NOT FOUND
 {% endif %}

@@ -2,6 +2,10 @@
 
 namespace Attogram\SharedMedia\Gallery;
 
+/**
+ * Class AdminMedia
+ * @package Attogram\SharedMedia\Gallery
+ */
 class AdminMedia
 {
     use TraitAccessControl;
@@ -16,6 +20,10 @@ class AdminMedia
     private $data = [];
     private $fieldNames = [];
 
+    /**
+     * AdminMedia constructor.
+     * @param array $data
+     */
     public function __construct($data)
     {
         $this->data = $data;
@@ -58,4 +66,10 @@ class AdminMedia
     {
         $this->displayView('admin/media.categories');
     }
+
+	public function delete()
+	{
+		$this->adminDelete($this->getMediaQuery());
+        $this->redirect301($this->data['uriBase'] . '/admin/media/list/');
+	}
 }

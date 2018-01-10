@@ -1,5 +1,5 @@
 {% if page %}
-    <span class="title"><a href="{{ uriBase }}/page/{{ page.pageid }}/">{{ page.title|e }}</a></span>
+    <span class="title"><a href="{{ uriBase }}/page/{{ page.sourceid }}/{{ page.pageid }}/">{{ page.title|e }}</a></span>
     &nbsp; <span class="pageid">{{ page.pageid }}</span>
     &nbsp; source_id:{{ page.source_id }} 
     &nbsp; displaytitle:{{ page.displaytitle|e }} 

@@ -16,7 +16,7 @@
             <div class="row">
                 <div class="cell left">
                     <span class="title">
-                        <a href="{{ uriBase }}/category/{{ category.pageid }}/">{{ category.shortTitle|e }}</a>
+                        <a href="{{ uriBase }}/category/{{ category.sourceid }}/{{ category.pageid }}/">{{ category.shortTitle|e }}</a>
                     </span>
                 </div>
                 <div class="cell right">{{ category.files|default('?') }}</div>

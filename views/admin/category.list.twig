@@ -6,26 +6,28 @@
     <div class="table">
         <div class="row">
             <div class="cell header">ID</div>
-            <div class="cell header">Pageid</div>
+            <div class="cell header small vsmall">Source<br />Pageid</div>
             <div class="cell header">Title</div>
             <div class="cell header">Remote<br />media</div>
             <div class="cell header">Local<br />media</div>
             <div class="cell header">Subcats</div>
             <div class="cell header">Pages</div>
             <div class="cell header">H/P</div>
-            <div class="cell header">Source</div>
-		</div>
+
+        </div>
         {% for category in categories %}
             <div class="row">
                 <div class="cell left">{{ category.id }}</div>
-                <div class="cell left"><span class="pageid">{{ category.pageid }}</span></div>
+                <div class="cell left small vsmall">
+                    <span class="source">{{ category.sourcetitle|e }}</span>
+                    <br /><span class="pageid">{{ category.pageid }}</span>
+                </div>
                 <div class="cell left"><span class="title">{{ category.shortTitle|e }}</span></div>
-                <div class="cell left"><a href="{{ uriBase }}/admin/category/{{ category.pageid }}/media/">import</a>&nbsp;{{ category.files|default('?') }}</div>
-                <div class="cell left">-</div>
-                <div class="cell left"><a href="{{ uriBase }}/admin/category/{{ category.pageid }}/subcats/">import</a>&nbsp;{{ category.subcats|default('?') }}</div>
-                <div class="cell left">{{ category.pages|default('?') }}</div>
-                <div class="cell left">{{ category.hidden ? 'H' : 'P' }}</div>
-                <div class="cell left">{{ category.sourcetitle|e }}</div>
+                <div class="cell right"><a href="{{ uriBase }}/admin/category/{{ category.pageid }}/media/">import</a>&nbsp;{{ category.files|default('?') }}</div>
+                <div class="cell right">-</div>
+                <div class="cell right"><a href="{{ uriBase }}/admin/category/{{ category.pageid }}/subcats/">import</a>&nbsp;{{ category.subcats|default('?') }}</div>
+                <div class="cell right">{{ category.pages|default('?') }}</div>
+                <div class="cell right">{{ category.hidden ? 'hidden' : '' }}</div>
             </div>
         {% endfor %}
     </div>

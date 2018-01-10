@@ -8,6 +8,10 @@ use Attogram\SharedMedia\Orm\PageQuery;
 use Attogram\SharedMedia\Orm\SourceQuery;
 use Throwable;
 
+/**
+ * Trait TraitCounts
+ * @package Attogram\SharedMedia\Gallery
+ */
 trait TraitCounts
 {
     /**
@@ -22,8 +26,8 @@ trait TraitCounts
     }
 
     /**
-     * @param ojbect $orm
-     * return int
+     * @param object $orm
+     * @return int
      */
     private function getCount($orm)
     {

@@ -1,5 +1,5 @@
 {% if category %}
-    <span class="title"><a href="{{ uriBase }}/category/{{ category.pageid }}/">{{ category.title|e }}</a></span>
+    <span class="title"><a href="{{ uriBase }}/category/{{ category.sourceid }}/{{ category.pageid }}/">{{ category.title|e }}</a></span>
     &nbsp; <span class="pageid">{{ category.pageid }}</span>
     &nbsp; {{ category.files|default('?') }} files
     &nbsp; {{ category.subcats|default('?') }} subcats
