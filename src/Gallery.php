@@ -99,6 +99,7 @@ class Gallery
     private function setupDatabase()
     {
         $dsn = 'sqlite:' . __DIR__ . '/../database/gallery.sq3';
+        /** @var \Propel\Runtime\ServiceContainer\StandardServiceContainer $serviceContainer */
         $serviceContainer = Propel::getServiceContainer();
         $serviceContainer->checkVersion('2.0.0-dev');
         $serviceContainer->setAdapterClass('default', 'sqlite');

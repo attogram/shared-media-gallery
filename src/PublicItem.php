@@ -2,6 +2,10 @@
 
 namespace Attogram\SharedMedia\Gallery;
 
+/**
+ * Class PublicItem
+ * @package Attogram\SharedMedia\Gallery
+ */
 class PublicItem
 {
     use TraitErrors;
@@ -11,6 +15,10 @@ class PublicItem
 
     private $data = [];
 
+    /**
+     * PublicItem constructor.
+     * @param array $data
+     */
     public function __construct($data)
     {
         $this->data = $data;

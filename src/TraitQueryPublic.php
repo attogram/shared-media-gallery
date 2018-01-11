@@ -42,7 +42,7 @@ trait TraitQueryPublic
     }
 
     /**
-     * @return object
+     * @return \Propel\Runtime\ActiveQuery\ModelCriteria|CategoryQuery
      */
     private function getCategoryQuery()
     {
@@ -50,7 +50,7 @@ trait TraitQueryPublic
     }
 
     /**
-     * @return object
+     * @return \Propel\Runtime\ActiveQuery\ModelCriteria|MediaQuery
      */
     private function getMediaQuery()
     {
@@ -58,7 +58,7 @@ trait TraitQueryPublic
     }
 
     /**
-     * @return object
+     * @return \Propel\Runtime\ActiveQuery\ModelCriteria|PageQuery
      */
     private function getPageQuery()
     {
@@ -67,7 +67,7 @@ trait TraitQueryPublic
 
     /**
      * @param object $ormQuery
-     * @return object
+     * @return \Propel\Runtime\ActiveQuery\ModelCriteria
      */
     private function joinWithSource($ormQuery)
     {
@@ -126,38 +126,38 @@ trait TraitQueryPublic
     /**
      * Setup search query
      *
-     * @param object $orm
-     * @return object orm
+     * @param \Propel\Runtime\ActiveQuery\ModelCriteria $ormQuery
+     * @return \Propel\Runtime\ActiveQuery\ModelCriteria orm
      */
-    private function setupSearch($orm)
+    private function setupSearch($ormQuery)
     {
         $query = $this->getGet('q');
         if (!empty($query)) {
-            $orm->filterByTitle("%$query%", Criteria::LIKE);
+            $ormQuery->filterByTitle("%$query%", Criteria::LIKE);
             $this->data['query'] = $query;
         }
-        return $orm;
+        return $ormQuery;
     }
 
     /**
-     * @param object   $orm
+     * @param \Propel\Runtime\ActiveQuery\ModelCriteria $ormQuery
      * @param string   $name
      */
-    private function displayItem($orm, $name)
+    private function displayItem($ormQuery, $name)
     {
-        $this->setItem($orm, $name);
+        $this->setItem($ormQuery, $name);
         $this->displayView($name);
     }
 
     /**
-     * @param object $orm
+     * @param \Propel\Runtime\ActiveQuery\ModelCriteria $ormQuery
      * @param string $dataName
      */
-    private function setItem($orm, $dataName)
+    private function setItem($ormQuery, $dataName)
     {
         $this->setSourceIdAndPageid();
         try {
-            $item = $orm
+            $item = $ormQuery
                 ->filterBySourceId($this->sourceId)
                 ->filterByPageid($this->pageid)
                 ->findOne();

@@ -13,7 +13,7 @@ use Twig_Loader_Filesystem;
  */
 trait TraitView
 {
-    /** @var Twig_Environment $twig */
+    /** @var Twig_Environment */
     private $twig;
 
     private function setupTwig()

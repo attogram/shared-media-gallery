@@ -30,6 +30,7 @@ class Site
     public function home()
     {
         try {
+            /** @var \Attogram\SharedMedia\Orm\Media $media */
             $media = $this->getMediaQuery()
                 ->setOffset(rand(1, $this->data['media_count'] - 1))
                 ->findOne();

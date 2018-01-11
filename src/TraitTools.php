@@ -2,6 +2,10 @@
 
 namespace Attogram\SharedMedia\Gallery;
 
+/**
+ * Trait TraitTools
+ * @package Attogram\SharedMedia\Gallery
+ */
 trait TraitTools
 {
     /**
@@ -20,7 +24,7 @@ trait TraitTools
      * get the value of a global _GET variable
      *
      * @param string $name
-     * @return mixed
+     * @return mixed|null
      */
     private function getGet(string $name)
     {

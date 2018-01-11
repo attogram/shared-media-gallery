@@ -34,7 +34,7 @@ class AdminSource
     }
 
     /**
-     * @return \Attogram\SharedMedia\Orm\SourceQuery
+     * @return SourceQuery
      */
     private function getSourceQuery()
     {
