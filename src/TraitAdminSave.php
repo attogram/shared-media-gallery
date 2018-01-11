@@ -35,7 +35,7 @@ trait TraitAdminSave
     {
         $this->pageids = $this->getPost('pageid');
         if (empty($this->pageids) || !is_array($this->pageids)) {
-            $this->fatalError('Nothing Selected <pre>' . print_r($_POST,1));
+            $this->fatalError('Nothing Selected <pre>' . print_r($_POST, true));
         }
         $this->sourceId = $this->getPost('source');
         if (!$this->sourceId) {

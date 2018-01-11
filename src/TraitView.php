@@ -14,7 +14,7 @@ use Twig_Loader_Filesystem;
 trait TraitView
 {
     /** @var Twig_Environment $twig */
-    private $twig = false;
+    private $twig;
 
     private function setupTwig()
     {
@@ -34,7 +34,7 @@ trait TraitView
      */
     private function displayView(string $view)
     {
-        if (!$this->twig) {
+        if (!$this->twig instanceof Twig_Environment) {
             $this->setupTwig();
         }
         try {
